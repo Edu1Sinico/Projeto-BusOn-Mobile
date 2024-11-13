@@ -1,20 +1,18 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useNavigation } from '@react-navigation/native'; // Importando o hook de navegação
 
-const SemiHeader = ({ route }) => {
-  // Verifique se `route` e `route.params` estão definidos
-  const pageType = route?.params?.pageType || 'default';
-
-  const pageTitle = pageType === 'add' ? 'Realizar Pagamento' : 'Adicionar Créditos';
+const SemiHeader = ({ title }) => {
+  const navigation = useNavigation(); // Inicializando o hook de navegação
 
   return (
     <View style={styles.semiHeader}>
       <View style={styles.semiHeaderTop}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={30} color="#0AC86C" />
         </TouchableOpacity>
-        <Text style={styles.pageTitle}>{pageTitle}</Text>
+        <Text style={styles.pageTitle}>{title}</Text>
       </View>
       <View style={styles.divisorSection}>
         <View style={styles.divisor}></View>
