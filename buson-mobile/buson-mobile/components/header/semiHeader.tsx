@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     pageTitle: {
         flex: 1, 
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: 'bold',
     },
 
