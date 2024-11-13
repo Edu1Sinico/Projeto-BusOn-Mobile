@@ -49,7 +49,7 @@ export default StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: '400',
-        color: '#166CE2',
+        color: '#0AC86C',
     },
 
     middleSection: {
@@ -88,7 +88,7 @@ export default StyleSheet.create({
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#166CE2',
+        backgroundColor: '#0AC86C',
     },
 
     iconInputError: {
@@ -121,7 +121,7 @@ export default StyleSheet.create({
         marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#166CE2',
+        backgroundColor: '#0AB060',
         shadowColor: '#000',
         shadowOffset: { width: 4, height: 4 },
         shadowOpacity: 0.5,

@@ -6,20 +6,20 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 const Header = () => {
   return (
     <View style={styles.header}>
-      <View style={styles.menu_section}>
+      <View style={[styles.menu_section, styles.topSection]}>
         <TouchableOpacity>
           <Icon name="ellipsis-h" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.logo_section}>
+      <View style={[styles.logo_section, styles.topSection]}>
         <Image
-          source={require("@/assets/images/vip_transportes_preto_e_branco.png")}
+          source={require("@/assets/images/BusOn_Logo_Branco_Preto.png")}
           style={styles.logo}
         />
       </View>
 
-      <View style={styles.user_section}>
+      <View style={[styles.user_section, styles.topSection]}>
         <TouchableOpacity style={styles.notify_button}>
           <Icon name="bell" size={25} color="#fff" />
         </TouchableOpacity>
@@ -34,10 +34,15 @@ const Header = () => {
 const styles = StyleSheet.create({
   header: {
     width: '100%',
+    height: 150,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#166CE2',
+    backgroundColor: '#0AC86C',
+  },
+
+  topSection: {
+    marginTop: 45,
   },
 
   menu_section: {

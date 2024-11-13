@@ -49,7 +49,7 @@ export default function LoginScreen() {
 
                     <View style={styles.topSection}>
                         <View style={styles.userSection}>
-                            <Icon name="user" size={110} color="#166CE2" />
+                            <Icon name="user" size={110} color="#0AC86C" />
                         </View>
 
                         <Text style={styles.title}>Login</Text>

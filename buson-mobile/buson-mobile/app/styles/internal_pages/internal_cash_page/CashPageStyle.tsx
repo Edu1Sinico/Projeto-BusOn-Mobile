@@ -95,7 +95,7 @@ export default StyleSheet.create({
     buttonText: {
         fontSize: 17,
         fontWeight: 'bold',
-        color: '#166CE2',
+        color: '#0AC86C',
     },
 
 });

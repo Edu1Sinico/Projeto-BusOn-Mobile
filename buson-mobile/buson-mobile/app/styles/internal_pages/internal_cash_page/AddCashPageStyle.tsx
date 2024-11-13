@@ -4,6 +4,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
+        backgroundColor: '#fff',
     },    
 
     mainSection: {
@@ -19,7 +20,7 @@ export default StyleSheet.create({
         margin: 10,
         borderRadius: 10,
         width: '90%',
-        height: 90,
+        height: 100,
         padding: 15,
         flexDirection: 'row',
         alignItems: 'center',

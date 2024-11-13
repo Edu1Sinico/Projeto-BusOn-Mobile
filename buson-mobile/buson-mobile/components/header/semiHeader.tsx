@@ -12,7 +12,7 @@ const SemiHeader = ({ route }) => {
     <View style={styles.semiHeader}>
       <View style={styles.semiHeaderTop}>
         <TouchableOpacity>
-          <Icon name="arrow-left" size={30} color="#166CE2" />
+          <Icon name="arrow-left" size={30} color="#0AC86C" />
         </TouchableOpacity>
         <Text style={styles.pageTitle}>{pageTitle}</Text>
       </View>

@@ -1,20 +1,26 @@
+
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TouchableOpacity  } from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useNavigation } from '@react-navigation/native'; // Importando o hook de navegação
+import { useLinkTo } from '@react-navigation/native';
 
 // Importando a estilização
 import styles from '@/app/styles/internal_pages/internal_cash_page/CashPageStyle'
+
 
 // Importando o Header como componente
 import Header from '@/components/header/header';
 
 
 export default function CashScreen() {
+  const navigation = useNavigation(); // Inicializando o hook de navegação
 
   // useState
     const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
+
+    const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   return (
     <View style={styles.container}>
@@ -38,7 +44,7 @@ export default function CashScreen() {
               <Icon
                 name={showBalance ? 'eye' : 'eye-slash'} // Alterna o ícone com base no estado
                 size={30}
-                color="#166CE2"
+                color="#0AC86C"
               />
             </TouchableOpacity>
           </View>
@@ -46,15 +52,18 @@ export default function CashScreen() {
 
         <View style={styles.buttonSection}>
           <View style={styles.cashButtonsSection}>
-            <TouchableOpacity style={styles.iconButton}>
-              <Icon name="wallet" size={90} color="#166CE2"/>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => linkTo('/Adicionar-Credito')} // Navegando para a página "Adicionar Créditos"
+            >
+              <Icon name="wallet" size={90} color="#0AC86C" />
               <Text style={styles.buttonText}>Adicionar Créditos</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.cashButtonsSection}>
             <TouchableOpacity style={styles.iconButton}>
-              <Icon name="credit-card" size={90} color="#166CE2"/>
+              <Icon name="credit-card" size={90} color="#0AC86C"/>
               <Text style={styles.buttonText}>Realizar Pagamento</Text>
             </TouchableOpacity>
           </View>

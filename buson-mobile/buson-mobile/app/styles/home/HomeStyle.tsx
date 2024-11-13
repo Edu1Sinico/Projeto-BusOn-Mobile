@@ -4,7 +4,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
-        backgroundColor: '#166CE2',
+        backgroundColor: '#0AC86C',
     },
 
     user_section: {
@@ -23,7 +23,7 @@ export default StyleSheet.create({
 
     balanceSection: {
         position: 'absolute',
-        top: 170, // Ajuste este valor conforme necessário para centralizar
+        top: 230, // Ajuste este valor conforme necessário para centralizar
         left: '10%',
         right: '10%',
         backgroundColor: '#fff',
@@ -62,7 +62,7 @@ export default StyleSheet.create({
 
       balanceValue: {
         fontSize: 24,
-        fontWeight: 400,
+        fontWeight: '400',
         color: '#333',
       },
 
@@ -111,7 +111,7 @@ export default StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#166CE2',
+        backgroundColor: '#0AC86C',
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 10,
     },
@@ -139,11 +139,11 @@ export default StyleSheet.create({
   },
 
   buttonTopSection: {
-    width: '100%',
+    width: '90%',
     padding: 25,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
 
   buttonBottomSection: {
@@ -154,13 +154,29 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
   },
 
+  bigIconButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0AC86C',
+    width: 150,
+    height: 150,
+    borderRadius: 20,
+  },
+
   iconButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#166CE2',
+    backgroundColor: '#0AC86C',
     width: 95,
     height: 95,
     borderRadius: 20,
+  },
+
+  bigTextIcon: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 5,
+    color: '#fff',
   },
 
   textIcon: {

@@ -32,14 +32,14 @@ export default function HomeScreen() {
         </View>
         <View style={styles.balanceTextSection}>
           <Text style={styles.balanceTitle}>Saldo Disponível</Text>
-          <Text style={styles.balanceValue}>{showBalance ? 'R$ ●●●●' : 'R$ 0,00'} </Text>  {/* Realiza a troca do valor conforme criacado no botão */}
+          <Text style={styles.balanceValue}> {showBalance ? 'R$ ●●●●' : 'R$ 0,00'} </Text>
         </View>
         <View style={styles.visibleButtonSection}>
           <TouchableOpacity onPress={() => setShowBalance(!showBalance)}>
             <Icon
               name={showBalance ? 'eye' : 'eye-slash'} // Alterna o ícone com base no estado
               size={20}
-              color="#166CE2"
+              color="#0AC86C"
             />
           </TouchableOpacity>
         </View>
@@ -74,19 +74,14 @@ export default function HomeScreen() {
 
           <View style={styles.buttonSection}>
             <View style={styles.buttonTopSection}>
-              <TouchableOpacity style={styles.iconButton}>
-                <Icon name="bus" size={50} color={'#fff'}></Icon>
-                <Text style={styles.textIcon}>Linhas</Text>
+              <TouchableOpacity style={styles.bigIconButton}>
+                <Icon name="money-bill" size={70} color={'#fff'}></Icon>
+                <Text style={styles.bigTextIcon}>Saldo</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.iconButton}>
-                <Icon name="money-bill" size={50} color={'#fff'}></Icon>
-                <Text style={styles.textIcon}>Saldo</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.iconButton}>
-                <Icon name="map-marker-alt" size={50} color={'#fff'}></Icon>
-                <Text style={styles.textIcon}>Pontos</Text>
+              <TouchableOpacity style={styles.bigIconButton}>
+                <Icon name="building" size={70} color={'#fff'}></Icon>
+                <Text style={styles.bigTextIcon}>Empresas</Text>
               </TouchableOpacity>
             </View>
 

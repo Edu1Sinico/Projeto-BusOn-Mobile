@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
 
     titleSection: {
-        backgroundColor: '#166CE2',
+        backgroundColor: 'red',
         width: '100%',
         height: '50%',
         borderTopRightRadius: 8,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#166CE2',
+        backgroundColor: 'red',
     },
 
     confirmTextButton: {

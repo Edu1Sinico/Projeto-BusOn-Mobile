@@ -5,7 +5,6 @@ import { View, Text, TouchableOpacity  } from 'react-native';
 // Importando os ícones
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-
 // Importando a estilização
 import styles from '@/app/styles/internal_pages/internal_cash_page/AddCashPageStyle'
 
@@ -13,7 +12,7 @@ import styles from '@/app/styles/internal_pages/internal_cash_page/AddCashPageSt
 import Header from '@/components/header/header';
 import SemiHeader from '@/components/header/semiHeader';
 
-export default function CashScreen() {
+export default function AddCashScreen() {
 
   return (
     <View style={styles.container}>
