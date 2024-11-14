@@ -165,24 +165,26 @@ Node.js é um ambiente de execução JavaScript no lado do servidor, que permite
 
 **Expo**
 <br>
-
+Expo é uma plataforma open-source para criar aplicativos móveis com React Native, facilitando o desenvolvimento para iOS e Android sem a necessidade de configuração complexa. Ele permite testes em tempo real e oferece ferramentas para agilizar o processo de desenvolvimento.
 
 <hr>
 
 **PostgreSQL**
 <br>
-
+PostgreSQL é um sistema de banco de dados relacional open-source, conhecido por sua robustez, escalabilidade e conformidade com transações ACID. Ele oferece suporte a dados complexos, como JSON, e é altamente extensível, ideal para aplicações de grande porte.
 
 <hr>
 
 **GitHub**
 <br>
-
+GitHub é uma plataforma de hospedagem de código baseada em Git, que facilita o controle de versão, a colaboração e o gerenciamento de repositórios. É amplamente usado para projetos open-source e integra com ferramentas de CI/CD para otimizar o fluxo de trabalho.
 
 <hr>
 
 **VS Code**
 <br>
+Visual Studio Code é um editor de código leve e gratuito, altamente extensível, que suporta várias linguagens de programação. Ele oferece funcionalidades como autocompletar, depuração integrada e controle de versão, sendo ideal para desenvolvedores de diferentes níveis.
+
 
 
 <hr>
