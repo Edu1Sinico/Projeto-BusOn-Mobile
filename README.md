@@ -29,7 +29,7 @@
 
 **_Fluxograma de Uso:_**
 <div align="center">
-    <img src="documentos/diagrama_de_uso_blogsphere.png" alt="Diagrama de Uso" width="800vh">
+    <img src="documentos/DiagramaDeUso.png" alt="Diagrama de Uso" width="800vh">
 </div>
 <br>
 Este diagrama destaca as ações possíveis para os usuários:
@@ -43,7 +43,7 @@ Este diagrama destaca as ações possíveis para os usuários:
 
 **_Fluxograma de Classe:_**
 <div align="center">
-    <img src="documentos/diagrama_de_classe_blogsphere.png" alt="Diagrama de Classe" width="800vh">
+    <img src="documentos/DiagramaDeClasse.png" alt="Diagrama de Classe" width="800vh">
 </div>
 <br>
 Este diagrama mostra as classes principais do sistema e como elas interagem:<br><br>
