@@ -33,7 +33,7 @@ O sistema proposto permitirá que os usuários realizem o pagamento da recarga d
 - Gerenciamento de Perfil: Atualização de informações pessoais e documentos, especialmente para estudantes e idosos.
 - Favoritos: Opção para salvar empresas de transporte preferidas para fácil acesso.
 
-
+<br>
 > ### _Manual de Instrução:_
 
 **_Fluxograma de Uso:_**
