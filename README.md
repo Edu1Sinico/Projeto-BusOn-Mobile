@@ -115,23 +115,16 @@ Esses diagramas juntos fornecem uma visão abrangente das funcionalidades e da e
 <br>
 
 > ## _Design e Estilos_
-Nesse tópico, irei apresentar todos os Designs de Wireframes de baixa, média e alta fidelidade.
+Nesse tópico, irei apresentar todos os Designs de Wireframes de alta fidelidade.
 
-**Design de Baixa Fidelidade:**
+**Paginas de Cadastro, completar Cadastro e Perfil:**
 <div align="center">
-    <img src="designs/blogsphere_baixa_fidelidade.png" alt="Wireframes de Baixa Fidelidade" width="800vh">
+    <img src="documentos/figmaCadastroPerfil.png" alt="Wireframes de Alta Fidelidade" width="800vh">
 </div>
-<br>
 
-**Design de Média Fidelidade:**
+**Paginas de Cadastro, completar Cadastro e Perfil:**
 <div align="center">
-    <img src="designs/blogsphare_media_fidelidade.png" alt="Wireframes de Média Fidelidade" width="800vh">
-</div>
-<br>
-
-**Design de Alta Fidelidade:**
-<div align="center">
-    <img src="designs/blogsphare_alta_fidelidade.png" alt="Wireframes de Alta Fidelidade" width="800vh">
+    <img src="documentos/figmaCadastroPerfil.png" alt="Wireframes de Alta Fidelidade" width="800vh">
 </div>
 
 <br>
