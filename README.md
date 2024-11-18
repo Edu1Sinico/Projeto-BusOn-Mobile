@@ -35,10 +35,14 @@
 Este diagrama destaca as ações possíveis para os usuários:
 
 1. Usuário:
-    - Adicionar, editar, excluir e visualizar Blogs.
-    - Adicionar comentários, avaliar publicações de outros usuários.
-    - Gerenciar perfil e publicações.
 
+- Realizar login/cadastro: O usuário pode iniciar sessão ou se cadastrar na plataforma. Após o login, é necessário completar o cadastro.
+- Completar cadastro: Após realizar o login ou cadastro, o usuário deve preencher informações adicionais obrigatórias.
+- Visualizar saldo: O usuário pode acessar seu saldo disponível na carteirinha.
+- Adicionar valores à carteira: Após visualizar o saldo, o usuário pode adicionar créditos à sua carteira virtual.
+- Realizar pagamento: Depois de adicionar valores à carteira, o usuário pode efetuar pagamentos usando o saldo.
+- Visualizar empresas: O usuário pode consultar uma lista de empresas de transporte disponíveis no sistema.
+- Adicionar empresas favoritas: Após visualizar as empresas, o usuário pode marcar algumas como favoritas para acesso rápido em futuras consultas.
 <br>
 
 **_Fluxograma de Classe:_**
