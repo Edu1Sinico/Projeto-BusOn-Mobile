@@ -44,7 +44,7 @@ O sistema proposto permitirá que os usuários realizem o pagamento da recarga d
 <br>
 Este diagrama destaca as ações possíveis para os usuários:
 
-1. Usuário:
+ # 1. Usuário:
 
 - Realizar login/cadastro: O usuário pode iniciar sessão ou se cadastrar na plataforma. Após o login, é necessário completar o cadastro.
 - Completar cadastro: Após realizar o login ou cadastro, o usuário deve preencher informações adicionais obrigatórias.
