@@ -87,8 +87,8 @@ Este diagrama de fluxo representa o processo inicial de uso do sistema de recarg
 - Se o usuário não optar por completar o cadastro neste momento, ele segue para a Home (Página Inicial).
 
 **3. Verificação de Perfil Completo**: 
-    - Se o perfil estiver completo, o usuário pode prosseguir para verificar seus créditos.
-    - Caso contrário, ele será redirecionado novamente para a etapa de Cadastrar Informações Adicionais.
+ - Se o perfil estiver completo, o usuário pode prosseguir para verificar seus créditos.
+ - Caso contrário, ele será redirecionado novamente para a etapa de Cadastrar Informações Adicionais.
 
 **4. Verificação de Créditos**:
 - Se o usuário tiver créditos disponíveis, ele pode seguir para Realizar Pagamento.
