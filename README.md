@@ -1,7 +1,7 @@
 # Projeto-BusOn-Mobile
 <br>
 <div align="center">
-    <img src="imagens_e_icones/BusOn Logo Branca.png" alt="Logo BlogSphere" width="200vh">
+    <img src="imagens_e_icones/BusOn Logo.png" alt="Logo BlogSphere" width="200vh">
 </div>
 <br>
 
