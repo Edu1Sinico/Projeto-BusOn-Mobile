@@ -15,15 +15,23 @@
 
 >  ## _Introdução_
 
+Este projeto tem como objetivo viabilizar uma forma prática e digital de pagamento para a recarga de carteirinhas de transporte público. Atualmente, o processo de recarga ocorre de maneira presencial nos terminais de Limeira, o que pode gerar desconforto e perda de tempo para os usuários, especialmente estudantes e idosos que fazem uso frequente do serviço.
 
 <br>
 
 > ## _Objetivos do Projeto_
 
+O sistema proposto permitirá que os usuários realizem o pagamento da recarga de suas carteirinhas diretamente pelo aplicativo, eliminando a necessidade de deslocamento até os terminais de recarga. Com isso, busca-se oferecer uma solução acessível e eficiente, proporcionando maior praticidade e conveniência para quem utiliza o transporte público.
 
 <br>
 
-> ## _Funcionalidades_
+> ## _Funcionalidades Principais_
+
+- Cadastro e Autenticação: Registro de novos usuários e login seguro para acessar o sistema.
+- Visualização de Saldo: Consulta do saldo atual disponível na carteirinha.
+- Pagamento de Recarga: Interface simples para adicionar créditos à carteirinha via métodos de pagamento online.
+- Gerenciamento de Perfil: Atualização de informações pessoais e documentos, especialmente para estudantes e idosos.
+- Favoritos: Opção para salvar empresas de transporte preferidas para fácil acesso.
 
 ### _Manual de Instrução:_
 
