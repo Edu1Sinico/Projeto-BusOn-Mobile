@@ -122,9 +122,9 @@ Nesse tópico, irei apresentar todos os Designs de Wireframes de alta fidelidade
     <img src="documentos/figmaCadastroPerfil.png" alt="Wireframes de Alta Fidelidade" width="800vh">
 </div>
 
-**Paginas de Cadastro, completar Cadastro e Perfil:**
+**Pagina Inicial, Buscar Empresas, Empresas Favoritas, Saldo, Adicionar Crédito e Finalizar pagamento:**
 <div align="center">
-    <img src="documentos/figmaCadastroPerfil.png" alt="Wireframes de Alta Fidelidade" width="800vh">
+    <img src="documentos/figmaPags.png" alt="Wireframes de Alta Fidelidade" width="800vh">
 </div>
 
 <br>
