@@ -34,6 +34,7 @@ O sistema proposto permitirá que os usuários realizem o pagamento da recarga d
 - Favoritos: Opção para salvar empresas de transporte preferidas para fácil acesso.
 
 <br>
+
 > ### _Manual de Instrução:_
 
 **_Fluxograma de Uso:_**
