@@ -72,36 +72,33 @@ _**Principais métodos:**_<br>
 
 **_Fluxograma de Fluxo:_**
 <div align="center">
-    <img src="documentos/diagrama_de_fluxo_blogsphere.png" alt="Diagrama de Fluxo" width="800vh">
+    <img src="documentos/DiagramaDeFluxo.png" alt="Diagrama de Fluxo" width="800vh">
 </div>
 <br>
 
-Este diagrama representa o fluxo principal do sistema BlogSphere, desde a tela de início até as principais funcionalidades disponíveis para os usuários. Abaixo estão as etapas detalhadas do fluxo:
+Este diagrama de fluxo representa o processo inicial de uso do sistema de recarga de carteirinhas de ônibus, detalhando as etapas desde o cadastro até a realização de pagamentos. Abaixo estão as etapas descritas:
 
-**1. Início**: É a primeira página que o usuário acessa ao entrar no sistema. O usuário pode tomar a decisão de realizar uma ação, como se registrar ou fazer login.
+**1. Página de Cadastro Inicial**:
+- Se o usuário já estiver cadastrado, ele é redirecionado para a Home (Página Inicial).
+- Se não estiver cadastrado, o fluxo segue para verificar se deseja completar o cadastro agora.
 
-**2. Ação**: Após acessar a página inicial, o usuário tem a possibilidade de escolher se deseja fazer login ou registrar uma nova conta.
+**2. Completar Cadastro Agora?**:
+- Se o usuário optar por completar o cadastro, ele será direcionado para Cadastrar Informações Adicionais, onde deverá preencher dados complementares.
+- Se o usuário não optar por completar o cadastro neste momento, ele segue para a Home (Página Inicial).
 
-**3. Decisão (Login/Registro)**: O sistema verifica se o usuário já possui uma conta:
-    - Se o usuário já tiver uma conta, ele será redirecionado para a tela de login.
-    - Se o usuário ainda não tiver uma conta, ele será encaminhado para a tela de registro para criar um novo perfil.
+**3. Verificação de Perfil Completo**: 
+    - Se o perfil estiver completo, o usuário pode prosseguir para verificar seus créditos.
+    - Caso contrário, ele será redirecionado novamente para a etapa de Cadastrar Informações Adicionais.
 
-**4. Login**: Caso o usuário já tenha uma conta, ele será redirecionado para realizar o login. Após a autenticação, ele poderá acessar as funcionalidades principais da plataforma.
+**4. Verificação de Créditos**:
+- Se o usuário tiver créditos disponíveis, ele pode seguir para Realizar Pagamento.
+- Se não houver créditos, o fluxo segue para Adicionar Créditos, onde o usuário pode recarregar seu saldo.
 
-**5. Registro**: Se o usuário não tiver uma conta, ele será redirecionado para a tela de criação de perfil, onde poderá se cadastrar.
-
-**6. Tela (Login)**: Após a autenticação bem-sucedida, o usuário será redirecionado para a página principal da plataforma, onde poderá realizar diversas ações.
-
-**7. Ação**: Depois de logado, o usuário pode acessar as funcionalidades disponíveis, como:
-    - **Perfil**: O usuário pode visualizar e editar seu perfil.
-    - **Postar**: O usuário pode criar novos posts para compartilhar suas ideias.
-    - **Avaliar**: O usuário pode avaliar os posts de outros membros da comunidade, proporcionando feedback e interação.
-
-Este fluxo ilustra a jornada básica do usuário dentro do BlogSphere, abrangendo desde o registro ou login até as principais ações realizadas dentro da plataforma.
+Este fluxo ilustra a jornada básica do usuário dentro do BusOn, abrangendo desde o registro ou login até as principais ações realizadas dentro do aplicativo.
 
 <br>
 
-Esses diagramas juntos fornecem uma visão completa das funcionalidades e estrutura do sistema, desde a autenticação até o gerenciamento de publicações e perfis, garantindo que todos os usuários da plataforma possam realizar suas atividades de forma eficiente.
+Esses diagramas juntos fornecem uma visão abrangente das funcionalidades e da estrutura do sistema de recarga de carteirinhas de ônibus. A combinação dos diferentes diagramas ilustra claramente as etapas e os componentes principais, desde o processo de autenticação até a gestão de perfis e transações financeiras.
 
 <br>
 
