@@ -50,50 +50,23 @@ Este diagrama destaca as ações possíveis para os usuários:
     <img src="documentos/DiagramaDeClasse.png" alt="Diagrama de Classe" width="800vh">
 </div>
 <br>
-Este diagrama mostra as classes principais do sistema e como elas interagem:<br><br>
 
-_**Usuário:**_ <br>
+Este diagrama de classes representa as principais entidades do sistema de recarga de carteirinhas e suas interações:<br><br>
 
-A classe Usuário contém atributos essenciais para representar cada usuário do sistema.<br>
+_**Classes principais e seus papéis:**_ <br>
 
-**Atributos:**
+- Usuário: Gerencia os dados do usuário, incluindo cadastro, atualização e exclusão.
+- Estudante e Deficiente: Extensões da classe Usuário para estudantes e deficientes, armazenando documentos específicos.
+- Empresa: Representa as empresas de transporte, permitindo cadastro e gerenciamento.
+- Favoritos: Armazena empresas marcadas como favoritas pelos usuários.
+- Saldo: Controla o saldo disponível para recargas.
+- Pagamento: Gerencia transações de pagamento realizadas no sistema.
 
-- ID: Identificador único do usuário.
-- Nome: Nome do usuário.
-- Email: Endereço de e-mail do usuário.
-- Senha: Senha usada para autenticação no sistema.
+_**Principais métodos:**_<br>
 
-**Métodos:**
-
-- login(): Método para autenticar o usuário e permitir o acesso ao sistema.
-- logout(): Método para finalizar a sessão do usuário.
-- adicionarPub(): Permite que o usuário adicione uma nova publicação.
-- removerPub(): Remove uma publicação existente do usuário.
-- atualizarPub(): Atualiza uma publicação criada pelo usuário.
-- visualizarPub(): Exibe uma lista de publicações criadas pelo usuário.
-
-<hr>
-
-_**Blogs:**_ <br>
-A classe Blogs gerencia as publicações feitas pelos usuários no sistema.<br>
-
-**Atributos:**
-
-- ID: Identificador único da publicação.
-- Título: Título da publicação.
-- Descricao: Conteúdo da publicação.
-- dataPublicacao: Data em que a publicação foi criada.
-- dataModificacao: Data da última modificação da publicação.
-- Comentarios: Campo onde os usuários podem adicionar comentários à publicação.
-- Avaliacao: Avaliação média atribuída pelos usuários.
-
-**Métodos:**
-
-- adicionarComentario(): Permite que os usuários adicionem comentários à publicação.
-- avaliarPublicacao(): Permite aos usuários avaliar a publicação com base em uma escala.
-- denunciarPublicacao(): Método para denunciar publicações que violam as diretrizes.
-- compartilharPublicacao(): Função para compartilhar a publicação com outros usuários ou em redes sociais.
-
+- Cadastro e atualização de dados (usuário, empresa, favoritos).
+- Adição de saldo e realização de pagamentos.
+- Documentação específica para estudantes e deficientes.
 
 <br>
 
