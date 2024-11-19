@@ -8,7 +8,7 @@ import SemiHeader from "@/components/header/semiHeader";
 export default function CompanyPage() {
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]);
-  
+
   const companies = [
     {
       id: 1,
@@ -80,12 +80,13 @@ export default function CompanyPage() {
           </View>
         </View>
 
-        <FlatList
-          data={companies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderCompanyCard}
-          contentContainerStyle={styles.cardList}
-        />
+        <View style={styles.mainBottomSection}>
+          <FlatList
+            data={companies}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderCompanyCard}
+          />
+        </View>
       </View>
     </View>
   );

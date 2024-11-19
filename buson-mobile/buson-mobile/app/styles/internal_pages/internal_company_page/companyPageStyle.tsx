@@ -5,6 +5,12 @@ export default StyleSheet.create({
         flex: 1,
         width: '100%',
     },
+
+    mainSection: {
+        width: '100%',
+        flex: 1,
+        flexDirection: 'column',
+    },
   
     mainTopSection: {
         width: '100%',
@@ -37,6 +43,12 @@ export default StyleSheet.create({
         backgroundColor: '#0AC86C',
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 10,
+    },
+
+    mainBottomSection: {
+        width: '100%',
+        flex: 1,
+        marginTop: 15,
     },
 
     // Estilo para o card de empresa
