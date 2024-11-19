@@ -62,7 +62,8 @@ export default function CashScreen() {
           </View>
 
           <View style={styles.cashButtonsSection}>
-            <TouchableOpacity style={styles.iconButton}>
+            <TouchableOpacity style={styles.iconButton}
+            onPress={() => linkTo('/Realizar-Pagamento')}>
               <Icon name="credit-card" size={90} color="#0AC86C"/>
               <Text style={styles.buttonText}>Realizar Pagamento</Text>
             </TouchableOpacity>
