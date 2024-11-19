@@ -1,32 +1,32 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput, FlatList, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from '@/app/styles/internal_pages/internal_company_page/companyPageStyle';
-import Header from '@/components/header/header';
+import { View, Text, TouchableOpacity, TextInput, FlatList, Image } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import styles from "@/app/styles/internal_pages/internal_company_page/companyPageStyle";
+import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 
-export default function CompanyPage() {
-  const [search, setSearch] = useState('');
+export default function CompanyPage({ navigation }) {
+  const [search, setSearch] = useState("");
   const [favorites, setFavorites] = useState([]);
-  
+
   const companies = [
     {
       id: 1,
       name: "SOU Transportes",
       location: "Limeira - SP",
-      image: require('@/assets/images/LogoSou.png'), // Troque para o caminho correto da imagem
+      image: require("@/assets/images/LogoSou.png"),
     },
     {
       id: 2,
       name: "Lira Bus",
       location: "Limeira - SP",
-      image: require('@/assets/images/LogoSou.png'), // Troque para o caminho correto da imagem
+      image: require("@/assets/images/LogoSou.png"),
     },
     {
       id: 3,
       name: "TransLimeira",
       location: "Limeira - SP",
-      image: require('@/assets/images/LogoSou.png'), // Troque para o caminho correto da imagem
+      image: require("@/assets/images/LogoSou.png"),
     },
   ];
 
@@ -48,13 +48,10 @@ export default function CompanyPage() {
         onPress={() => toggleFavorite(item.id)}
       >
         <Icon
-          name={favorites.includes(item.id) ? 'star' : 'star-border'}
+          name={favorites.includes(item.id) ? "star" : "star-border"}
           size={24}
-          color={favorites.includes(item.id) ? '#FFD700' : '#C7C7C7'}
+          color={favorites.includes(item.id) ? "#FFD700" : "#C7C7C7"}
         />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.selectButton}>
-        <Text style={styles.selectButtonText}>Selecionar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,7 +60,7 @@ export default function CompanyPage() {
     <View style={styles.container}>
       <Header />
       <View style={styles.mainSection}>
-        <SemiHeader title={'Empresas'} />
+        <SemiHeader title={"Empresas"} />
         <View style={styles.mainTopSection}>
           <View style={styles.inputSection}>
             <View style={styles.iconInputSection}>
@@ -72,12 +69,20 @@ export default function CompanyPage() {
             <TextInput
               style={[styles.input]}
               placeholder="Pesquisar"
-              placeholderTextColor={'#C7C7C7'}
+              placeholderTextColor={"#C7C7C7"}
               value={search}
               onChangeText={setSearch}
               underlineColorAndroid="transparent"
             />
           </View>
+          <TouchableOpacity
+            style={[styles.selectButton, { marginTop: 10 }]}
+            onPress={() =>
+              navigation.navigate("FavoriteCompaniesPage", { favorites, companies })
+            }
+          >
+            <Text style={styles.selectButtonText}>Ver Favoritas</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList
