@@ -6,6 +6,7 @@ import { useLinkTo } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // Importando a tela de aviso do campo vazio
 import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
+import { ModalConfirmValidation } from '@/components/modal/ModalConfirmValidation';
 import { inputValidationRegister } from '@/app/scripts/login_register/validationRegister';
 import React from 'react';
 
@@ -19,7 +20,8 @@ export default function RegisterScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
+    const [alertModalVisible, setAlertModalVisible] = useState(false);
+    const [confirmModalVisible, setConfirmModalVisible] = useState(false);
     const linkTo = useLinkTo(); // Sistema de links do react navigator
 
     // Estados de erro para campos individuais
@@ -34,14 +36,41 @@ export default function RegisterScreen() {
     // Estado para mensagem de sucesso
     const [successRegister, setSuccessRegister] = useState(false);
 
-
     const handleRegister = () => {
-        if (inputValidationRegister(user, email, password, confirmPassword, setMessageAlert, setUserError, setEmailError, setPasswordError, setConfirmPasswordError, setModalVisible)) {
-            setSuccessRegister(true);
-            setTimeout(() => {
-                linkTo('/Home');
-                setModalVisible(false)
-            }, 1500);
+        // Realiza a validação
+        const isValid = inputValidationRegister(
+            user,
+            email,
+            password,
+            confirmPassword,
+            setMessageAlert,
+            setUserError,
+            setEmailError,
+            setPasswordError,
+            setConfirmPasswordError,
+            setAlertModalVisible
+        );
+
+        if (isValid) {
+            setAlertModalVisible(false);
+            // Caso a validação seja bem-sucedida, exibe o modal de confirmação
+            setConfirmModalVisible(true);
+        } else {
+            // Caso a validação falhe, exibe o modal de alerta
+            setAlertModalVisible(true);
+        }
+    };
+
+    // Responde à escolha do modal de confirmação
+    const handleConfirmationResponse = (response) => {
+        setConfirmModalVisible(false); // Fecha o modal de confirmação
+
+        if (response === 'yes') {
+            // Redireciona para completar o cadastro
+            linkTo('/Register-Plus');
+        } else {
+            // Redireciona para a tela inicial
+            linkTo('/Home');
         }
     };
 
@@ -136,13 +165,29 @@ export default function RegisterScreen() {
                 </View>
             </ImageBackground >
 
-            {/* Modal de alerta */}
+            {/* Modal de Confirmação */}
             <Modal
-                animationType='fade'
+                animationType="fade"
                 transparent={true}
-                visible={modalVisible}
+                visible={confirmModalVisible}
             >
-                <ModalAlertValidation messageAlert={messageAlert} successMessage={successRegister} handleClose={() => setModalVisible(false)} />
+                <ModalConfirmValidation
+                    onConfirm={() => handleConfirmationResponse('yes')}
+                    onCancel={() => handleConfirmationResponse('no')}
+                />
+            </Modal>
+
+            {/* Modal de Alerta */}
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={alertModalVisible}
+            >
+                <ModalAlertValidation
+                    messageAlert={messageAlert}
+                    successMessage={successRegister}
+                    handleClose={() => setAlertModalVisible(false)}
+                />
             </Modal>
         </View >
 

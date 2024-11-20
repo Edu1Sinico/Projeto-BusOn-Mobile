@@ -1,38 +1,52 @@
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-// Link do site de ícones: https://oblador.github.io/react-native-vector-icons/
 
-export function ModalAlertValidation({ messageAlert, successMessage, handleClose}) {
+export function ModalConfirmValidation({ onConfirm, onCancel }) {
+    const [loading, setLoading] = useState(false);
+
+    const handleConfirm = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            onConfirm(); // Aciona a função passada por prop
+        }, 1500);
+    };
+
+    const handleCancel = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            onCancel(); // Aciona a função passada por prop
+        }, 1500);
+    };
 
     return (
-
-        // Campos vazios
         <View style={styles.container}>
             <View style={styles.content}>
-                <View style={[styles.titleSection, successMessage && styles.titleSectionSuccess]}>
-                    <Icon
-                        name={successMessage ? "check" : "alert-triangle"}
-                        size={40}
-                        color="#fff"
-                    />
-                    <Text style={styles.title}>{messageAlert}</Text>
+                <View style={styles.titleSection}>
+                    <Icon name="help-circle" size={40} color="#fff" />
+                    <Text style={styles.title}>Deseja completar o seu Cadastro?</Text>
                 </View>
-
-                {successMessage ? (
-                    // Indicador de login no lugar do botão
+                {loading ? (
                     <View style={styles.loadingSection}>
                         <ActivityIndicator size="large" color="#00ff00" />
                     </View>
                 ) : (
-                    // Botão padrão de fechar quando não for login bem-sucedido
-                    <TouchableOpacity style={styles.confirmButton} onPress={handleClose}>
-                        <Text style={styles.confirmTextButton}>Fechar</Text>
-                    </TouchableOpacity>
+                    <View style={styles.confirmSection}>
+                        <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+                            <Text style={styles.confirmTextButton}>Sim</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.confirmButton} onPress={handleCancel}>
+                            <Text style={styles.confirmTextButton}>Não</Text>
+                        </TouchableOpacity>
+                    </View>
                 )}
             </View>
         </View>
-    )
+    );
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -55,7 +69,7 @@ const styles = StyleSheet.create({
     },
 
     titleSection: {
-        backgroundColor: 'red',
+        backgroundColor: '#0AC86C',
         width: '100%',
         height: '50%',
         borderTopRightRadius: 8,
@@ -65,17 +79,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    titleSectionSuccess: {
-        backgroundColor: '#0AC86C',
-    },
-
     title: {
         fontSize: 20,
         fontWeight: '400',
         color: '#fff',
         textAlign: 'center',
     },
-    
+
+    confirmSection: {
+        height: '50%',
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+
     loadingSection: {
         height: '50%',
         alignItems: 'center',
@@ -89,7 +106,7 @@ const styles = StyleSheet.create({
         marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'red',
+        backgroundColor: '#0AC86C',
     },
 
     confirmTextButton: {
@@ -97,5 +114,5 @@ const styles = StyleSheet.create({
         fontWeight: 500,
         color: '#fff',
     }
-    
+
 });

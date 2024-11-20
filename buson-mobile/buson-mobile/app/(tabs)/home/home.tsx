@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity  } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Importando o hook de navegação
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useLinkTo } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -14,7 +13,6 @@ import Header from '@/components/header/header';
 
 
 export default function HomeScreen() {
-  const navigation = useNavigation(); // Inicializando o hook de navegação
 
   // useState
   const [search, setSearch] = useState('');
@@ -79,13 +77,18 @@ export default function HomeScreen() {
 
           <View style={styles.buttonSection}>
             <View style={styles.buttonTopSection}>
-              <TouchableOpacity style={styles.bigIconButton}>
+              <TouchableOpacity
+                style={styles.bigIconButton}
+                onPress={() => linkTo('/Saldo')}
+              >
                 <Icon name="money-bill" size={70} color={'#fff'}></Icon>
                 <Text style={styles.bigTextIcon}>Saldo</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.bigIconButton}
-              onPress={() => linkTo('/Empresas')}>
+              <TouchableOpacity
+                style={styles.bigIconButton}
+                onPress={() => linkTo('/Empresas')}
+              >
                 <Icon name="building" size={70} color={'#fff'}></Icon>
                 <Text style={styles.bigTextIcon}>Empresas</Text>
               </TouchableOpacity>

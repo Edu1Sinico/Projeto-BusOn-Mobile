@@ -5,7 +5,7 @@ import styles from '@/app/styles/internal_pages/internal_company_page/companyPag
 import Header from '@/components/header/header';
 import SemiHeader from "@/components/header/semiHeader";
 
-export default function CompanyPage() {
+export default function CompanyScreen() {
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]);
 

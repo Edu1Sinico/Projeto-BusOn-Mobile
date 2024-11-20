@@ -9,12 +9,13 @@ export default StyleSheet.create({
   // Top Section
   sectionTop: {
     width: "100%",
-    height: "45%",
+    height: "40%",
     alignItems: "center",
   },
 
   header: {
     width: "100%",
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
