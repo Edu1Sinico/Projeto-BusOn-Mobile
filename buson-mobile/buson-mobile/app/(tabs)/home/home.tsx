@@ -105,7 +105,10 @@ export default function HomeScreen() {
                 <Text style={styles.textIcon}>Ajuda</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.iconButton}>
+              <TouchableOpacity
+                style={styles.iconButton}
+                onPress={() => linkTo('/Perfil')}
+              >
                 <Icon name="user-circle" size={50} color={'#fff'}></Icon>
                 <Text style={styles.textIcon}>Conta</Text>
               </TouchableOpacity>
