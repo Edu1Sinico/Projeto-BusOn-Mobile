@@ -12,8 +12,6 @@ import React from 'react';
 
 const background = require("@/assets/images/background/bus_background.png");
 
-
-
 export default function RegisterScreen() {
 
     const [user, setUser] = useState('');
@@ -32,9 +30,6 @@ export default function RegisterScreen() {
 
     // Mensagem de alerta
     const [messageAlert, setMessageAlert] = useState("");
-
-    // Estado para mensagem de sucesso
-    const [successRegister, setSuccessRegister] = useState(false);
 
     const handleRegister = () => {
         // Realiza a validação
@@ -185,7 +180,7 @@ export default function RegisterScreen() {
             >
                 <ModalAlertValidation
                     messageAlert={messageAlert}
-                    successMessage={successRegister}
+                    successMessage={false}
                     handleClose={() => setAlertModalVisible(false)}
                 />
             </Modal>

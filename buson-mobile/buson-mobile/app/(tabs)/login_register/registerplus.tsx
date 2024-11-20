@@ -1,9 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "@/app/styles/login_register/RegisterPlusStyle";
+import { useLinkTo } from '@react-navigation/native';
 import SemiHeader from "@/components/header/semiHeader";
+
+// Importando a tela de aviso do campo vazio
+import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
+import { inputValidationRegisterPlus } from '@/app/scripts/login_register/validationRegisterPlus';
 
 export default function RegisterPlus() {
   const [cpf, setCpf] = useState("");
@@ -11,6 +16,31 @@ export default function RegisterPlus() {
   const [telefone, setTelefone] = useState("");
   const [endereco, setEndereco] = useState("");
   const [categoria, setCategoria] = useState("Comum");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // Estados de erro para campos individuais
+  const [cpfError, setCpfError] = useState(false);
+  const [dataNascError, setDataNascError] = useState(false);
+  const [telefoneError, setTelefoneError] = useState(false);
+  const [enderecoError, setEnderecoError] = useState(false);
+
+  // Mensagem de alerta
+  const [messageAlert, setMessageAlert] = useState("");
+
+  // Estado para mensagem de sucesso
+  const [successRegister, setSuccessRegister] = useState(false);
+
+  const linkTo = useLinkTo(); // Sistema de links do react navigator
+
+  const handleRegister = () => {
+    if (inputValidationRegisterPlus(cpf, dataNascimento, telefone, endereco, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setEnderecoError, setModalVisible)) {
+      setSuccessRegister(true);
+      setTimeout(() => {
+        linkTo('/Home');
+        setModalVisible(false)
+      }, 1500);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -40,11 +70,11 @@ export default function RegisterPlus() {
           <View style={styles.inputContainer}>
             {/* input cpf */}
             <View style={styles.inputSection}>
-              <View style={styles.iconInputSection}>
+              <View style={[styles.iconInputSection, cpfError && styles.iconInputError]}>
                 <Icon name="id-card" size={20} color="#fff" />
               </View>
               <TextInput
-                style={[styles.input]}
+                style={[styles.input, cpfError && styles.inputError]}
                 placeholder="CPF"
                 placeholderTextColor={"#C7C7C7"}
                 value={cpf}
@@ -57,11 +87,11 @@ export default function RegisterPlus() {
           <View style={styles.inputContainer}>
             {/* input cpf */}
             <View style={styles.inputSection}>
-              <View style={styles.iconInputSection}>
+              <View style={[styles.iconInputSection, dataNascError && styles.iconInputError]}>
                 <Icon name="calendar" size={20} color="#fff" />
               </View>
               <TextInput
-                style={[styles.input]}
+                style={[styles.input, dataNascError && styles.inputError]}
                 placeholder="Data de Nascimento"
                 placeholderTextColor={"#C7C7C7"}
                 value={dataNascimento}
@@ -73,11 +103,11 @@ export default function RegisterPlus() {
           <View style={styles.inputContainer}>
             {/* input cpf */}
             <View style={styles.inputSection}>
-              <View style={styles.iconInputSection}>
+              <View style={[styles.iconInputSection, telefoneError && styles.iconInputError]}>
                 <Icon name="phone" size={20} color="#fff" />
               </View>
               <TextInput
-                style={[styles.input]}
+                style={[styles.input, telefoneError && styles.inputError]}
                 placeholder="Telefone"
                 placeholderTextColor={"#C7C7C7"}
                 value={telefone}
@@ -89,11 +119,11 @@ export default function RegisterPlus() {
           <View style={styles.inputContainer}>
             {/* input cpf */}
             <View style={styles.inputSection}>
-              <View style={styles.iconInputSection}>
+              <View style={[styles.iconInputSection, enderecoError && styles.iconInputError]}>
                 <Icon name="map-marker-alt" size={20} color="#fff" />
               </View>
               <TextInput
-                style={[styles.input]}
+                style={[styles.input, enderecoError && styles.inputError]}
                 placeholder="Endereço"
                 placeholderTextColor={"#C7C7C7"}
                 value={endereco}
@@ -123,11 +153,21 @@ export default function RegisterPlus() {
           </View>
 
           {/* Submit Button */}
-          <TouchableOpacity style={styles.addButton}>
-            <Text style={styles.addTextButton}>Adicionar</Text>
+          <TouchableOpacity style={styles.addButton}
+            onPress={handleRegister}>
+            <Text style={styles.addTextButton}>Completar Cadastro</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Modal de alerta */}
+      <Modal
+        animationType='fade'
+        transparent={true}
+        visible={modalVisible}
+      >
+        <ModalAlertValidation messageAlert={messageAlert} successMessage={successRegister} handleClose={() => setModalVisible(false)} />
+      </Modal>
     </View>
   );
 }

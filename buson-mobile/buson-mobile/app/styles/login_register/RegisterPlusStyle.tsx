@@ -120,7 +120,7 @@ export default StyleSheet.create({
   addButton: {
     padding: 10,
     height: 70,
-    width: 120,
+    width: 250,
     margin: 15,
     alignItems: 'center',
     justifyContent: 'center',
@@ -151,12 +151,21 @@ export default StyleSheet.create({
     paddingLeft: 10,
   },
 
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 2,
+  },
+
   iconInputSection: {
     width: 50,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0AC86C',
+  },
+
+  iconInputError: {
+    backgroundColor: 'red',
   },
 
 });

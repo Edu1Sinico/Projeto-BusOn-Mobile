@@ -37,7 +37,7 @@ export function ModalConfirmValidation({ onConfirm, onCancel }) {
                         <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
                             <Text style={styles.confirmTextButton}>Sim</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.confirmButton} onPress={handleCancel}>
+                        <TouchableOpacity style={[styles.confirmButton, styles.cancelButton]} onPress={handleCancel}>
                             <Text style={styles.confirmTextButton}>Não</Text>
                         </TouchableOpacity>
                     </View>
@@ -106,7 +106,11 @@ const styles = StyleSheet.create({
         marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#0AC86C',
+        backgroundColor: 'green',
+    },
+
+    cancelButton: {
+        backgroundColor: 'red',
     },
 
     confirmTextButton: {
