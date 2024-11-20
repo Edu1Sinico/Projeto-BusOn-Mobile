@@ -9,12 +9,13 @@ export default StyleSheet.create({
   // Top Section
   sectionTop: {
     width: "100%",
-    height: "45%",
+    height: "40%",
     alignItems: "center",
   },
 
   header: {
     width: "100%",
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
@@ -64,12 +65,18 @@ export default StyleSheet.create({
     elevation: 5,
   },
 
+  formSection: {
+    width: '100%',
+    marginTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   inputContainer: {
+    width: '100%',
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
     paddingBottom: 5,
   },
 
@@ -84,6 +91,7 @@ export default StyleSheet.create({
   },
 
   radioGroup: {
+    width: '100%',
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: 20,
@@ -109,18 +117,24 @@ export default StyleSheet.create({
     backgroundColor: "#0AC86C",
   },
 
-  button: {
-    backgroundColor: "#0AC86C",
-    borderRadius: 8,
-    marginTop: 30,
-    alignItems: "center",
-    paddingVertical: 15,
+  addButton: {
+    padding: 10,
+    height: 70,
+    width: 250,
+    margin: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0AB060',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
   },
 
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+  addTextButton: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 
   inputSection: {
@@ -128,21 +142,30 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-},
+  },
 
-input: {
+  input: {
     width: '65%',
     height: 50,
     backgroundColor: '#EDEDED',
     paddingLeft: 10,
-},
+  },
 
-iconInputSection: {
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 2,
+  },
+
+  iconInputSection: {
     width: 50,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0AC86C',
-},
+  },
+
+  iconInputError: {
+    backgroundColor: 'red',
+  },
 
 });

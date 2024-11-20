@@ -3,7 +3,6 @@ import React from 'react';
 import { useState } from 'react';
 import { View, Text, TouchableOpacity  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { useNavigation } from '@react-navigation/native'; // Importando o hook de navegação
 import { useLinkTo } from '@react-navigation/native';
 
 // Importando a estilização
@@ -15,7 +14,6 @@ import Header from '@/components/header/header';
 
 
 export default function CashScreen() {
-  const navigation = useNavigation(); // Inicializando o hook de navegação
 
   // useState
     const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
