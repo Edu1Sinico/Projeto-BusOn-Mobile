@@ -7,7 +7,7 @@ import styles from "@/app/styles/internal_pages/internal_company_page/companyPag
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 
-export default function CompanyPage({ navigation }) {
+export default function FavoritesCompanyPage({ navigation }) {
   // Estado inicial com favorito já selecionado
   const [isFavorite, setIsFavorite] = useState(true);
 
@@ -15,7 +15,7 @@ export default function CompanyPage({ navigation }) {
     id: 1,
     name: "SOU Transportes",
     location: "Limeira - SP",
-    image: require("@/assets/images/LogoSou.png"),
+    image: require("@/assets/images/companiesLogo/LogoSou.png"),
   };
 
   const toggleFavorite = () => {

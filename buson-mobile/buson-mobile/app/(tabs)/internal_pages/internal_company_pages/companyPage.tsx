@@ -5,7 +5,7 @@ import styles from "@/app/styles/internal_pages/internal_company_page/companyPag
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 
-export default function CompanyScreen() {
+export default function CompanyScreen({navigation}) {
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]);
 
@@ -81,7 +81,7 @@ export default function CompanyScreen() {
               navigation.navigate("FavoriteCompaniesPage", { favorites, companies })
             }
           >
-            <Text style={styles.selectButtonText}>Ver Favoritas</Text>
+            <Text style={styles.selectButtonText} >Ver Favoritas</Text>
           </TouchableOpacity>
         </View>
 
