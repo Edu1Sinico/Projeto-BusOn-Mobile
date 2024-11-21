@@ -1,26 +1,30 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from '../(tabs)/home/home';
 import CashScreen from '../(tabs)/internal_pages/internal_cash_pages/cashPage';
-import AddCashScreen from '../(tabs)/internal_pages/internal_cash_pages/addCashPage';
-import PaymentCashPage from '../(tabs)/internal_pages/internal_cash_pages/paymentCashPage';
+import CompanyScreen from '../(tabs)/internal_pages/internal_company_pages/companyPage';
+import ProfileScreen from '../(tabs)/internal_pages/internal_user_pages/userPage';
 
 const Stack = createNativeStackNavigator();
 
-export function CashNavigator() {
+export function HomeNavigator() {
     return (
         <NavigationContainer independent={true}>
-            <Stack.Navigator initialRouteName="Saldo"
+            <Stack.Navigator initialRouteName="Home"
                 screenOptions={{
                     headerShown: false,  // Removendo o cabeçalho
                 }}>
+                <Stack.Screen name="Home" component={HomeScreen} options={{
+                    animation: 'fade'
+                }} />
                 <Stack.Screen name="Saldo" component={CashScreen} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Adicionar-Credito" component={AddCashScreen} options={{
+                <Stack.Screen name="Empresas" component={CompanyScreen} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Realizar-Pagamento" component={PaymentCashPage} options={{
+                <Stack.Screen name="Perfil" component={ProfileScreen} options={{
                     animation: 'fade'
                 }} />
             </Stack.Navigator>

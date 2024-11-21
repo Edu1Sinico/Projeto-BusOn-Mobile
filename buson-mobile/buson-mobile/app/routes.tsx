@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './(tabs)/home/home';
+import { HomeNavigator } from './routes/homeNavigator';
 // import CashScreen from './(tabs)/internal_pages/internal_cash_pages/cashPage';
 import { CashNavigator } from './routes/cashNavigator';
 
@@ -33,7 +33,7 @@ export function Routes() {
             />
             <Tab.Screen
                 name="Home"
-                component={HomeScreen}
+                component={HomeNavigator}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused, color }) => (

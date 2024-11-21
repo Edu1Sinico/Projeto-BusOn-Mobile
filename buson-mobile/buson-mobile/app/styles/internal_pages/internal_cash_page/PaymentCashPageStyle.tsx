@@ -23,7 +23,7 @@ export default StyleSheet.create({
 
     title: {
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 20,
     },
 
     mainTopSection: {
@@ -53,10 +53,55 @@ export default StyleSheet.create({
     },
 
     buttonText: {
-        fontSize: 17,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginTop: 15,
         color: '#fff',
     },
+    
+    mainBottomSection: {
+        width: '100%',
+        margin: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    paymentCodeCard: {
+        width: '75%',
+        height: 125,
+        backgroundColor: '#F9F9F9',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+    },
+
+    paymentCodeTopSection: {
+        width: '100%',
+        height: '35%',
+        padding: 15,
+    },
+
+    paymentCodeBottomSection: {
+        width: '100%',
+        height: '65%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    paymentCodeTitle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+
+    input: {
+        backgroundColor: '#EDEDED',
+        height: 45,
+        width: 250,
+        textAlign: 'center',
+        fontSize: 25,
+        borderRadius: 5,
+        marginBottom: 10,
+    }
 
 });

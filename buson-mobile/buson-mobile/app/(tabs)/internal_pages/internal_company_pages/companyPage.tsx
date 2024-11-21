@@ -5,8 +5,8 @@ import styles from "@/app/styles/internal_pages/internal_company_page/companyPag
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 
-export default function CompanyPage({ navigation }) {
-  const [search, setSearch] = useState("");
+export default function CompanyScreen() {
+  const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]);
 
   const companies = [
@@ -14,19 +14,19 @@ export default function CompanyPage({ navigation }) {
       id: 1,
       name: "SOU Transportes",
       location: "Limeira - SP",
-      image: require("@/assets/images/LogoSou.png"),
+      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
     },
     {
       id: 2,
       name: "Lira Bus",
       location: "Limeira - SP",
-      image: require("@/assets/images/LogoSou.png"),
+      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
     },
     {
       id: 3,
       name: "TransLimeira",
       location: "Limeira - SP",
-      image: require("@/assets/images/LogoSou.png"),
+      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
     },
   ];
 
@@ -85,12 +85,13 @@ export default function CompanyPage({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <FlatList
-          data={companies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderCompanyCard}
-          contentContainerStyle={styles.cardList}
-        />
+        <View style={styles.mainBottomSection}>
+          <FlatList
+            data={companies}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderCompanyCard}
+          />
+        </View>
       </View>
     </View>
   );

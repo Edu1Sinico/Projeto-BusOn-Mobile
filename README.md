@@ -15,17 +15,29 @@
 
 >  ## _Introdução_
 
+Este projeto tem como objetivo viabilizar uma forma prática e digital de pagamento para a recarga de carteirinhas de transporte público. Atualmente, o processo de recarga ocorre de maneira presencial nos terminais de Limeira, o que pode gerar desconforto e perda de tempo para os usuários, especialmente estudantes e idosos que fazem uso frequente do serviço.
 
 <br>
 
 > ## _Objetivos do Projeto_
 
+O sistema proposto permitirá que os usuários realizem o pagamento da recarga de suas carteirinhas diretamente pelo aplicativo, eliminando a necessidade de deslocamento até os terminais de recarga. Com isso, busca-se oferecer uma solução acessível e eficiente, proporcionando maior praticidade e conveniência para quem utiliza o transporte público.
 
 <br>
 
-> ## _Funcionalidades_
+> ## _Funcionalidades Principais_
 
-### _Manual de Instrução:_
+- Cadastro e Autenticação: Registro de novos usuários e login seguro para acessar o sistema.
+- Visualização de Saldo: Consulta do saldo atual disponível na carteirinha.
+- Pagamento de Recarga: Interface simples para adicionar créditos à carteirinha via métodos de pagamento online.
+- Gerenciamento de Perfil: Atualização de informações pessoais e documentos, especialmente para estudantes e idosos.
+- Favoritos: Opção para salvar empresas de transporte preferidas para fácil acesso.
+
+<br>
+
+> ### _Manual de Instrução:_
+
+<br>
 
 **_Fluxograma de Uso:_**
 <div align="center">
@@ -34,11 +46,15 @@
 <br>
 Este diagrama destaca as ações possíveis para os usuários:
 
-1. Usuário:
-    - Adicionar, editar, excluir e visualizar Blogs.
-    - Adicionar comentários, avaliar publicações de outros usuários.
-    - Gerenciar perfil e publicações.
+ ### 1. Usuário:
 
+- Realizar login/cadastro: O usuário pode iniciar sessão ou se cadastrar na plataforma. Após o login, é necessário completar o cadastro.
+- Completar cadastro: Após realizar o login ou cadastro, o usuário deve preencher informações adicionais obrigatórias.
+- Visualizar saldo: O usuário pode acessar seu saldo disponível na carteirinha.
+- Adicionar valores à carteira: Após visualizar o saldo, o usuário pode adicionar créditos à sua carteira virtual.
+- Realizar pagamento: Depois de adicionar valores à carteira, o usuário pode efetuar pagamentos usando o saldo.
+- Visualizar empresas: O usuário pode consultar uma lista de empresas de transporte disponíveis no sistema.
+- Adicionar empresas favoritas: Após visualizar as empresas, o usuário pode marcar algumas como favoritas para acesso rápido em futuras consultas.
 <br>
 
 **_Fluxograma de Classe:_**
@@ -46,106 +62,69 @@ Este diagrama destaca as ações possíveis para os usuários:
     <img src="documentos/DiagramaDeClasse.png" alt="Diagrama de Classe" width="800vh">
 </div>
 <br>
-Este diagrama mostra as classes principais do sistema e como elas interagem:<br><br>
 
-_**Usuário:**_ <br>
+Este diagrama de classes representa as principais entidades do sistema de recarga de carteirinhas e suas interações:<br><br>
 
-A classe Usuário contém atributos essenciais para representar cada usuário do sistema.<br>
+_**Classes principais e seus papéis:**_ <br>
 
-**Atributos:**
+- Usuário: Gerencia os dados do usuário, incluindo cadastro, atualização e exclusão.
+- Estudante e Deficiente: Extensões da classe Usuário para estudantes e deficientes, armazenando documentos específicos.
+- Empresa: Representa as empresas de transporte, permitindo cadastro e gerenciamento.
+- Favoritos: Armazena empresas marcadas como favoritas pelos usuários.
+- Saldo: Controla o saldo disponível para recargas.
+- Pagamento: Gerencia transações de pagamento realizadas no sistema.
 
-- ID: Identificador único do usuário.
-- Nome: Nome do usuário.
-- Email: Endereço de e-mail do usuário.
-- Senha: Senha usada para autenticação no sistema.
+_**Principais métodos:**_<br>
 
-**Métodos:**
-
-- login(): Método para autenticar o usuário e permitir o acesso ao sistema.
-- logout(): Método para finalizar a sessão do usuário.
-- adicionarPub(): Permite que o usuário adicione uma nova publicação.
-- removerPub(): Remove uma publicação existente do usuário.
-- atualizarPub(): Atualiza uma publicação criada pelo usuário.
-- visualizarPub(): Exibe uma lista de publicações criadas pelo usuário.
-
-<hr>
-
-_**Blogs:**_ <br>
-A classe Blogs gerencia as publicações feitas pelos usuários no sistema.<br>
-
-**Atributos:**
-
-- ID: Identificador único da publicação.
-- Título: Título da publicação.
-- Descricao: Conteúdo da publicação.
-- dataPublicacao: Data em que a publicação foi criada.
-- dataModificacao: Data da última modificação da publicação.
-- Comentarios: Campo onde os usuários podem adicionar comentários à publicação.
-- Avaliacao: Avaliação média atribuída pelos usuários.
-
-**Métodos:**
-
-- adicionarComentario(): Permite que os usuários adicionem comentários à publicação.
-- avaliarPublicacao(): Permite aos usuários avaliar a publicação com base em uma escala.
-- denunciarPublicacao(): Método para denunciar publicações que violam as diretrizes.
-- compartilharPublicacao(): Função para compartilhar a publicação com outros usuários ou em redes sociais.
-
+- Cadastro e atualização de dados (usuário, empresa, favoritos).
+- Adição de saldo e realização de pagamentos.
+- Documentação específica para estudantes e deficientes.
 
 <br>
 
 **_Fluxograma de Fluxo:_**
 <div align="center">
-    <img src="documentos/diagrama_de_fluxo_blogsphere.png" alt="Diagrama de Fluxo" width="800vh">
+    <img src="documentos/DiagramaDeFluxo.png" alt="Diagrama de Fluxo" width="800vh">
 </div>
 <br>
 
-Este diagrama representa o fluxo principal do sistema BlogSphere, desde a tela de início até as principais funcionalidades disponíveis para os usuários. Abaixo estão as etapas detalhadas do fluxo:
+Este diagrama de fluxo representa o processo inicial de uso do sistema de recarga de carteirinhas de ônibus, detalhando as etapas desde o cadastro até a realização de pagamentos. Abaixo estão as etapas descritas:
 
-**1. Início**: É a primeira página que o usuário acessa ao entrar no sistema. O usuário pode tomar a decisão de realizar uma ação, como se registrar ou fazer login.
+**1. Página de Cadastro Inicial**:
+- Se o usuário já estiver cadastrado, ele é redirecionado para a Home (Página Inicial).
+- Se não estiver cadastrado, o fluxo segue para verificar se deseja completar o cadastro agora.
 
-**2. Ação**: Após acessar a página inicial, o usuário tem a possibilidade de escolher se deseja fazer login ou registrar uma nova conta.
+**2. Completar Cadastro Agora?**:
+- Se o usuário optar por completar o cadastro, ele será direcionado para Cadastrar Informações Adicionais, onde deverá preencher dados complementares.
+- Se o usuário não optar por completar o cadastro neste momento, ele segue para a Home (Página Inicial).
 
-**3. Decisão (Login/Registro)**: O sistema verifica se o usuário já possui uma conta:
-    - Se o usuário já tiver uma conta, ele será redirecionado para a tela de login.
-    - Se o usuário ainda não tiver uma conta, ele será encaminhado para a tela de registro para criar um novo perfil.
+**3. Verificação de Perfil Completo**: 
+ - Se o perfil estiver completo, o usuário pode prosseguir para verificar seus créditos.
+ - Caso contrário, ele será redirecionado novamente para a etapa de Cadastrar Informações Adicionais.
 
-**4. Login**: Caso o usuário já tenha uma conta, ele será redirecionado para realizar o login. Após a autenticação, ele poderá acessar as funcionalidades principais da plataforma.
+**4. Verificação de Créditos**:
+- Se o usuário tiver créditos disponíveis, ele pode seguir para Realizar Pagamento.
+- Se não houver créditos, o fluxo segue para Adicionar Créditos, onde o usuário pode recarregar seu saldo.
 
-**5. Registro**: Se o usuário não tiver uma conta, ele será redirecionado para a tela de criação de perfil, onde poderá se cadastrar.
-
-**6. Tela (Login)**: Após a autenticação bem-sucedida, o usuário será redirecionado para a página principal da plataforma, onde poderá realizar diversas ações.
-
-**7. Ação**: Depois de logado, o usuário pode acessar as funcionalidades disponíveis, como:
-    - **Perfil**: O usuário pode visualizar e editar seu perfil.
-    - **Postar**: O usuário pode criar novos posts para compartilhar suas ideias.
-    - **Avaliar**: O usuário pode avaliar os posts de outros membros da comunidade, proporcionando feedback e interação.
-
-Este fluxo ilustra a jornada básica do usuário dentro do BlogSphere, abrangendo desde o registro ou login até as principais ações realizadas dentro da plataforma.
+Este fluxo ilustra a jornada básica do usuário dentro do BusOn, abrangendo desde o registro ou login até as principais ações realizadas dentro do aplicativo.
 
 <br>
 
-Esses diagramas juntos fornecem uma visão completa das funcionalidades e estrutura do sistema, desde a autenticação até o gerenciamento de publicações e perfis, garantindo que todos os usuários da plataforma possam realizar suas atividades de forma eficiente.
+Esses diagramas juntos fornecem uma visão abrangente das funcionalidades e da estrutura do sistema de recarga de carteirinhas de ônibus. A combinação dos diferentes diagramas ilustra claramente as etapas e os componentes principais, desde o processo de autenticação até a gestão de perfis e transações financeiras.
 
 <br>
 
 > ## _Design e Estilos_
-Nesse tópico, irei apresentar todos os Designs de Wireframes de baixa, média e alta fidelidade.
+Nesse tópico, irei apresentar todos os Designs de Wireframes de alta fidelidade.
 
-**Design de Baixa Fidelidade:**
+**Paginas de Cadastro, completar Cadastro e Perfil:**
 <div align="center">
-    <img src="designs/blogsphere_baixa_fidelidade.png" alt="Wireframes de Baixa Fidelidade" width="800vh">
+    <img src="documentos/figmaCadastroPerfil.png" alt="Wireframes de Alta Fidelidade" width="800vh">
 </div>
-<br>
 
-**Design de Média Fidelidade:**
+**Pagina Inicial, Buscar Empresas, Empresas Favoritas, Saldo, Adicionar Crédito e Finalizar pagamento:**
 <div align="center">
-    <img src="designs/blogsphare_media_fidelidade.png" alt="Wireframes de Média Fidelidade" width="800vh">
-</div>
-<br>
-
-**Design de Alta Fidelidade:**
-<div align="center">
-    <img src="designs/blogsphare_alta_fidelidade.png" alt="Wireframes de Alta Fidelidade" width="800vh">
+    <img src="documentos/figmaPags.png" alt="Wireframes de Alta Fidelidade" width="800vh">
 </div>
 
 <br>
@@ -185,21 +164,4 @@ GitHub é uma plataforma de hospedagem de código baseada em Git, que facilita o
 <br>
 Visual Studio Code é um editor de código leve e gratuito, altamente extensível, que suporta várias linguagens de programação. Ele oferece funcionalidades como autocompletar, depuração integrada e controle de versão, sendo ideal para desenvolvedores de diferentes níveis.
 
-
-
-<hr>
-
-<hr>
-
-### Temporário
-Diagrama de Fluxo de Atividades: https://lucid.app/lucidchart/53afc5e6-b81f-489e-aa27-7c4f236db985/edit?viewport_loc=-102%2C-130%2C3573%2C1823%2C0_0&invitationId=inv_7fc43deb-d43c-4b54-a7cd-810870be098e  
-
-
-# Sprint 1 - dia 11/11/2024
-
-- Pesquisar sobre o editais sobre as leis de transporte de alunos/deficientes.
-- Pesquisar sobre em outros municipios como funciona na parte de descontos.
-
-## Novo Objetivo
-- Focar em meio de ser uma empresa de viabilização de pagamentos.
 

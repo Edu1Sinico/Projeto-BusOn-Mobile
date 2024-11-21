@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity  } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useLinkTo } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -16,6 +17,8 @@ export default function HomeScreen() {
   // useState
   const [search, setSearch] = useState('');
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
+
+  const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   return (
     <View style={styles.container}>
@@ -74,12 +77,19 @@ export default function HomeScreen() {
 
           <View style={styles.buttonSection}>
             <View style={styles.buttonTopSection}>
-              <TouchableOpacity style={styles.bigIconButton}>
+              <TouchableOpacity
+                style={styles.bigIconButton}
+                onPress={() => linkTo('/Saldo')}
+              >
                 <Icon name="money-bill" size={70} color={'#fff'}></Icon>
                 <Text style={styles.bigTextIcon}>Saldo</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.bigIconButton}>
+              <TouchableOpacity
+                style={styles.bigIconButton}
+                onPress={() => linkTo('/Empresas')}
+                // onPress={() => console.log("teste")}
+              >
                 <Icon name="building" size={70} color={'#fff'}></Icon>
                 <Text style={styles.bigTextIcon}>Empresas</Text>
               </TouchableOpacity>
@@ -96,7 +106,10 @@ export default function HomeScreen() {
                 <Text style={styles.textIcon}>Ajuda</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.iconButton}>
+              <TouchableOpacity
+                style={styles.iconButton}
+                onPress={() => linkTo('/Perfil')}
+              >
                 <Icon name="user-circle" size={50} color={'#fff'}></Icon>
                 <Text style={styles.textIcon}>Conta</Text>
               </TouchableOpacity>

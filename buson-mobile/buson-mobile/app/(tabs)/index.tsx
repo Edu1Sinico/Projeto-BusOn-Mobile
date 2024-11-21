@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './login_register/login';
 import RegisterScreen from './login_register/register';
+import RegisterPlus from './login_register/registerPlus';
 
 import { Routes } from '../routes'; // Importando o sistema de navegação com o BottomTabNavigator
 
@@ -23,6 +24,9 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} options={{
           animation: 'fade'
         }} />
+        <Stack.Screen name="Register-Plus" component={RegisterPlus} options={{
+          animation: 'fade'
+        }} />
         <Stack.Screen
           name="Home"
           component={Routes} // Aqui você usa o Routes com o BottomTabNavigator
@@ -31,4 +35,3 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer >
   )
-}
