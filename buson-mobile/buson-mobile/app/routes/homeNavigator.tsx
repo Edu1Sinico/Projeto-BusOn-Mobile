@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../(tabs)/home/home';
 import CashScreen from '../(tabs)/internal_pages/internal_cash_pages/cashPage';
 import CompanyScreen from '../(tabs)/internal_pages/internal_company_pages/companyPage';
+import FavoritesCompanyPage  from '../(tabs)/internal_pages/internal_company_pages/favoriteCompaniesPage';
 import ProfileScreen from '../(tabs)/internal_pages/internal_user_pages/userPage';
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,9 @@ export function HomeNavigator() {
                     animation: 'fade'
                 }} />
                 <Stack.Screen name="Empresas" component={CompanyScreen} options={{
+                    animation: 'fade'
+                }} />
+                <Stack.Screen name="Empresas-Favoritas" component={FavoritesCompanyPage} options={{
                     animation: 'fade'
                 }} />
                 <Stack.Screen name="Perfil" component={ProfileScreen} options={{

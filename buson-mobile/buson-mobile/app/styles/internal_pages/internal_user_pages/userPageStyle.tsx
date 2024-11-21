@@ -56,11 +56,7 @@ export default StyleSheet.create({
 
     infoSection: {
         width: '100%',
-        borderRadius: 25,
-        paddingHorizontal: 20,
         flex: 1,
-        marginHorizontal: 15,
-        elevation: 3,
         marginTop: 140,
     },
 
