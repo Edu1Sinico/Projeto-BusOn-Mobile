@@ -88,6 +88,7 @@ export default function HomeScreen() {
               <TouchableOpacity
                 style={styles.bigIconButton}
                 onPress={() => linkTo('/Empresas')}
+                // onPress={() => console.log("teste")}
               >
                 <Icon name="building" size={70} color={'#fff'}></Icon>
                 <Text style={styles.bigTextIcon}>Empresas</Text>

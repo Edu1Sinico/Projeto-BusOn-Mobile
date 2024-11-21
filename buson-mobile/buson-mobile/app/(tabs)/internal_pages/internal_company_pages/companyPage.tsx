@@ -14,19 +14,19 @@ export default function CompanyScreen() {
       id: 1,
       name: "SOU Transportes",
       location: "Limeira - SP",
-      image: require('@/assets/images/LogoSou.png'), // Troque para o caminho correto da imagem
+      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
     },
     {
       id: 2,
       name: "Lira Bus",
       location: "Limeira - SP",
-      image: require('@/assets/images/LogoSou.png'), // Troque para o caminho correto da imagem
+      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
     },
     {
       id: 3,
       name: "TransLimeira",
       location: "Limeira - SP",
-      image: require('@/assets/images/LogoSou.png'), // Troque para o caminho correto da imagem
+      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
     },
   ];
 
