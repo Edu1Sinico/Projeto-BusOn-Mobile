@@ -41,6 +41,39 @@ export default function RegisterPlus() {
       }, 1500);
     }
   };
+  const cadastrarUsuario = async () => {
+    try {
+        // Define o endpoint da API (ajuste o endereço do backend)
+        const response = await fetch('http://localhost:3000/api/completarCadastro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cpf: cpf,
+                data_nascimento: dataNascimento ,
+                telefone: telefone,
+                endereco: endereco,
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Usuário registrado com sucesso:', data);
+            // Redireciona para a tela inicial
+            linkTo('/');
+        } else {
+            console.error('Erro ao cadastrar usuário:', await response.text());
+            setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
+            setModalVisible(true);
+        }
+    } catch (error) {
+        console.error('Erro de conexão:', error);
+        setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
+        setModalVisible(true);
+    }
+};
+
 
   return (
     <View style={styles.container}>
