@@ -61,18 +61,20 @@ export default function RegisterScreen() {
         setConfirmModalVisible(false); // Fecha o modal de confirmação
 
         if (response === 'yes') {
+            cadastrarUsuario();
             // Redireciona para completar o cadastro
             linkTo('/Register-Plus');
         } else {
             // Registra o usuário e redireciona para a tela inicial
             cadastrarUsuario();
+            linkTo('/Home');
         }
     };
 
     const cadastrarUsuario = async () => {
         try {
             // Define o endpoint da API (ajuste o endereço do backend)
-            const response = await fetch('http://localhost:3000/api/usuario', {
+            const response = await fetch('http://localhost:3000/api/criarUsuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,8 +89,7 @@ export default function RegisterScreen() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Usuário registrado com sucesso:', data);
-                // Redireciona para a tela inicial
-                linkTo('/Home');
+
             } else {
                 console.error('Erro ao cadastrar usuário:', await response.text());
                 setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
