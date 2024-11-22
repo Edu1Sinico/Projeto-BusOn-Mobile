@@ -72,7 +72,7 @@ export default function RegisterScreen() {
     const cadastrarUsuario = async () => {
         try {
             // Define o endpoint da API (ajuste o endereço do backend)
-            const response = await fetch('http://localhost:3000/api/usuarios', {
+            const response = await fetch('http://localhost:3000/api/usuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
