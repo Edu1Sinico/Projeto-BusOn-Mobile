@@ -64,10 +64,43 @@ export default function RegisterScreen() {
             // Redireciona para completar o cadastro
             linkTo('/Register-Plus');
         } else {
-            // Redireciona para a tela inicial
-            linkTo('/Home');
+            // Registra o usuário e redireciona para a tela inicial
+            cadastrarUsuario();
         }
     };
+
+    const cadastrarUsuario = async () => {
+        try {
+            // Define o endpoint da API (ajuste o endereço do backend)
+            const response = await fetch('http://localhost:3000/api/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome: user,
+                    email: email,
+                    senha: password,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Usuário registrado com sucesso:', data);
+                // Redireciona para a tela inicial
+                linkTo('/Home');
+            } else {
+                console.error('Erro ao cadastrar usuário:', await response.text());
+                setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
+                setAlertModalVisible(true);
+            }
+        } catch (error) {
+            console.error('Erro de conexão:', error);
+            setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
+            setAlertModalVisible(true);
+        }
+    };
+
 
     return (
         <View style={styles.container}>

@@ -106,7 +106,7 @@ export default StyleSheet.create({
 
     button: {
         padding: 15,
-        height: 50,
+        height: 55,
         width: 210,
         borderRadius: 10,
         alignItems: 'center',
