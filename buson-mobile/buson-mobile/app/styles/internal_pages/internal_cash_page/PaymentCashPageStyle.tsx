@@ -66,8 +66,8 @@ export default StyleSheet.create({
     },
 
     paymentCodeCard: {
-        width: '75%',
-        height: 125,
+        width: '85%',
+        height: 160,
         backgroundColor: '#F9F9F9',
         alignItems: 'center',
         shadowColor: '#000',
