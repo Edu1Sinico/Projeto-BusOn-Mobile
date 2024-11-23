@@ -73,11 +73,13 @@ export default function RegisterPlus() {
         console.error('Erro ao cadastrar usuário:', await response.text());
         setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
         setModalVisible(true);
+        return null;
       }
     } catch (error) {
       console.error('Erro de conexão:', error);
       setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
       setModalVisible(true);
+      return null;
     }
   };
 

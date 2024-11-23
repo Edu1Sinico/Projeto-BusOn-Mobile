@@ -21,7 +21,6 @@ export default function RegisterScreen() {
     const [alertModalVisible, setAlertModalVisible] = useState(false);
     const [confirmModalVisible, setConfirmModalVisible] = useState(false);
     const linkTo = useLinkTo(); // Sistema de links do react navigator
-    const navigation = useNavigation(); // Hook para acessar a navegação
 
     // Estados de erro para campos individuais
     const [userError, setUserError] = useState(false);
@@ -61,19 +60,17 @@ export default function RegisterScreen() {
 
 
     // Responde à escolha do modal de confirmação
-    const handleConfirmationResponse = (response) => {
+    const handleConfirmationResponse = async (response) => {
         setConfirmModalVisible(false); // Fecha o modal de confirmação
 
-        if (response === 'yes') {
-            cadastrarUsuario().then((id) => {
-                // Após o cadastro, redireciona para a página RegisterPlus com o ID do usuário
+        const id = await cadastrarUsuario();
+
+        if (id) { // Só redireciona se o cadastro foi bem-sucedido
+            if (response === 'yes') {
                 linkTo(`/Register-Plus?id=${id}`);
-            });
-        } else {
-            cadastrarUsuario().then(() => {
-                // Redireciona para a página inicial
-                linkTo('/Home');
-            });
+            } else {
+                linkTo(`/Home?id=${id}`);
+            }
         }
     };
     const cadastrarUsuario = async () => {
@@ -100,11 +97,13 @@ export default function RegisterScreen() {
                 console.error('Erro ao cadastrar usuário:', await response.text());
                 setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
                 setAlertModalVisible(true);
+                return null;
             }
         } catch (error) {
             console.error('Erro de conexão:', error);
             setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
             setAlertModalVisible(true);
+            return null;
         }
     };
 

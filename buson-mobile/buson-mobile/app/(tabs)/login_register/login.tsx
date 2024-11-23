@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, Modal, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useNavigation } from '@react-navigation/native';
 // Importando a estilização
 import styles from '@/app/styles/login_register/LoginStyle';
 
@@ -19,6 +19,7 @@ export default function LoginScreen() {
     const [modalVisible, setModalVisible] = useState(false);
 
     const linkTo = useLinkTo(); // Sistema de links do react navigator
+    const navigation = useNavigation(); // Hook para acessar a navegação
 
     // Estados de erro para campos individuais
     const [userError, setUserError] = useState(false);
@@ -54,15 +55,14 @@ export default function LoginScreen() {
             });
 
             if (response.ok) {
-                const userData = await response.json();
-                console.log('Login bem-sucedido:', userData);
+                const data = await response.json();
                 setSuccessLogin(true);
                 setTimeout(() => {
-                    linkTo('/Home');
+                    navigation.navigate('Home', { id: data.id_usuario });
                     setModalVisible(false);
                 }, 2000);
             } else {
-                setMessageAlert('Erro ao realizar login.');
+                setMessageAlert('Credenciais inválidas, tente novamente.');
                 setModalVisible(true);
             }
         } catch (err) {

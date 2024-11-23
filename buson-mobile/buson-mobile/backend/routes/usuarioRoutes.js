@@ -6,7 +6,7 @@ const router = express.Router(); // Cria um roteador para definir as rotas relac
 // Quando essa rota é acessada, a função criarUsuario é chamada.
 router.post('/criarUsuario', criarUsuario); 
 router.post('/completarUsuario', completarUsuario );
-router.get('/buscarUsuario', buscarUsuario);
+router.post('/buscarUsuario', buscarUsuario);
 router.post('/autenticarUsuario', autenticarUsuario)
 
 module.exports = router; 

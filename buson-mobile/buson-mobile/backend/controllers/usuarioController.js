@@ -48,10 +48,11 @@ const completarUsuario = async (req, res) => {
 
 // Método de buscar um usuário pelo ID
 const buscarUsuario = async (req, res) => {
+    const { id_usuario } = req.body;
     try {
         const result = await pool.query(
             'SELECT * FROM usuario WHERE id=$1',
-            [req.params.id]
+            [id_usuario]
         );
         // Se a resposta for bem-sucedida, retorna o usuário
         res.json(result.rows[0]);
@@ -65,10 +66,6 @@ const buscarUsuario = async (req, res) => {
 // Método para autenticar o usuário
 const autenticarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body;
-
-    if (!nome || !email || !senha) {
-        return res.status(400).send('Usuário, email e senha são obrigatórios.');
-    }
 
     try {
         const result = await pool.query(
