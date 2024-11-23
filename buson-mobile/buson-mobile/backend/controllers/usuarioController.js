@@ -21,19 +21,27 @@ const criarUsuario = async (req, res) => {
 };
 
 //Método de completar cadastro 
-const completarCadastro = async (req, res) => {
-    const { cpf, data_nascimento, telefone, endereco } = req.body;
+const completarUsuario = async (req, res) => {
+    const { cpf, data_nascimento, telefone, endereco, tipo_usuario, id_usuario } = req.body;
+
+    if (!id_usuario) {
+        return res.status(400).send('ID do usuário é obrigatório.');
+    }
 
     try {
         const result = await pool.query(
-            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, endereco=$4 WHERE id=$5 RETURNING *',
-            [cpf, data_nascimento, telefone, endereco, req.params.id]
+            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, endereco=$4, tipo_usuario=$5 WHERE id_usuario=$6 RETURNING *',
+            [cpf, data_nascimento, telefone, endereco, tipo_usuario, id_usuario]
         );
-        // Se a resposta for bem-sucedida, retorna o novo usuário
-        res.status(201).json(result.rows[0]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Usuário não encontrado.');
+        }
+
+        // Retorna o usuário atualizado
+        res.status(200).json(result.rows[0]);
     } catch (err) {
-        // Em caso de erro, exibe o erro no console e retorna um status 500 com uma mensagem de erro.
-        console.error(err);
+        console.error('Erro ao completar cadastro:', err);
         res.status(500).send('Erro ao completar cadastro.');
     }
 };
@@ -55,4 +63,4 @@ const buscarUsuario = async (req, res) => {
 };
 
 
-module.exports = { criarUsuario, completarCadastro, buscarUsuario }; // Exporta a função para ser usada nas rotas.
+module.exports = { criarUsuario, completarUsuario, buscarUsuario }; // Exporta a função para ser usada nas rotas.

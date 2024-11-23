@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, Modal, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 // Importando a estilização
 import styles from '@/app/styles/login_register/RegisterStyle';
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // Importando a tela de aviso do campo vazio
 import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
@@ -21,6 +21,7 @@ export default function RegisterScreen() {
     const [alertModalVisible, setAlertModalVisible] = useState(false);
     const [confirmModalVisible, setConfirmModalVisible] = useState(false);
     const linkTo = useLinkTo(); // Sistema de links do react navigator
+    const navigation = useNavigation(); // Hook para acessar a navegação
 
     // Estados de erro para campos individuais
     const [userError, setUserError] = useState(false);
@@ -30,6 +31,7 @@ export default function RegisterScreen() {
 
     // Mensagem de alerta
     const [messageAlert, setMessageAlert] = useState("");
+
 
     const handleRegister = () => {
         // Realiza a validação
@@ -56,21 +58,24 @@ export default function RegisterScreen() {
         }
     };
 
+
+
     // Responde à escolha do modal de confirmação
     const handleConfirmationResponse = (response) => {
         setConfirmModalVisible(false); // Fecha o modal de confirmação
 
         if (response === 'yes') {
-            cadastrarUsuario();
-            // Redireciona para completar o cadastro
-            linkTo('/Register-Plus');
+            cadastrarUsuario().then((id) => {
+                // Após o cadastro, redireciona para a página RegisterPlus com o ID do usuário
+                linkTo(`/Register-Plus?id=${id}`);
+            });
         } else {
-            // Registra o usuário e redireciona para a tela inicial
-            cadastrarUsuario();
-            linkTo('/Home');
+            cadastrarUsuario().then(() => {
+                // Redireciona para a página inicial
+                linkTo('/Home');
+            });
         }
     };
-
     const cadastrarUsuario = async () => {
         try {
             // Define o endpoint da API (ajuste o endereço do backend)
@@ -89,7 +94,8 @@ export default function RegisterScreen() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Usuário registrado com sucesso:', data);
-
+                // Retorna o ID do usuário criado
+                return data.id_usuario;
             } else {
                 console.error('Erro ao cadastrar usuário:', await response.text());
                 setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');

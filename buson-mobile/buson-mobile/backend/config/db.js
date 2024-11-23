@@ -2,6 +2,7 @@ const { Pool } = require('pg'); // Biblioteca para integrar com o Postgres
 const dotenv = require('dotenv'); // Para configurar as variáveis de ambiente
 
 dotenv.config(); // Configurando às variáveis de ambiente
+console.log(process.env)
 
 // Puxa as informações do banco de dados
 const pool = new Pool({
@@ -11,6 +12,7 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
 });
+
 
 // Estabelece uma conexão e exibe se for bem sucedida
 pool.on('connect', () => {
