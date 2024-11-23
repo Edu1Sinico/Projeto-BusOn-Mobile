@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "@/app/styles/login_register/RegisterPlusStyle";
@@ -12,6 +12,7 @@ import { inputValidationRegisterPlus } from '@/app/scripts/login_register/valida
 
 export default function RegisterPlus() {
   const route = useRoute(); // Hook para acessar os parâmetros da rota
+  console.log(route.params);
   const [cpf, setCpf] = useState("");
   const { id } = route.params; // Obtém o parâmetro id
   const [dataNascimento, setDataNascimento] = useState("");
@@ -35,14 +36,19 @@ export default function RegisterPlus() {
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
-  const handleRegister = () => {
+  const handleRegister = async (response) => {
     const isValid = inputValidationRegisterPlus(cpf, dataNascimento, telefone, endereco, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setEnderecoError, setModalVisible);
     if (isValid) {
-      setSuccessRegister(true);
-      completarCadastro();
-      setTimeout(() => {
-        setModalVisible(false);
-      }, 1500);
+
+      const id = await completarCadastro();
+
+      if (id) {
+        setSuccessRegister(true);
+        setTimeout(() => {
+          linkTo(`/Home`, { params: { id } }); // Passa os parâmetros explicitamente
+          setModalVisible(false);
+        }, 1500);
+      }
     }
   };
 
@@ -66,9 +72,7 @@ export default function RegisterPlus() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Usuário registrado com sucesso:', data);
-        // Redireciona para a tela inicial
-        linkTo('/Home');
+        return data.id_usuario;
       } else {
         console.error('Erro ao cadastrar usuário:', await response.text());
         setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');

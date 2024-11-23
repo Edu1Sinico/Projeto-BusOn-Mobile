@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { View, Text, Modal, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 // Importando a estilização
 import styles from '@/app/styles/login_register/RegisterStyle';
-import { useLinkTo, useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // Importando a tela de aviso do campo vazio
 import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
@@ -69,7 +69,7 @@ export default function RegisterScreen() {
             if (response === 'yes') {
                 linkTo(`/Register-Plus?id=${id}`);
             } else {
-                linkTo(`/Home?id=${id}`);
+                linkTo(`/Home`, { params: { id } }); // Passa os parâmetros explicitamente
             }
         }
     };
@@ -90,8 +90,6 @@ export default function RegisterScreen() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Usuário registrado com sucesso:', data);
-                // Retorna o ID do usuário criado
                 return data.id_usuario;
             } else {
                 console.error('Erro ao cadastrar usuário:', await response.text());

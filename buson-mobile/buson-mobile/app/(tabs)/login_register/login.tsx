@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, Modal, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
-import { useLinkTo, useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 // Importando a estilização
 import styles from '@/app/styles/login_register/LoginStyle';
 
@@ -19,7 +19,6 @@ export default function LoginScreen() {
     const [modalVisible, setModalVisible] = useState(false);
 
     const linkTo = useLinkTo(); // Sistema de links do react navigator
-    const navigation = useNavigation(); // Hook para acessar a navegação
 
     // Estados de erro para campos individuais
     const [userError, setUserError] = useState(false);
@@ -33,9 +32,17 @@ export default function LoginScreen() {
     const [messageAlert, setMessageAlert] = useState("");
 
 
-    const handleLogin = () => {
+    const handleLogin = async (response) => {
         if (inputValidationLogin(user, email, password, setMessageAlert, setUserError, setEmailError, setPasswordError, setModalVisible)) {
-            autenticarUsuario();
+            const id = await autenticarUsuario();
+            console.log("ID recebido: " + id)
+            if (id) {
+                setSuccessLogin(true);
+                setTimeout(() => {
+                    linkTo(`/Home?id=${id}`);
+                    setModalVisible(false);
+                }, 2000);
+            }
         }
     };
 
@@ -56,19 +63,17 @@ export default function LoginScreen() {
 
             if (response.ok) {
                 const data = await response.json();
-                setSuccessLogin(true);
-                setTimeout(() => {
-                    navigation.navigate('Home', { id: data.id_usuario });
-                    setModalVisible(false);
-                }, 2000);
+                return data.id_usuario;
             } else {
                 setMessageAlert('Credenciais inválidas, tente novamente.');
                 setModalVisible(true);
+                return null;
             }
         } catch (err) {
             console.error('Erro ao realizar login:', err);
             setMessageAlert('Erro ao conectar ao servidor.');
             setModalVisible(true);
+            return null;
         }
     };
 

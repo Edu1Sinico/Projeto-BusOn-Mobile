@@ -13,10 +13,6 @@ import Header from '@/components/header/header';
 
 
 export default function HomeScreen() {
-  const route = useRoute(); // Hook para acessar os parâmetros da rota
-  console.log(route.params);
-  // const { id } = route.params; // Obtém o parâmetro id
-  // console.log(id);
 
   // useState
   const [search, setSearch] = useState('');
@@ -25,7 +21,7 @@ export default function HomeScreen() {
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
-  const buscarUsuario = async () => {
+  const buscarUsuario = async (id_usuario) => {
     try {
       // Define o endpoint da API (ajuste o endereço do backend)
       const response = await fetch('http://localhost:3000/api/buscarUsuario', {
@@ -34,7 +30,7 @@ export default function HomeScreen() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id_usuario: id,
+          id_usuario,
         }),
       });
 
@@ -49,7 +45,7 @@ export default function HomeScreen() {
     }
   };
 
-  buscarUsuario();
+  buscarUsuario(id);
 
   return (
     <View style={styles.container}>
