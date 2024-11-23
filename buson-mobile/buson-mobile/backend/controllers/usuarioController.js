@@ -62,5 +62,32 @@ const buscarUsuario = async (req, res) => {
     }
 };
 
+// Método para autenticar o usuário
+const autenticarUsuario = async (req, res) => {
+    const { nome, email, senha } = req.body;
 
-module.exports = { criarUsuario, completarUsuario, buscarUsuario }; // Exporta a função para ser usada nas rotas.
+    if (!nome || !email || !senha) {
+        return res.status(400).send('Usuário, email e senha são obrigatórios.');
+    }
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM usuario WHERE nome=$1 AND email=$2 AND senha=$3',
+            [nome, email, senha]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(401).send('Credenciais inválidas.');
+        }
+
+        // Retorna os dados do usuário (pode-se adicionar um token JWT aqui)
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.error('Erro ao autenticar usuário:', err);
+        res.status(500).send('Erro ao autenticar usuário.');
+    }
+};
+
+
+
+module.exports = { criarUsuario, completarUsuario, buscarUsuario, autenticarUsuario }; // Exporta a função para ser usada nas rotas.

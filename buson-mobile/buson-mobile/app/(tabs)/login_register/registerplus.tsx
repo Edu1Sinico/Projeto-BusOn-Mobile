@@ -13,7 +13,7 @@ import { inputValidationRegisterPlus } from '@/app/scripts/login_register/valida
 export default function RegisterPlus() {
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const [cpf, setCpf] = useState("");
-  const { id } = route.params; // Obtém o parâmetro userId
+  const { id } = route.params; // Obtém o parâmetro id
   const [dataNascimento, setDataNascimento] = useState("");
   const [telefone, setTelefone] = useState("");
   const [endereco, setEndereco] = useState("");

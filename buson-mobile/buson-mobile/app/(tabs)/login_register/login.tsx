@@ -34,11 +34,41 @@ export default function LoginScreen() {
 
     const handleLogin = () => {
         if (inputValidationLogin(user, email, password, setMessageAlert, setUserError, setEmailError, setPasswordError, setModalVisible)) {
-            setSuccessLogin(true);
-            setTimeout(() => {
-                linkTo('/Home');
-                setModalVisible(false)
-            }, 2000);
+            autenticarUsuario();
+        }
+    };
+
+    const autenticarUsuario = async () => {
+        try {
+            // Define o endpoint da API (ajuste o endereço do backend)
+            const response = await fetch('http://localhost:3000/api/autenticarUsuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome: user,
+                    email: email,
+                    senha: password,
+                }),
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                console.log('Login bem-sucedido:', userData);
+                setSuccessLogin(true);
+                setTimeout(() => {
+                    linkTo('/Home');
+                    setModalVisible(false);
+                }, 2000);
+            } else {
+                setMessageAlert('Erro ao realizar login.');
+                setModalVisible(true);
+            }
+        } catch (err) {
+            console.error('Erro ao realizar login:', err);
+            setMessageAlert('Erro ao conectar ao servidor.');
+            setModalVisible(true);
         }
     };
 

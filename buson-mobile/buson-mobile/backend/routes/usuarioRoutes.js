@@ -1,5 +1,5 @@
 const express = require('express'); // Framework para criar a API para lidar com requisições do app e comunicar com o banco de dados
-const { criarUsuario, completarUsuario, buscarUsuario } = require('../controllers/usuarioController'); // busca o método "criarUsuario" do controller
+const { criarUsuario, completarUsuario, buscarUsuario, autenticarUsuario } = require('../controllers/usuarioController'); // busca o método "criarUsuario" do controller
 const router = express.Router(); // Cria um roteador para definir as rotas relacionadas a "Usuário"
 
 // Define uma rota que escuta requisições POST no endpoint /usuarios.
@@ -7,6 +7,7 @@ const router = express.Router(); // Cria um roteador para definir as rotas relac
 router.post('/criarUsuario', criarUsuario); 
 router.post('/completarUsuario', completarUsuario );
 router.get('/buscarUsuario', buscarUsuario);
+router.post('/autenticarUsuario', autenticarUsuario)
 
 module.exports = router; 
 // O roteador é exportado para ser usado no servidor principal (index.js).
