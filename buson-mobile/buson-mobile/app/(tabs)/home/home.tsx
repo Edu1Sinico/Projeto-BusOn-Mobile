@@ -21,31 +21,31 @@ export default function HomeScreen() {
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
-  const buscarUsuario = async (id_usuario) => {
-    try {
-      // Define o endpoint da API (ajuste o endereço do backend)
-      const response = await fetch('http://localhost:3000/api/buscarUsuario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id_usuario,
-        }),
-      });
+  // const buscarUsuario = async (id_usuario) => {
+  //   try {
+  //     // Define o endpoint da API (ajuste o endereço do backend)
+  //     const response = await fetch('http://localhost:3000/api/buscarUsuario', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         id_usuario,
+  //       }),
+  //     });
 
-      if (response.ok) {
-        const data = await response.json();
-        setUserName(data.nome);
-      } else {
-        console.log('Erro ao buscar o usuário.')
-      }
-    } catch (err) {
-      console.error('Erro ao buscar usuário: ' + err);
-    }
-  };
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setUserName(data.nome);
+  //     } else {
+  //       console.log('Erro ao buscar o usuário.')
+  //     }
+  //   } catch (err) {
+  //     console.error('Erro ao buscar usuário: ' + err);
+  //   }
+  // };
 
-  buscarUsuario(id);
+  // buscarUsuario(id);
 
   return (
     <View style={styles.container}>

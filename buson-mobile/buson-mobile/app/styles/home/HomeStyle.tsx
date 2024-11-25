@@ -16,7 +16,7 @@ export default StyleSheet.create({
     
     text_title: {
         fontSize: 22,
-        fontWeight: 'light',
+        fontWeight: '400',
         color: '#fff',
         marginBottom: 30,
     },
@@ -180,7 +180,7 @@ export default StyleSheet.create({
   },
 
   textIcon: {
-    fontWeight: 'light',
+    fontWeight: '400',
     fontSize: 15,
     marginTop: 2,
     color: '#fff',
