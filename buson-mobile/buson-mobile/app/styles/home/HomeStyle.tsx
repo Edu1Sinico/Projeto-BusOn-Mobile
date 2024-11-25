@@ -7,6 +7,15 @@ export default StyleSheet.create({
         backgroundColor: '#0AC86C',
     },
 
+    banner: {
+      flex: 1,
+      width: '100%', // Garante que a imagem cubra toda a largura
+      height: '135%', // Garante que a imagem cubra toda a altura
+      justifyContent: 'center',
+      alignItems: 'center',
+      resizeMode: 'center', // Ajusta a imagem para cobrir todo o fundo
+    },
+
     user_section: {
         width: '100%',
         height: '10%',

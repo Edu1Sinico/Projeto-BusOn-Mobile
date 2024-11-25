@@ -16,7 +16,7 @@ export default function AddCashScreen() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header backgroundActive={true}/>
       <SemiHeader title="Adicionar Créditos" />
 
       <View style={styles.mainSection}>

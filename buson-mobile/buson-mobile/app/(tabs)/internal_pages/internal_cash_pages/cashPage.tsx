@@ -22,7 +22,7 @@ export default function CashScreen() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header backgroundActive={true}/>
 
       <View style={styles.mainSection}> 
         <View style={styles.balanceSection}>
