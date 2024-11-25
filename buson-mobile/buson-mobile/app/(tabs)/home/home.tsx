@@ -24,6 +24,8 @@ export default function HomeScreen() {
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
+  const background = require('@/assets/images/background/background.png');
+
   // const buscarUsuario = async (id_usuario) => {
   //   try {
   //     // Define o endpoint da API (ajuste o endereço do backend)
@@ -51,14 +53,16 @@ export default function HomeScreen() {
   // buscarUsuario(id);
 
   return (
+
     <View style={styles.container}>
-     <ImageBackground
-  source={require('@/assets/images/background/fundo.png')}
-  style={styles.banner} // Use o estilo ajustado
->
+      {/* Cabeçalho */}
+      <ImageBackground
+        source={background}
+        style={styles.banner} // Use o estilo ajustado
+      >
 
 
-        <Header backgroundActive={false}/>
+        <Header backgroundActive={false} />
 
         <View style={styles.user_section}>
           <Text style={styles.text_title}>Bem-vindo(a), {userName}!</Text>

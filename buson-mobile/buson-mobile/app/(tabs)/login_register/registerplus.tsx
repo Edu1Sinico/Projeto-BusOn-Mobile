@@ -34,6 +34,8 @@ export default function RegisterPlus() {
   // Estado para mensagem de sucesso
   const [successRegister, setSuccessRegister] = useState(false);
 
+  const background = require('@/assets/images/background/background.png');
+
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   const handleRegister = async (response) => {
@@ -91,7 +93,7 @@ export default function RegisterPlus() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('@/assets/images/background/fundo.png')}
+        source={background}
         style={styles.banner} // Use o estilo ajustado
       >
         {/* Top Section */}

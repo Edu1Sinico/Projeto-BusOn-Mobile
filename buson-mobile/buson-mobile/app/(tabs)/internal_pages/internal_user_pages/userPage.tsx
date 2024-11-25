@@ -10,11 +10,15 @@ import styles from '@/app/styles/internal_pages/internal_user_pages/userPageStyl
 import Header from '@/components/header/header';
 
 export default function ProfileScreen() {
+
+  const background = require('@/assets/images/background/background.png');
+
+
   return (
     <View style={styles.container}>
       {/* Cabeçalho */}
       <ImageBackground
-        source={require('@/assets/images/background/fundo.png')}
+        source={background}
         style={styles.banner} // Use o estilo ajustado
       >
         <Header backgroundActive={false} />
