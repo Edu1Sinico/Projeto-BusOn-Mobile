@@ -3,7 +3,7 @@ import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "@/app/styles/login_register/RegisterPlusStyle";
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useRoute } from '@react-navigation/native';
 import SemiHeader from "@/components/header/semiHeader";
 
 // Importando a tela de aviso do campo vazio
@@ -11,12 +11,16 @@ import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
 import { inputValidationRegisterPlus } from '@/app/scripts/login_register/validationRegisterPlus';
 
 export default function RegisterPlus() {
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  console.log(route.params);
   const [cpf, setCpf] = useState("");
+  const { id } = route.params; // Obtém o parâmetro id
   const [dataNascimento, setDataNascimento] = useState("");
   const [telefone, setTelefone] = useState("");
   const [endereco, setEndereco] = useState("");
   const [categoria, setCategoria] = useState("Comum");
   const [modalVisible, setModalVisible] = useState(false);
+
 
   // Estados de erro para campos individuais
   const [cpfError, setCpfError] = useState(false);
@@ -32,47 +36,56 @@ export default function RegisterPlus() {
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
-  const handleRegister = () => {
-    if (inputValidationRegisterPlus(cpf, dataNascimento, telefone, endereco, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setEnderecoError, setModalVisible)) {
-      setSuccessRegister(true);
-      setTimeout(() => {
-        linkTo('/Home');
-        setModalVisible(false)
-      }, 1500);
+  const handleRegister = async (response) => {
+    const isValid = inputValidationRegisterPlus(cpf, dataNascimento, telefone, endereco, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setEnderecoError, setModalVisible);
+    if (isValid) {
+
+      const id = await completarCadastro();
+
+      if (id) {
+        setSuccessRegister(true);
+        setTimeout(() => {
+          linkTo(`/Home`, { params: { id } }); // Passa os parâmetros explicitamente
+          setModalVisible(false);
+        }, 1500);
+      }
     }
   };
-  const cadastrarUsuario = async () => {
-    try {
-        // Define o endpoint da API (ajuste o endereço do backend)
-        const response = await fetch('http://localhost:3000/api/completarCadastro', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                cpf: cpf,
-                data_nascimento: dataNascimento ,
-                telefone: telefone,
-                endereco: endereco,
-            }),
-        });
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Usuário registrado com sucesso:', data);
-            // Redireciona para a tela inicial
-            linkTo('/');
-        } else {
-            console.error('Erro ao cadastrar usuário:', await response.text());
-            setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
-            setModalVisible(true);
-        }
-    } catch (error) {
-        console.error('Erro de conexão:', error);
-        setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
+  const completarCadastro = async () => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/completarUsuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cpf: cpf,
+          data_nascimento: dataNascimento,
+          telefone: telefone,
+          endereco: endereco,
+          tipo_usuario: categoria,
+          id_usuario: id,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.id_usuario;
+      } else {
+        console.error('Erro ao cadastrar usuário:', await response.text());
+        setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
         setModalVisible(true);
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro de conexão:', error);
+      setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
+      setModalVisible(true);
+      return null;
     }
-};
+  };
 
 
   return (

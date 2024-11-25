@@ -27,11 +27,10 @@ export default function App() {
         <Stack.Screen name="Register-Plus" component={RegisterPlus} options={{
           animation: 'fade'
         }} />
-        <Stack.Screen
-          name="Home"
-          component={Routes} // Aqui você usa o Routes com o BottomTabNavigator
-          options={{ headerShown: false, animation: 'fade' }} // Esconde o header se necessário
-        />
+        <Stack.Screen name="Home" component={Routes} options={{
+          headerShown: false,
+          animation: 'fade'
+        }} />
       </Stack.Navigator>
     </NavigationContainer >
   )

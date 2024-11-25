@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'green',
+        backgroundColor: '#0AC86C',
     },
 
     cancelButton: {

@@ -21,29 +21,38 @@ const criarUsuario = async (req, res) => {
 };
 
 //Método de completar cadastro 
-const completarCadastro = async (req, res) => {
-    const { cpf, data_nascimento, telefone, endereco } = req.body;
+const completarUsuario = async (req, res) => {
+    const { cpf, data_nascimento, telefone, endereco, tipo_usuario, id_usuario } = req.body;
+
+    if (!id_usuario) {
+        return res.status(400).send('ID do usuário é obrigatório.');
+    }
 
     try {
         const result = await pool.query(
-            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, endereco=$4 WHERE id=$5 RETURNING *',
-            [cpf, data_nascimento, telefone, endereco, req.params.id]
+            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, endereco=$4, tipo_usuario=$5 WHERE id_usuario=$6 RETURNING *',
+            [cpf, data_nascimento, telefone, endereco, tipo_usuario, id_usuario]
         );
-        // Se a resposta for bem-sucedida, retorna o novo usuário
-        res.status(201).json(result.rows[0]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Usuário não encontrado.');
+        }
+
+        // Retorna o usuário atualizado
+        res.status(200).json(result.rows[0]);
     } catch (err) {
-        // Em caso de erro, exibe o erro no console e retorna um status 500 com uma mensagem de erro.
-        console.error(err);
+        console.error('Erro ao completar cadastro:', err);
         res.status(500).send('Erro ao completar cadastro.');
     }
 };
 
 // Método de buscar um usuário pelo ID
 const buscarUsuario = async (req, res) => {
+    const { id_usuario } = req.body;
     try {
         const result = await pool.query(
             'SELECT * FROM usuario WHERE id=$1',
-            [req.params.id]
+            [id_usuario]
         );
         // Se a resposta for bem-sucedida, retorna o usuário
         res.json(result.rows[0]);
@@ -54,5 +63,28 @@ const buscarUsuario = async (req, res) => {
     }
 };
 
+// Método para autenticar o usuário
+const autenticarUsuario = async (req, res) => {
+    const { nome, email, senha } = req.body;
 
-module.exports = { criarUsuario, completarCadastro, buscarUsuario }; // Exporta a função para ser usada nas rotas.
+    try {
+        const result = await pool.query(
+            'SELECT * FROM usuario WHERE nome=$1 AND email=$2 AND senha=$3',
+            [nome, email, senha]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(401).send('Credenciais inválidas.');
+        }
+
+        // Retorna os dados do usuário (pode-se adicionar um token JWT aqui)
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.error('Erro ao autenticar usuário:', err);
+        res.status(500).send('Erro ao autenticar usuário.');
+    }
+};
+
+
+
+module.exports = { criarUsuario, completarUsuario, buscarUsuario, autenticarUsuario }; // Exporta a função para ser usada nas rotas.

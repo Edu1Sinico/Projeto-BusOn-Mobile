@@ -32,13 +32,48 @@ export default function LoginScreen() {
     const [messageAlert, setMessageAlert] = useState("");
 
 
-    const handleLogin = () => {
+    const handleLogin = async (response) => {
         if (inputValidationLogin(user, email, password, setMessageAlert, setUserError, setEmailError, setPasswordError, setModalVisible)) {
-            setSuccessLogin(true);
-            setTimeout(() => {
-                linkTo('/Home');
-                setModalVisible(false)
-            }, 2000);
+            const id = await autenticarUsuario();
+            console.log("ID recebido: " + id)
+            if (id) {
+                setSuccessLogin(true);
+                setTimeout(() => {
+                    linkTo(`/Home?id=${id}`);
+                    setModalVisible(false);
+                }, 2000);
+            }
+        }
+    };
+
+    const autenticarUsuario = async () => {
+        try {
+            // Define o endpoint da API (ajuste o endereço do backend)
+            const response = await fetch('http://localhost:3000/api/autenticarUsuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome: user,
+                    email: email,
+                    senha: password,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.id_usuario;
+            } else {
+                setMessageAlert('Credenciais inválidas, tente novamente.');
+                setModalVisible(true);
+                return null;
+            }
+        } catch (err) {
+            console.error('Erro ao realizar login:', err);
+            setMessageAlert('Erro ao conectar ao servidor.');
+            setModalVisible(true);
+            return null;
         }
     };
 

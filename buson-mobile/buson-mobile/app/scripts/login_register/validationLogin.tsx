@@ -45,13 +45,6 @@ export function inputValidationLogin(user, email, password, setMessageAlert, set
             setModalVisible(true);
             return false; // Interrompe a execução aqui
         }
-        else if (password.length < 8) {
-            message = 'O campo de senha precisar ser maior que 8 caracteres!';
-            setPasswordError(true);
-            setMessageAlert(message);
-            setModalVisible(true);
-            return false; // Interrompe a execução aqui
-        }
         else {
             setPasswordError(false);
         }

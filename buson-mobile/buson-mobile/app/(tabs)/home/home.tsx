@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useRoute } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -17,15 +17,42 @@ export default function HomeScreen() {
   // useState
   const [search, setSearch] = useState('');
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
+  const [userName, setUserName] = useState('Usuário');
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
+
+  const buscarUsuario = async (id_usuario) => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/buscarUsuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserName(data.nome);
+      } else {
+        console.log('Erro ao buscar o usuário.')
+      }
+    } catch (err) {
+      console.error('Erro ao buscar usuário: ' + err);
+    }
+  };
+
+  buscarUsuario(id);
 
   return (
     <View style={styles.container}>
       <Header />
 
       <View style={styles.user_section}>
-        <Text style={styles.text_title}>Bem-vindo(a), Usuário!</Text>
+        <Text style={styles.text_title}>Bem-vindo(a), {userName}!</Text>
       </View>
 
       {/* Seção de saldo disponível */}

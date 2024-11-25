@@ -31,6 +31,7 @@ export default function RegisterScreen() {
     // Mensagem de alerta
     const [messageAlert, setMessageAlert] = useState("");
 
+
     const handleRegister = () => {
         // Realiza a validação
         const isValid = inputValidationRegister(
@@ -56,21 +57,22 @@ export default function RegisterScreen() {
         }
     };
 
+
+
     // Responde à escolha do modal de confirmação
-    const handleConfirmationResponse = (response) => {
+    const handleConfirmationResponse = async (response) => {
         setConfirmModalVisible(false); // Fecha o modal de confirmação
 
-        if (response === 'yes') {
-            cadastrarUsuario();
-            // Redireciona para completar o cadastro
-            linkTo('/Register-Plus');
-        } else {
-            // Registra o usuário e redireciona para a tela inicial
-            cadastrarUsuario();
-            linkTo('/Home');
+        const id = await cadastrarUsuario();
+
+        if (id) { // Só redireciona se o cadastro foi bem-sucedido
+            if (response === 'yes') {
+                linkTo(`/Register-Plus?id=${id}`);
+            } else {
+                linkTo(`/Home`, { params: { id } }); // Passa os parâmetros explicitamente
+            }
         }
     };
-
     const cadastrarUsuario = async () => {
         try {
             // Define o endpoint da API (ajuste o endereço do backend)
@@ -88,17 +90,18 @@ export default function RegisterScreen() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Usuário registrado com sucesso:', data);
-
+                return data.id_usuario;
             } else {
                 console.error('Erro ao cadastrar usuário:', await response.text());
                 setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
                 setAlertModalVisible(true);
+                return null;
             }
         } catch (error) {
             console.error('Erro de conexão:', error);
             setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
             setAlertModalVisible(true);
+            return null;
         }
     };
 
