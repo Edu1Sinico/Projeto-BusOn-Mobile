@@ -1,7 +1,10 @@
+
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useLinkTo, useRoute } from '@react-navigation/native';
+import { ImageBackground } from 'react-native';
+
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -21,132 +24,140 @@ export default function HomeScreen() {
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
-  const buscarUsuario = async (id_usuario) => {
-    try {
-      // Define o endpoint da API (ajuste o endereço do backend)
-      const response = await fetch('http://localhost:3000/api/buscarUsuario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id_usuario,
-        }),
-      });
+  // const buscarUsuario = async (id_usuario) => {
+  //   try {
+  //     // Define o endpoint da API (ajuste o endereço do backend)
+  //     const response = await fetch('http://localhost:3000/api/buscarUsuario', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         id_usuario,
+  //       }),
+  //     });
 
-      if (response.ok) {
-        const data = await response.json();
-        setUserName(data.nome);
-      } else {
-        console.log('Erro ao buscar o usuário.')
-      }
-    } catch (err) {
-      console.error('Erro ao buscar usuário: ' + err);
-    }
-  };
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setUserName(data.nome);
+  //     } else {
+  //       console.log('Erro ao buscar o usuário.')
+  //     }
+  //   } catch (err) {
+  //     console.error('Erro ao buscar usuário: ' + err);
+  //   }
+  // };
 
-  buscarUsuario(id);
+  // buscarUsuario(id);
 
   return (
     <View style={styles.container}>
-      <Header />
+     <ImageBackground
+  source={require('@/assets/images/background/fundo.png')}
+  style={styles.banner} // Use o estilo ajustado
+>
 
-      <View style={styles.user_section}>
-        <Text style={styles.text_title}>Bem-vindo(a), {userName}!</Text>
-      </View>
 
-      {/* Seção de saldo disponível */}
-      <View style={styles.balanceSection}>
-        <View style={styles.balanceIconSection}>
-          <Text style={styles.balanceDollarIcon}>$</Text>
+        <Header backgroundActive={false}/>
+
+        <View style={styles.user_section}>
+          <Text style={styles.text_title}>Bem-vindo(a), {userName}!</Text>
         </View>
-        <View style={styles.balanceTextSection}>
-          <Text style={styles.balanceTitle}>Saldo Disponível</Text>
-          <Text style={styles.balanceValue}> {showBalance ? 'R$ ●●●●' : 'R$ 0,00'} </Text>
-        </View>
-        <View style={styles.visibleButtonSection}>
-          <TouchableOpacity onPress={() => setShowBalance(!showBalance)}>
-            <Icon
-              name={showBalance ? 'eye' : 'eye-slash'} // Alterna o ícone com base no estado
-              size={20}
-              color="#0AC86C"
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
 
-      {/* Seção principal */}
-      <View style={styles.mainSection}>
-
-        {/* Seção do Topo */}
-
-        {/* Barra de pesquisa */}
-        <View style={styles.mainTopSection}>
-          <View style={styles.inputSection}>
-            <View style={styles.iconInputSection}>
-              <Icon name="search" size={20} color="#fff" />
-            </View>
-            <TextInput
-              style={[styles.input]}
-              placeholder="Pesquisar"
-              placeholderTextColor={'#C7C7C7'}
-              value={search}
-              onChangeText={setSearch}
-              underlineColorAndroid="transparent"
-            />
+        {/* Seção de saldo disponível */}
+        <View style={styles.balanceSection}>
+          <View style={styles.balanceIconSection}>
+            <Text style={styles.balanceDollarIcon}>$</Text>
+          </View>
+          <View style={styles.balanceTextSection}>
+            <Text style={styles.balanceTitle}>Saldo Disponível</Text>
+            <Text style={styles.balanceValue}> {showBalance ? 'R$ ●●●●' : 'R$ 0,00'} </Text>
+          </View>
+          <View style={styles.visibleButtonSection}>
+            <TouchableOpacity onPress={() => setShowBalance(!showBalance)}>
+              <Icon
+                name={showBalance ? 'eye' : 'eye-slash'} // Alterna o ícone com base no estado
+                size={20}
+                color="#0AC86C"
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
-        {/* Seção de baixo */}
-        <View style={styles.mainBottomSection}>
+        {/* Seção principal */}
+        <View style={styles.mainSection}>
 
-          <View style={styles.divisorBar}></View>
+          {/* Seção do Topo */}
 
-          <View style={styles.buttonSection}>
-            <View style={styles.buttonTopSection}>
-              <TouchableOpacity
-                style={styles.bigIconButton}
-                onPress={() => linkTo('/Saldo')}
-              >
-                <Icon name="money-bill" size={70} color={'#fff'}></Icon>
-                <Text style={styles.bigTextIcon}>Saldo</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.bigIconButton}
-                onPress={() => linkTo('/Empresas')}
-              >
-                <Icon name="building" size={70} color={'#fff'}></Icon>
-                <Text style={styles.bigTextIcon}>Empresas</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.buttonBottomSection}>
-              <TouchableOpacity
-                style={styles.iconButton}
-                onPress={() => linkTo('/Empresas-Favoritas')}
-              >
-                <Icon name="star" size={50} color={'#fff'}></Icon>
-                <Text style={styles.textIcon}>Favoritos</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.iconButton}>
-                <Icon name="question" size={50} color={'#fff'}></Icon>
-                <Text style={styles.textIcon}>Ajuda</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.iconButton}
-                onPress={() => linkTo('/Perfil')}
-              >
-                <Icon name="user-circle" size={50} color={'#fff'}></Icon>
-                <Text style={styles.textIcon}>Conta</Text>
-              </TouchableOpacity>
+          {/* Barra de pesquisa */}
+          <View style={styles.mainTopSection}>
+            <View style={styles.inputSection}>
+              <View style={styles.iconInputSection}>
+                <Icon name="search" size={20} color="#fff" />
+              </View>
+              <TextInput
+                style={[styles.input]}
+                placeholder="Pesquisar"
+                placeholderTextColor={'#C7C7C7'}
+                value={search}
+                onChangeText={setSearch}
+                underlineColorAndroid="transparent"
+              />
             </View>
           </View>
-        </View>
 
-      </View>
+          {/* Seção de baixo */}
+          <View style={styles.mainBottomSection}>
+
+            <View style={styles.divisorBar}></View>
+
+            <View style={styles.buttonSection}>
+              <View style={styles.buttonTopSection}>
+                <TouchableOpacity
+                  style={styles.bigIconButton}
+                  onPress={() => linkTo('/Saldo')}
+                >
+                  <Icon name="money-bill" size={70} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Saldo</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.bigIconButton}
+                  onPress={() => linkTo('/Empresas')}
+                >
+                  <Icon name="building" size={70} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Empresas</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.buttonBottomSection}>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => linkTo('/Empresas-Favoritas')}
+                >
+                  <Icon name="star" size={50} color={'#fff'}></Icon>
+                  <Text style={styles.textIcon}>Favoritos</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.iconButton}>
+                  <Icon name="question" size={50} color={'#fff'}></Icon>
+                  <Text style={styles.textIcon}>Ajuda</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => linkTo('/Perfil')}
+                >
+                  <Icon name="user-circle" size={50} color={'#fff'}></Icon>
+                  <Text style={styles.textIcon}>Conta</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+        </View>
+      </ImageBackground>
     </View>
+
   );
 }
