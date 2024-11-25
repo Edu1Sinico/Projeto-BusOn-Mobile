@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, Modal, ImageBackground } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "@/app/styles/login_register/RegisterPlusStyle";
 import { useLinkTo, useRoute } from '@react-navigation/native';
@@ -90,130 +90,135 @@ export default function RegisterPlus() {
 
   return (
     <View style={styles.container}>
-      {/* Top Section */}
-      <View style={styles.sectionTop}>
-        <View style={styles.header}>
-          <View style={styles.logo_section}>
-            <Image
-              source={require("@/assets/images/BusOn_Logo_Branco_Preto.png")}
-              style={styles.logo}
-            />
-          </View>
-        </View>
-        <View style={styles.userbanner}>
-          <Icon name="user-alt" size={50} color="#0AC86C" />
-        </View>
-        <Text style={styles.title}>Complete o seu Cadastro</Text>
-      </View>
-
-      {/* Bottom Section */}
-      <View style={styles.sectionBottom}>
-        {/* SemiHeader Component */}
-        <SemiHeader title={"Preencha as Informações"} />
-
-        {/* Form Section */}
-        <View style={styles.formSection}>
-          <View style={styles.inputContainer}>
-            {/* input cpf */}
-            <View style={styles.inputSection}>
-              <View style={[styles.iconInputSection, cpfError && styles.iconInputError]}>
-                <Icon name="id-card" size={20} color="#fff" />
-              </View>
-              <TextInput
-                style={[styles.input, cpfError && styles.inputError]}
-                placeholder="CPF"
-                placeholderTextColor={"#C7C7C7"}
-                value={cpf}
-                onChangeText={setCpf}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-          </View>
-
-          <View style={styles.inputContainer}>
-            {/* input cpf */}
-            <View style={styles.inputSection}>
-              <View style={[styles.iconInputSection, dataNascError && styles.iconInputError]}>
-                <Icon name="calendar" size={20} color="#fff" />
-              </View>
-              <TextInput
-                style={[styles.input, dataNascError && styles.inputError]}
-                placeholder="Data de Nascimento"
-                placeholderTextColor={"#C7C7C7"}
-                value={dataNascimento}
-                onChangeText={setDataNascimento}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainer}>
-            {/* input cpf */}
-            <View style={styles.inputSection}>
-              <View style={[styles.iconInputSection, telefoneError && styles.iconInputError]}>
-                <Icon name="phone" size={20} color="#fff" />
-              </View>
-              <TextInput
-                style={[styles.input, telefoneError && styles.inputError]}
-                placeholder="Telefone"
-                placeholderTextColor={"#C7C7C7"}
-                value={telefone}
-                onChangeText={setTelefone}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainer}>
-            {/* input cpf */}
-            <View style={styles.inputSection}>
-              <View style={[styles.iconInputSection, enderecoError && styles.iconInputError]}>
-                <Icon name="map-marker-alt" size={20} color="#fff" />
-              </View>
-              <TextInput
-                style={[styles.input, enderecoError && styles.inputError]}
-                placeholder="Endereço"
-                placeholderTextColor={"#C7C7C7"}
-                value={endereco}
-                onChangeText={setEndereco}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-          </View>
-
-          {/* Radio Buttons */}
-          <View style={styles.radioGroup}>
-            {["Comum", "Estudante", "Deficiente"].map((option) => (
-              <TouchableOpacity
-                key={option}
-                style={styles.radioButton}
-                onPress={() => setCategoria(option)}
-              >
-                <View
-                  style={[
-                    styles.radioCircle,
-                    categoria === option && styles.radioSelected,
-                  ]}
-                />
-                <Text>{option}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Submit Button */}
-          <TouchableOpacity style={styles.addButton}
-            onPress={handleRegister}>
-            <Text style={styles.addTextButton}>Completar Cadastro</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Modal de alerta */}
-      <Modal
-        animationType='fade'
-        transparent={true}
-        visible={modalVisible}
+      <ImageBackground
+        source={require('@/assets/images/background/fundo.png')}
+        style={styles.banner} // Use o estilo ajustado
       >
-        <ModalAlertValidation messageAlert={messageAlert} successMessage={successRegister} handleClose={() => setModalVisible(false)} />
-      </Modal>
+        {/* Top Section */}
+        <View style={styles.sectionTop}>
+          <View style={styles.header}>
+            <View style={styles.logo_section}>
+              <Image
+                source={require("@/assets/images/BusOn_Logo_Branco_Preto.png")}
+                style={styles.logo}
+              />
+            </View>
+          </View>
+          <View style={styles.userbanner}>
+            <Icon name="user-alt" size={50} color="#0AC86C" />
+          </View>
+          <Text style={styles.title}>Complete o seu Cadastro</Text>
+        </View>
+
+        {/* Bottom Section */}
+        <View style={styles.sectionBottom}>
+          {/* SemiHeader Component */}
+          <SemiHeader title={"Preencha as Informações"} />
+
+          {/* Form Section */}
+          <View style={styles.formSection}>
+            <View style={styles.inputContainer}>
+              {/* input cpf */}
+              <View style={styles.inputSection}>
+                <View style={[styles.iconInputSection, cpfError && styles.iconInputError]}>
+                  <Icon name="id-card" size={20} color="#fff" />
+                </View>
+                <TextInput
+                  style={[styles.input, cpfError && styles.inputError]}
+                  placeholder="CPF"
+                  placeholderTextColor={"#C7C7C7"}
+                  value={cpf}
+                  onChangeText={setCpf}
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputContainer}>
+              {/* input cpf */}
+              <View style={styles.inputSection}>
+                <View style={[styles.iconInputSection, dataNascError && styles.iconInputError]}>
+                  <Icon name="calendar" size={20} color="#fff" />
+                </View>
+                <TextInput
+                  style={[styles.input, dataNascError && styles.inputError]}
+                  placeholder="Data de Nascimento"
+                  placeholderTextColor={"#C7C7C7"}
+                  value={dataNascimento}
+                  onChangeText={setDataNascimento}
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+            </View>
+            <View style={styles.inputContainer}>
+              {/* input cpf */}
+              <View style={styles.inputSection}>
+                <View style={[styles.iconInputSection, telefoneError && styles.iconInputError]}>
+                  <Icon name="phone" size={20} color="#fff" />
+                </View>
+                <TextInput
+                  style={[styles.input, telefoneError && styles.inputError]}
+                  placeholder="Telefone"
+                  placeholderTextColor={"#C7C7C7"}
+                  value={telefone}
+                  onChangeText={setTelefone}
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+            </View>
+            <View style={styles.inputContainer}>
+              {/* input cpf */}
+              <View style={styles.inputSection}>
+                <View style={[styles.iconInputSection, enderecoError && styles.iconInputError]}>
+                  <Icon name="map-marker-alt" size={20} color="#fff" />
+                </View>
+                <TextInput
+                  style={[styles.input, enderecoError && styles.inputError]}
+                  placeholder="Endereço"
+                  placeholderTextColor={"#C7C7C7"}
+                  value={endereco}
+                  onChangeText={setEndereco}
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+            </View>
+
+            {/* Radio Buttons */}
+            <View style={styles.radioGroup}>
+              {["Comum", "Estudante", "Deficiente"].map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={styles.radioButton}
+                  onPress={() => setCategoria(option)}
+                >
+                  <View
+                    style={[
+                      styles.radioCircle,
+                      categoria === option && styles.radioSelected,
+                    ]}
+                  />
+                  <Text>{option}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Submit Button */}
+            <TouchableOpacity style={styles.addButton}
+              onPress={handleRegister}>
+              <Text style={styles.addTextButton}>Completar Cadastro</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Modal de alerta */}
+        <Modal
+          animationType='fade'
+          transparent={true}
+          visible={modalVisible}
+        >
+          <ModalAlertValidation messageAlert={messageAlert} successMessage={successRegister} handleClose={() => setModalVisible(false)} />
+        </Modal>
+      </ImageBackground>
     </View>
   );
 }

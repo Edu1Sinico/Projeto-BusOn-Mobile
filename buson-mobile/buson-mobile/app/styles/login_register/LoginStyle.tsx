@@ -11,6 +11,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    
 
     loginSection: {
         flex: 1,

@@ -24,7 +24,7 @@ export default function FavoritesCompanyPage({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header backgroundActive={true}/>
       <View style={styles.mainSection}>
         <SemiHeader title={"Empresas Favoritas"} />
 

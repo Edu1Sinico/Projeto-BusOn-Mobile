@@ -58,7 +58,7 @@ export default function CompanyScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header backgroundActive={true}/>
       <View style={styles.mainSection}>
         <SemiHeader title={"Empresas"} />
         <View style={styles.mainTopSection}>

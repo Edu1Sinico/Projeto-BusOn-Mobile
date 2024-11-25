@@ -16,7 +16,7 @@ export default function PaymentCashPage() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header backgroundActive={true}/>
       <SemiHeader title={'Realizar Pagamento'} />
 
       <View style={styles.mainSection}>
