@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, TouchableOpacity  } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useLinkTo } from '@react-navigation/native';
 
@@ -16,21 +16,21 @@ import Header from '@/components/header/header';
 export default function CashScreen() {
 
   // useState
-    const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
+  const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
 
-    const linkTo = useLinkTo(); // Sistema de links do react navigator
+  const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   return (
     <View style={styles.container}>
-      <Header backgroundActive={true}/>
+      <Header backgroundActive={true} />
 
-      <View style={styles.mainSection}> 
+      <View style={styles.mainSection}>
         <View style={styles.balanceSection}>
           <View style={styles.balanceLeftSection}>
             <View style={styles.balanceTextSection}>
               <Text style={styles.balanceText}>Saldo Disponível</Text>
             </View>
-            
+
             <View style={styles.balanceValueSection}>
               <Text style={styles.realIcon}>R$ </Text>
               <Text style={styles.valueText}>{showBalance ? '●●●●' : '0,00'}</Text>
@@ -61,8 +61,8 @@ export default function CashScreen() {
 
           <View style={styles.cashButtonsSection}>
             <TouchableOpacity style={styles.iconButton}
-            onPress={() => linkTo('/Realizar-Pagamento')}>
-              <Icon name="credit-card" size={90} color="#0AC86C"/>
+              onPress={() => linkTo('/Realizar-Pagamento')}>
+              <Icon name="credit-card" size={90} color="#0AC86C" />
               <Text style={styles.buttonText}>Realizar Pagamento</Text>
             </TouchableOpacity>
           </View>
