@@ -18,7 +18,7 @@ export default function RegisterPlus() {
   const [dataNascimento, setDataNascimento] = useState("");
   const [telefone, setTelefone] = useState("");
   const [endereco, setEndereco] = useState("");
-  const [categoria, setCategoria] = useState("Comum");
+  const [categoria, setCategoria] = useState("Padrão");
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -47,7 +47,7 @@ export default function RegisterPlus() {
       if (id) {
         setSuccessRegister(true);
         setTimeout(() => {
-          linkTo(`/Home`, { params: { id } }); // Passa os parâmetros explicitamente
+          linkTo('/Home'); // Passa os parâmetros explicitamente
           setModalVisible(false);
         }, 1500);
       }
@@ -187,7 +187,7 @@ export default function RegisterPlus() {
 
             {/* Radio Buttons */}
             <View style={styles.radioGroup}>
-              {["Comum", "Estudante", "Deficiente"].map((option) => (
+              {["Padrão", "Estudante", "PCD"].map((option) => (
                 <TouchableOpacity
                   key={option}
                   style={styles.radioButton}

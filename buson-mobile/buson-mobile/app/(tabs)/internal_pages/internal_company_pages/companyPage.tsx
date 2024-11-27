@@ -1,34 +1,56 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput, FlatList, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, TextInput, FlatList, Image, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "@/app/styles/internal_pages/internal_company_page/companyPageStyle";
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 
-export default function CompanyScreen({navigation}) {
+export default function CompanyScreen() {
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]);
+  const [companies, setCompanies] = useState([]); // Estado para armazenar as empresas
+  const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
 
-  const companies = [
-    {
-      id: 1,
-      name: "SOU Transportes",
-      location: "Limeira - SP",
-      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
-    },
-    {
-      id: 2,
-      name: "Lira Bus",
-      location: "Limeira - SP",
-      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
-    },
-    {
-      id: 3,
-      name: "TransLimeira",
-      location: "Limeira - SP",
-      image: require('@/assets/images/companiesLogo/LogoSou.png'), // Troque para o caminho correto da imagem
-    },
-  ];
+  // Função para buscar empresas do backend
+  const fetchCompanies = async () => {
+    try {
+      setIsLoading(true); // Ativa o estado de carregamento
+      const response = await fetch('http://localhost:3000/api/buscarEmpresas', {
+        method: 'GET',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Resposta da API:", data);
+        const formattedData = Array.isArray(data)
+          ? data.map((item) => ({
+            id: item.id_empresa,
+            name: item.nome_empresa,
+            location: item.cidade_empresa,
+            image: item.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
+          }))
+          : [{
+            id: data.id_empresa,
+            name: data.nome_empresa,
+            location: data.cidade_empresa,
+            image: data.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
+          }];
+
+        setCompanies(formattedData);
+      } else {
+        console.error('Erro ao buscar empresas:', response.status);
+      }
+    } catch (err) {
+      console.error('Erro ao conectar ao servidor:', err);
+    } finally {
+      setIsLoading(false); // Desativa o estado de carregamento
+    }
+  };
+
+  // Carrega as empresas ao montar o componente
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
 
   const toggleFavorite = (id) => {
     setFavorites((prev) =>
@@ -53,12 +75,15 @@ export default function CompanyScreen({navigation}) {
           color={favorites.includes(item.id) ? "#FFD700" : "#C7C7C7"}
         />
       </TouchableOpacity>
+      <TouchableOpacity>
+        <Text></Text>
+      </TouchableOpacity>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <Header backgroundActive={true}/>
+      <Header backgroundActive={true} />
       <View style={styles.mainSection}>
         <SemiHeader title={"Empresas"} />
         <View style={styles.mainTopSection}>
@@ -77,20 +102,26 @@ export default function CompanyScreen({navigation}) {
           </View>
           <TouchableOpacity
             style={[styles.selectButton, { marginTop: 10 }]}
-            onPress={() =>
-              navigation.navigate("FavoriteCompaniesPage", { favorites, companies })
-            }
+          // onPress={() =>
+          //   navigation.navigate("FavoriteCompaniesPage", { favorites, companies })
+          // }
           >
             <Text style={styles.selectButtonText} >Ver Favoritas</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.mainBottomSection}>
-          <FlatList
-            data={companies}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={renderCompanyCard}
-          />
+          {isLoading ? (
+            <View>
+              <ActivityIndicator size="large" color="#0AC86C" />
+            </View>
+          ) : (
+            <FlatList
+              data={companies}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={renderCompanyCard}
+            />
+          )}
         </View>
       </View>
     </View>

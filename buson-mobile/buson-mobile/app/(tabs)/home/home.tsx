@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-
+import { useLinkTo } from '@react-navigation/native';
 import { ImageBackground } from 'react-native';
 
 
