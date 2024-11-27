@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, TextInput, FlatList, Image, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "@/app/styles/internal_pages/internal_company_page/companyPageStyle";
+import { useLinkTo } from '@react-navigation/native';
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 
@@ -10,6 +11,9 @@ export default function CompanyScreen() {
   const [favorites, setFavorites] = useState([]);
   const [companies, setCompanies] = useState([]); // Estado para armazenar as empresas
   const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
+  const [errorAlert, setErrorAlert] = useState(false);
+
+  const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   // Função para buscar empresas do backend
   const fetchCompanies = async () => {
@@ -21,7 +25,6 @@ export default function CompanyScreen() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Resposta da API:", data);
         const formattedData = Array.isArray(data)
           ? data.map((item) => ({
             id: item.id_empresa,
@@ -37,10 +40,13 @@ export default function CompanyScreen() {
           }];
 
         setCompanies(formattedData);
+        setErrorAlert(false);
       } else {
+        setErrorAlert(true);
         console.error('Erro ao buscar empresas:', response.status);
       }
     } catch (err) {
+      setErrorAlert(true);
       console.error('Erro ao conectar ao servidor:', err);
     } finally {
       setIsLoading(false); // Desativa o estado de carregamento
@@ -75,8 +81,10 @@ export default function CompanyScreen() {
           color={favorites.includes(item.id) ? "#FFD700" : "#C7C7C7"}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Text></Text>
+      <TouchableOpacity
+        style={styles.selectButton}
+      >
+        <Text style={styles.selectButtonText}>Selecionar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -102,19 +110,23 @@ export default function CompanyScreen() {
           </View>
           <TouchableOpacity
             style={[styles.selectButton, { marginTop: 10 }]}
-          // onPress={() =>
-          //   navigation.navigate("FavoriteCompaniesPage", { favorites, companies })
-          // }
+            onPress={() => { linkTo('/Empresas-Favoritas') }}
           >
-            <Text style={styles.selectButtonText} >Ver Favoritas</Text>
+            <Text style={styles.selectButtonText} >Visualizar Favoritos</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.mainBottomSection}>
           {isLoading ? (
-            <View>
-              <ActivityIndicator size="large" color="#0AC86C" />
+            <View style={styles.loadingSection}>
+              {errorAlert ? (
+                <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
+              ) : (
+                <ActivityIndicator size="large" color="#0AC86C" />
+              )}
             </View>
+          ) : errorAlert ? (
+            <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
           ) : (
             <FlatList
               data={companies}
