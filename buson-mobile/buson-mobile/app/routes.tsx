@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeNavigator } from './routes/homeNavigator';
-// import CashScreen from './(tabs)/internal_pages/internal_cash_pages/cashPage';
 import { CashNavigator } from './routes/cashNavigator';
 
 import Icon from 'react-native-vector-icons/FontAwesome';

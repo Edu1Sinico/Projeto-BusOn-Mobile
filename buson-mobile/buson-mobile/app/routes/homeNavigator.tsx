@@ -2,10 +2,10 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../(tabs)/home/home';
-import CashScreen from '../(tabs)/internal_pages/internal_cash_pages/cashPage';
 import CompanyScreen from '../(tabs)/internal_pages/internal_company_pages/companyPage';
 import FavoritesCompanyPage  from '../(tabs)/internal_pages/internal_company_pages/favoriteCompaniesPage';
 import ProfileScreen from '../(tabs)/internal_pages/internal_user_pages/userPage';
+import { CashNavigator } from './cashNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +19,7 @@ export function HomeNavigator() {
                 <Stack.Screen name="Home" component={HomeScreen} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Saldo" component={CashScreen} options={{
+                <Stack.Screen name="Saldo" component={CashNavigator} options={{
                     animation: 'fade'
                 }} />
                 <Stack.Screen name="Empresas" component={CompanyScreen} options={{

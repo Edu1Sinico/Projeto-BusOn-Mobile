@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useLinkTo, useRoute } from '@react-navigation/native';
+
 import { ImageBackground } from 'react-native';
 
 
@@ -153,7 +153,7 @@ export default function HomeScreen() {
                   onPress={() => linkTo('/Perfil')}
                 >
                   <Icon name="user-circle" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Conta</Text>
+                  <Text style={styles.textIcon}>Perfil</Text>
                 </TouchableOpacity>
               </View>
             </View>
