@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useRoute } from '@react-navigation/native';
 import { ImageBackground } from 'react-native';
 
 
@@ -16,6 +16,12 @@ import Header from '@/components/header/header';
 
 
 export default function HomeScreen() {
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  const { id } = route.params || {}; // Obtém o parâmetro id
+
+  React.useEffect(() => {
+    console.log('ID do usuário:', id);
+  }, [id]);
 
   // useState
   const [search, setSearch] = useState('');
@@ -26,31 +32,31 @@ export default function HomeScreen() {
 
   const background = require('@/assets/images/background/background.png');
 
-  // const buscarUsuario = async (id_usuario) => {
-  //   try {
-  //     // Define o endpoint da API (ajuste o endereço do backend)
-  //     const response = await fetch('http://localhost:3000/api/buscarUsuario', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         id_usuario,
-  //       }),
-  //     });
+  const buscarUsuario = async (id_usuario) => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/buscarUsuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario,
+        }),
+      });
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setUserName(data.nome);
-  //     } else {
-  //       console.log('Erro ao buscar o usuário.')
-  //     }
-  //   } catch (err) {
-  //     console.error('Erro ao buscar usuário: ' + err);
-  //   }
-  // };
+      if (response.ok) {
+        const data = await response.json();
+        setUserName(data.nome);
+      } else {
+        console.log('Erro ao buscar o usuário.')
+      }
+    } catch (err) {
+      console.error('Erro ao buscar usuário: ' + err);
+    }
+  };
 
-  // buscarUsuario(id);
+  buscarUsuario(id);
 
   return (
 
