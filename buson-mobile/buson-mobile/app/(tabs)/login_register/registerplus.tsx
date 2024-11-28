@@ -47,7 +47,7 @@ export default function RegisterPlus() {
       if (id) {
         setSuccessRegister(true);
         setTimeout(() => {
-          linkTo('/MainRoutes'); // Passa os parâmetros explicitamente
+          linkTo(`/MainRoutes?id=${id}`); // Passa os parâmetros explicitamente
           setModalVisible(false);
         }, 1500);
       }
