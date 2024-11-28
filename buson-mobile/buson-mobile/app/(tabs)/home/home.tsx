@@ -119,41 +119,33 @@ export default function HomeScreen() {
               <View style={styles.buttonTopSection}>
                 <TouchableOpacity
                   style={styles.bigIconButton}
-                  onPress={() => linkTo('/Saldo')}
+                  onPress={() => linkTo('/Empresas')}
                 >
-                  <Icon name="money-bill" size={70} color={'#fff'}></Icon>
-                  <Text style={styles.bigTextIcon}>Saldo</Text>
+                  <Icon name="building" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Empresas</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.bigIconButton}
-                  onPress={() => linkTo('/Empresas')}
+                  onPress={() => linkTo('/Empresas-Favoritas')}
                 >
-                  <Icon name="building" size={70} color={'#fff'}></Icon>
-                  <Text style={styles.bigTextIcon}>Empresas</Text>
+                  <Icon name="star" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Favoritos</Text>
                 </TouchableOpacity>
               </View>
 
               <View style={styles.buttonBottomSection}>
-                <TouchableOpacity
-                  style={styles.iconButton}
-                  onPress={() => linkTo('/Empresas-Favoritas')}
-                >
-                  <Icon name="star" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Favoritos</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.iconButton}>
-                  <Icon name="question" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Ajuda</Text>
+                <TouchableOpacity style={styles.bigIconButton}>
+                  <Icon name="question" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Ajuda</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={styles.iconButton}
+                  style={styles.bigIconButton}
                   onPress={() => linkTo('/Perfil')}
                 >
-                  <Icon name="user-circle" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Perfil</Text>
+                  <Icon name="user-circle" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Perfil</Text>
                 </TouchableOpacity>
               </View>
             </View>

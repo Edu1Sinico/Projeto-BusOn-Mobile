@@ -11,7 +11,7 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
     },
-  
+
     mainTopSection: {
         width: '100%',
         alignItems: 'center',
@@ -105,17 +105,22 @@ export default StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
     },
-    container: {
+
+    loadingSection: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
-      },
-      mainSection: {
-        flex: 1, // Permite que a seção ocupe todo o espaço disponível
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-      },
-      cardList: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    errorMessage: {
+        textAlign: 'center',
+        fontSize: 15,
+        color: 'gray',
+    },
+
+    cardList: {
         paddingBottom: 16, // Espaçamento inferior para melhor visualização
-      },
-      
+    },
+
 });

@@ -19,9 +19,6 @@ export function HomeNavigator() {
                 <Stack.Screen name="Home" component={HomeScreen} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Saldo" component={CashNavigator} options={{
-                    animation: 'fade'
-                }} />
                 <Stack.Screen name="Empresas" component={CompanyScreen} options={{
                     animation: 'fade'
                 }} />
