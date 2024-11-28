@@ -11,4 +11,8 @@ const buscarEmpresas = async (req, res) => {
     }
 };
 
+const adicionarFavoritos = async (req, res) => {
+    
+};
+
 module.exports = { buscarEmpresas }; // Exporta a função para ser usada nas rotas.

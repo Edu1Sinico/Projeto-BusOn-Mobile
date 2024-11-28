@@ -51,7 +51,7 @@ const buscarUsuario = async (req, res) => {
     const { id_usuario } = req.body;
     try {
         const result = await pool.query(
-            'SELECT * FROM usuario WHERE id=$1',
+            'SELECT * FROM usuario WHERE id_usuario=$1',
             [id_usuario]
         );
         // Se a resposta for bem-sucedida, retorna o usuário

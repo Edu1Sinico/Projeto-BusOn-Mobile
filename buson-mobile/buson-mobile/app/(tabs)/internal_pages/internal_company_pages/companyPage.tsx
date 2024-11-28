@@ -120,13 +120,16 @@ export default function CompanyScreen() {
           {isLoading ? (
             <View style={styles.loadingSection}>
               {errorAlert ? (
-                <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
+                <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique 
+                sua conexão e tente novamente.</Text>
               ) : (
                 <ActivityIndicator size="large" color="#0AC86C" />
               )}
             </View>
           ) : errorAlert ? (
-            <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
+            <View style={styles.loadingSection}>
+              <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
+            </View>
           ) : (
             <FlatList
               data={companies}
