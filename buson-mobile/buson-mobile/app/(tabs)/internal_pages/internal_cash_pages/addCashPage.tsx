@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, TouchableOpacity  } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useLinkTo } from '@react-navigation/native';
 
 // Importando os ícones
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -14,9 +15,11 @@ import SemiHeader from '@/components/header/semiHeader';
 
 export default function AddCashScreen() {
 
+  const linkTo = useLinkTo(); // Sistema de links do react navigator
+
   return (
     <View style={styles.container}>
-      <Header backgroundActive={true}/>
+      <Header backgroundActive={true} />
       <SemiHeader title="Adicionar Créditos" />
 
       <View style={styles.mainSection}>
@@ -32,7 +35,8 @@ export default function AddCashScreen() {
         </TouchableOpacity>
 
         {/* Botão do Cartão */}
-        <TouchableOpacity style={styles.cashButton}>
+        <TouchableOpacity style={styles.cashButton}
+          onPress={() => linkTo('/Visualizar-Cartao')}>
           <View style={styles.iconCashSection}>
             <Icon name="credit-card" size={40} color="#2EBEC6" />
           </View>
@@ -42,16 +46,6 @@ export default function AddCashScreen() {
           </View>
         </TouchableOpacity>
 
-        {/* Botão do Boleto */}
-        <TouchableOpacity style={styles.cashButton}>
-          <View style={styles.iconCashSection}>
-            <Icon name="local-atm" size={40} color="#2EBEC6" />
-          </View>
-          <View style={styles.textCashSection}>
-            <Text style={styles.titleCashButton}>Boleto</Text>
-            <Text style={styles.textCashButton}>Adicione credítos na sua carteira via Boleto</Text>
-          </View>
-        </TouchableOpacity>
       </View>
     </View>
   );
