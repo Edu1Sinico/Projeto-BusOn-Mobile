@@ -89,7 +89,6 @@ export default function RegisterPlus() {
     }
   };
 
-
   return (
     <View style={styles.container}>
       <ImageBackground

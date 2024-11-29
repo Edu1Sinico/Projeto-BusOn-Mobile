@@ -22,10 +22,10 @@ export function HomeNavigator() {
                 <Stack.Screen name="HomeScreen" component={HomeScreen} initialParams={{ id }} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Empresas" component={CompanyScreen} options={{
+                <Stack.Screen name="Empresas" component={CompanyScreen} initialParams={{ id }} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Empresas-Favoritas" component={FavoritesCompanyPage} options={{
+                <Stack.Screen name="Empresas-Favoritas" component={FavoritesCompanyPage} initialParams={{ id }} options={{
                     animation: 'fade'
                 }} />
                 <Stack.Screen name="Perfil" component={ProfileScreen} options={{

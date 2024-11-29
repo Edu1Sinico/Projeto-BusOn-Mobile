@@ -1,26 +1,109 @@
-
-
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "@/app/styles/internal_pages/internal_company_page/companyPageStyle";
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
+import { useRoute } from "@react-navigation/native";
 
-export default function FavoritesCompanyPage({ navigation }) {
-  // Estado inicial com favorito já selecionado
-  const [isFavorite, setIsFavorite] = useState(true);
+export default function FavoritesCompanyPage() {
+  const [favorites, setFavorites] = useState([]); // Estado para armazenar os favoritos
+  const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
+  const [errorAlert, setErrorAlert] = useState(false);
 
-  const company = {
-    id: 1,
-    name: "SOU Transportes",
-    location: "Limeira - SP",
-    image: require("@/assets/images/companiesLogo/LogoSou.png"),
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  const { id } = route.params || {}; // Obtém o ID do usuário dos parâmetros da rota
+
+  // Função para buscar os favoritos do backend
+  const fetchFavorites = async () => {
+    try {
+      setIsLoading(true); // Ativa o estado de carregamento
+      const response = await fetch('http://localhost:3000/api/buscarFavoritos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const formattedData = Array.isArray(data)
+          ? data.map((item) => ({
+            id: item.id_empresa,
+            name: item.nome_empresa,
+            location: item.cidade_empresa,
+            image: item.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
+          }))
+          : [];
+
+        setFavorites(formattedData); // Atualiza os favoritos no estado
+        setErrorAlert(false);
+      } else {
+        setErrorAlert(true);
+        console.error('Erro ao buscar favoritos:', response.status);
+      }
+    } catch (err) {
+      setErrorAlert(true);
+      console.error('Erro ao conectar ao servidor:', err);
+    } finally {
+      setIsLoading(false); // Desativa o estado de carregamento
+    }
   };
 
-  const toggleFavorite = () => {
-    setIsFavorite((prev) => !prev);
+  // Função para remover um favorito
+  const removeFavorite = async (id_empresa) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/removerFavoritos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id,
+          id_empresa,
+        }),
+      });
+
+      if (response.ok) {
+        // Remove o favorito da lista localmente
+        setFavorites((prev) => prev.filter((fav) => fav.id !== id_empresa));
+        console.log("Favorito removido com sucesso!");
+      } else {
+        const errorText = await response.text();
+        console.error('Erro ao remover favorito:', errorText);
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao remover favorito:', error);
+    }
   };
+
+  // Carrega os favoritos ao montar o componente
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
+  // Renderiza cada empresa favorita
+  const renderFavoriteCard = ({ item }) => (
+    <View style={styles.card}>
+      <Image source={item.image} style={styles.cardImage} />
+      <View style={styles.cardContent}>
+        <Text style={styles.cardTitle}>{item.name}</Text>
+        <Text style={styles.cardSubtitle}>{item.location}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.favoriteButton}
+        onPress={() => removeFavorite(item.id)}
+      >
+        <Icon name="star" size={24} color="#FFD700" /> {/* Sempre amarelo */}
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.selectButton}>
+        <Text style={styles.selectButtonText}>Selecionar</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -28,30 +111,26 @@ export default function FavoritesCompanyPage({ navigation }) {
       <View style={styles.mainSection}>
         <SemiHeader title={"Empresas Favoritas"} />
 
-        <View style={styles.card}>
-          <Image source={company.image} style={styles.cardImage} />
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>{company.name}</Text>
-            <Text style={styles.cardSubtitle}>{company.location}</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.favoriteButton}
-            onPress={toggleFavorite}
-          >
-            <Icon
-              name={isFavorite ? "star" : "star-border"}
-              size={24}
-              color={isFavorite ? "#FFD700" : "#C7C7C7"}
+        <View style={styles.mainBottomSection}>
+          {isLoading ? (
+            <View style={styles.loadingSection}>
+              {errorAlert ? (
+                <Text style={styles.errorMessage}>Falha ao carregar favoritos. Verifique sua conexão e tente novamente.</Text>
+              ) : (
+                <ActivityIndicator size="large" color="#0AC86C" />
+              )}
+            </View>
+          ) : errorAlert ? (
+            <View style={styles.loadingSection}>
+              <Text style={styles.errorMessage}>Falha ao carregar favoritos. Verifique sua conexão e tente novamente.</Text>
+            </View>
+          ) : (
+            <FlatList
+              data={favorites}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={renderFavoriteCard}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.selectButton}
-            // onPress={() =>
-            //   navigation.navigate("FavoriteCompaniesPage", { company })
-            // }
-          >
-            <Text style={styles.selectButtonText}>Selecionar</Text>
-          </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
