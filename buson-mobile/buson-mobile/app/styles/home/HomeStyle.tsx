@@ -148,16 +148,16 @@ export default StyleSheet.create({
   },
 
   buttonTopSection: {
-    width: '90%',
+    width: '100%',
     padding: 25,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
 
   buttonBottomSection: {
     width: '100%',
-    padding: 18,
+    padding: 25,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
@@ -167,33 +167,15 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0AC86C',
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
     borderRadius: 20,
   },
-
-  iconButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0AC86C',
-    width: 95,
-    height: 95,
-    borderRadius: 20,
-  },
-
   bigTextIcon: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 20,
     marginTop: 5,
     color: '#fff',
   },
-
-  textIcon: {
-    fontWeight: '400',
-    fontSize: 15,
-    marginTop: 2,
-    color: '#fff',
-  },
-
 
 });

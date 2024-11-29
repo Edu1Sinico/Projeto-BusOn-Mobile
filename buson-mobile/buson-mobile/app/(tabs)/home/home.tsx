@@ -16,6 +16,12 @@ import Header from '@/components/header/header';
 
 
 export default function HomeScreen() {
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  const { id } = route.params || {}; // Obtém o parâmetro id
+
+  React.useEffect(() => {
+    console.log('ID do usuário:', id);
+  }, [id]);
 
   // useState
   const [search, setSearch] = useState('');
@@ -26,31 +32,31 @@ export default function HomeScreen() {
 
   const background = require('@/assets/images/background/background.png');
 
-  // const buscarUsuario = async (id_usuario) => {
-  //   try {
-  //     // Define o endpoint da API (ajuste o endereço do backend)
-  //     const response = await fetch('http://localhost:3000/api/buscarUsuario', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         id_usuario,
-  //       }),
-  //     });
+  const buscarUsuario = async (id_usuario) => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/buscarUsuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario,
+        }),
+      });
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setUserName(data.nome);
-  //     } else {
-  //       console.log('Erro ao buscar o usuário.')
-  //     }
-  //   } catch (err) {
-  //     console.error('Erro ao buscar usuário: ' + err);
-  //   }
-  // };
+      if (response.ok) {
+        const data = await response.json();
+        setUserName(data.nome);
+      } else {
+        console.log('Erro ao buscar o usuário.')
+      }
+    } catch (err) {
+      console.error('Erro ao buscar usuário: ' + err);
+    }
+  };
 
-  // buscarUsuario(id);
+  buscarUsuario(id);
 
   return (
 
@@ -119,41 +125,33 @@ export default function HomeScreen() {
               <View style={styles.buttonTopSection}>
                 <TouchableOpacity
                   style={styles.bigIconButton}
-                  onPress={() => linkTo('/Saldo')}
+                  onPress={() => linkTo('/Empresas')}
                 >
-                  <Icon name="money-bill" size={70} color={'#fff'}></Icon>
-                  <Text style={styles.bigTextIcon}>Saldo</Text>
+                  <Icon name="building" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Empresas</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.bigIconButton}
-                  onPress={() => linkTo('/Empresas')}
+                  onPress={() => linkTo('/Empresas-Favoritas')}
                 >
-                  <Icon name="building" size={70} color={'#fff'}></Icon>
-                  <Text style={styles.bigTextIcon}>Empresas</Text>
+                  <Icon name="star" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Favoritos</Text>
                 </TouchableOpacity>
               </View>
 
               <View style={styles.buttonBottomSection}>
-                <TouchableOpacity
-                  style={styles.iconButton}
-                  onPress={() => linkTo('/Empresas-Favoritas')}
-                >
-                  <Icon name="star" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Favoritos</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.iconButton}>
-                  <Icon name="question" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Ajuda</Text>
+                <TouchableOpacity style={styles.bigIconButton}>
+                  <Icon name="question" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Ajuda</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={styles.iconButton}
+                  style={styles.bigIconButton}
                   onPress={() => linkTo('/Perfil')}
                 >
-                  <Icon name="user-circle" size={50} color={'#fff'}></Icon>
-                  <Text style={styles.textIcon}>Conta</Text>
+                  <Icon name="user-circle" size={90} color={'#fff'}></Icon>
+                  <Text style={styles.bigTextIcon}>Perfil</Text>
                 </TouchableOpacity>
               </View>
             </View>

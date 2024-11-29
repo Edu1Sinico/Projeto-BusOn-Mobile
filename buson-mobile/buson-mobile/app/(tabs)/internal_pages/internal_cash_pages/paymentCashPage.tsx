@@ -38,7 +38,7 @@ export default function PaymentCashPage() {
         <View style={styles.mainBottomSection}>
           <View style={styles.paymentCodeCard}>
             <View style={styles.paymentCodeTopSection}>
-              <Text style={styles.paymentCodeTitle}>Insira o código do ônibus</Text>
+              <Text style={styles.paymentCodeTitle}>Insira o código da empresa</Text>
             </View>
             <View style={styles.paymentCodeBottomSection}>
               <TextInput

@@ -2,12 +2,12 @@ export function inputValidationRegisterPlus(
     cpf,
     dataNascimento,
     telefone,
-    endereco,
+    cep,
     setMessageAlert,
     setCpfError,
     setDataNascError,
     setTelefoneError,
-    setEnderecoError,
+    setCepError,
     setModalVisible
 ) {
     let message = "";
@@ -15,14 +15,15 @@ export function inputValidationRegisterPlus(
     const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$|^\d{11}$/; // Formatação para o CPF
     const dataNascimentoRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d{2}$/; // Formato DD/MM/AAAA
     const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/; // Formato (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+    const cepRegex = /^\d{5}-\d{3}$|^\d{8}$/; // Formato 00000-000 ou 00000000
 
     // Verifica se todos os campos estão vazios
-    if (cpf === '' && dataNascimento === '' && telefone === '' && endereco === '') {
+    if (cpf === '' && dataNascimento === '' && telefone === '' && cep === '') {
         message = 'Por favor, preencha todos os campos!';
         setCpfError(true);
         setDataNascError(true);
         setTelefoneError(true);
-        setEnderecoError(true);
+        setCepError(true);
         setMessageAlert(message);
         setModalVisible(true);
         return false; // Interrompe a execução aqui
@@ -80,14 +81,21 @@ export function inputValidationRegisterPlus(
     }
 
     // Validações para o campo de 'Endereço'
-    if (endereco === '') {
-        setEnderecoError(true);
-        message = 'O campo de endereço não pode ser vazio!';
+    // Validações para o campo de 'CEP'
+    if (cep === '') {
+        setCepError(true);
+        message = 'O campo de CEP não pode ser vazio!';
+        setMessageAlert(message);
+        setModalVisible(true);
+        return false;
+    } else if (!cepRegex.test(cep)) {
+        message = 'O campo de CEP precisa estar no formato 00000-000 ou 00000000!';
+        setCepError(true);
         setMessageAlert(message);
         setModalVisible(true);
         return false;
     } else {
-        setEnderecoError(false);
+        setCepError(false);
     }
 
     // Caso todas as validações passem

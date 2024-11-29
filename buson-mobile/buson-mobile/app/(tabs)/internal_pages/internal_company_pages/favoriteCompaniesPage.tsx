@@ -24,7 +24,7 @@ export default function FavoritesCompanyPage({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header backgroundActive={true}/>
+      <Header backgroundActive={true} />
       <View style={styles.mainSection}>
         <SemiHeader title={"Empresas Favoritas"} />
 
@@ -46,9 +46,9 @@ export default function FavoritesCompanyPage({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.selectButton}
-            onPress={() =>
-              navigation.navigate("FavoriteCompaniesPage", { company })
-            }
+            // onPress={() =>
+            //   navigation.navigate("FavoriteCompaniesPage", { company })
+            // }
           >
             <Text style={styles.selectButtonText}>Selecionar</Text>
           </TouchableOpacity>

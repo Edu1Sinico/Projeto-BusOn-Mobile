@@ -17,8 +17,8 @@ export default function RegisterPlus() {
   const { id } = route.params; // Obtém o parâmetro id
   const [dataNascimento, setDataNascimento] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [categoria, setCategoria] = useState("Comum");
+  const [cep, setCep] = useState("");
+  const [categoria, setCategoria] = useState("Padrão");
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -26,7 +26,7 @@ export default function RegisterPlus() {
   const [cpfError, setCpfError] = useState(false);
   const [dataNascError, setDataNascError] = useState(false);
   const [telefoneError, setTelefoneError] = useState(false);
-  const [enderecoError, setEnderecoError] = useState(false);
+  const [cepError, setCepError] = useState(false);
 
   // Mensagem de alerta
   const [messageAlert, setMessageAlert] = useState("");
@@ -39,7 +39,7 @@ export default function RegisterPlus() {
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   const handleRegister = async (response) => {
-    const isValid = inputValidationRegisterPlus(cpf, dataNascimento, telefone, endereco, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setEnderecoError, setModalVisible);
+    const isValid = inputValidationRegisterPlus(cpf, dataNascimento, telefone, cep, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setCepError, setModalVisible);
     if (isValid) {
 
       const id = await completarCadastro();
@@ -47,7 +47,7 @@ export default function RegisterPlus() {
       if (id) {
         setSuccessRegister(true);
         setTimeout(() => {
-          linkTo(`/Home`, { params: { id } }); // Passa os parâmetros explicitamente
+          linkTo('/MainRoutes'); // Passa os parâmetros explicitamente
           setModalVisible(false);
         }, 1500);
       }
@@ -66,7 +66,7 @@ export default function RegisterPlus() {
           cpf: cpf,
           data_nascimento: dataNascimento,
           telefone: telefone,
-          endereco: endereco,
+          cep: cep,
           tipo_usuario: categoria,
           id_usuario: id,
         }),
@@ -171,15 +171,15 @@ export default function RegisterPlus() {
             <View style={styles.inputContainer}>
               {/* input cpf */}
               <View style={styles.inputSection}>
-                <View style={[styles.iconInputSection, enderecoError && styles.iconInputError]}>
+                <View style={[styles.iconInputSection, cepError && styles.iconInputError]}>
                   <Icon name="map-marker-alt" size={20} color="#fff" />
                 </View>
                 <TextInput
-                  style={[styles.input, enderecoError && styles.inputError]}
-                  placeholder="Endereço"
+                  style={[styles.input, cepError && styles.inputError]}
+                  placeholder="CEP"
                   placeholderTextColor={"#C7C7C7"}
-                  value={endereco}
-                  onChangeText={setEndereco}
+                  value={cep}
+                  onChangeText={setCep}
                   underlineColorAndroid="transparent"
                 />
               </View>
@@ -187,7 +187,7 @@ export default function RegisterPlus() {
 
             {/* Radio Buttons */}
             <View style={styles.radioGroup}>
-              {["Comum", "Estudante", "Deficiente"].map((option) => (
+              {["Padrão", "Estudante", "PCD"].map((option) => (
                 <TouchableOpacity
                   key={option}
                   style={styles.radioButton}

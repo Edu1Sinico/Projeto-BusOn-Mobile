@@ -22,7 +22,7 @@ const criarUsuario = async (req, res) => {
 
 //Método de completar cadastro 
 const completarUsuario = async (req, res) => {
-    const { cpf, data_nascimento, telefone, endereco, tipo_usuario, id_usuario } = req.body;
+    const { cpf, data_nascimento, telefone, cep, tipo_usuario, id_usuario } = req.body;
 
     if (!id_usuario) {
         return res.status(400).send('ID do usuário é obrigatório.');
@@ -30,8 +30,8 @@ const completarUsuario = async (req, res) => {
 
     try {
         const result = await pool.query(
-            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, endereco=$4, tipo_usuario=$5 WHERE id_usuario=$6 RETURNING *',
-            [cpf, data_nascimento, telefone, endereco, tipo_usuario, id_usuario]
+            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, cep=$4, tipo_usuario=$5 WHERE id_usuario=$6 RETURNING *',
+            [cpf, data_nascimento, telefone, cep, tipo_usuario, id_usuario]
         );
 
         if (result.rows.length === 0) {
@@ -51,7 +51,7 @@ const buscarUsuario = async (req, res) => {
     const { id_usuario } = req.body;
     try {
         const result = await pool.query(
-            'SELECT * FROM usuario WHERE id=$1',
+            'SELECT * FROM usuario WHERE id_usuario=$1',
             [id_usuario]
         );
         // Se a resposta for bem-sucedida, retorna o usuário

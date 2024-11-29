@@ -88,16 +88,6 @@ export default StyleSheet.create({
     paddingBottom: 5,
   },
 
-  icon: {
-    marginRight: 10,
-  },
-
-  input: {
-    flex: 1,
-    fontSize: 16,
-    color: "#333",
-  },
-
   radioGroup: {
     width: '100%',
     flexDirection: "row",

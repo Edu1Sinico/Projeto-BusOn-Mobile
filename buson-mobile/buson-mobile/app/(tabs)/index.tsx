@@ -27,7 +27,7 @@ export default function App() {
         <Stack.Screen name="Register-Plus" component={RegisterPlus} options={{
           animation: 'fade'
         }} />
-        <Stack.Screen name="Home" component={Routes} options={{
+        <Stack.Screen name="MainRoutes" component={Routes} options={{
           headerShown: false,
           animation: 'fade'
         }} />
