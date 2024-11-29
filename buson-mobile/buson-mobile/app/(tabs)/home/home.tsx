@@ -125,7 +125,7 @@ export default function HomeScreen() {
               <View style={styles.buttonTopSection}>
                 <TouchableOpacity
                   style={styles.bigIconButton}
-                  onPress={() => linkTo('/Empresas')}
+                  onPress={() => linkTo(`/Empresas?id=${id}`)}
                 >
                   <Icon name="building" size={90} color={'#fff'}></Icon>
                   <Text style={styles.bigTextIcon}>Empresas</Text>

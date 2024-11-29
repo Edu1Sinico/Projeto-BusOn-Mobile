@@ -69,7 +69,7 @@ export default function RegisterScreen() {
             if (response === 'yes') {
                 linkTo(`/Register-Plus?id=${id}`);
             } else {
-                linkTo(`/MainRoutes`, { params: { id } }); // Passa os parâmetros explicitamente
+                linkTo(`/MainHome?id=${id}`); // Passa os parâmetros explicitamente
             }
         }
     };

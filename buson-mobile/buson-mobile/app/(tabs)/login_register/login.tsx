@@ -39,7 +39,7 @@ export default function LoginScreen() {
             if (id) {
                 setSuccessLogin(true);
                 setTimeout(() => {
-                    linkTo(`/MainRoutes?id=${id}`);
+                    linkTo(`/MainHome?id=${id}`);
                     setModalVisible(false);
                 }, 2000);
             }

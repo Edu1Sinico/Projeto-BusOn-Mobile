@@ -7,7 +7,7 @@ const router = express.Router(); // Cria um roteador para definir as rotas relac
 router.post('/criarUsuario', criarUsuario); 
 router.post('/completarUsuario', completarUsuario );
 router.post('/buscarUsuario', buscarUsuario);
-router.post('/autenticarUsuario', autenticarUsuario)
+router.post('/autenticarUsuario', autenticarUsuario);
 
 module.exports = router; 
 // O roteador é exportado para ser usado no servidor principal (index.js).
