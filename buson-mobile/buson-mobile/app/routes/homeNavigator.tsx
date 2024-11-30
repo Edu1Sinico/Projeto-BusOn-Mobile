@@ -5,6 +5,7 @@ import HomeScreen from '../(tabs)/home/home';
 import CompanyScreen from '../(tabs)/internal_pages/internal_company_pages/companyPage';
 import FavoritesCompanyPage from '../(tabs)/internal_pages/internal_company_pages/favoriteCompaniesPage';
 import ProfileScreen from '../(tabs)/internal_pages/internal_user_pages/userPage';
+import RegisterPlus from '../(tabs)/login_register/registerplus';
 const Stack = createNativeStackNavigator();
 import { useRoute } from '@react-navigation/native';
 
@@ -28,7 +29,10 @@ export function HomeNavigator() {
                 <Stack.Screen name="Empresas-Favoritas" component={FavoritesCompanyPage} initialParams={{ id }} options={{
                     animation: 'fade'
                 }} />
-                <Stack.Screen name="Perfil" component={ProfileScreen} options={{
+                <Stack.Screen name="Perfil" component={ProfileScreen} initialParams={{ id }} options={{
+                    animation: 'fade'
+                }} />
+                <Stack.Screen name="Register-Plus" component={RegisterPlus} options={{
                     animation: 'fade'
                 }} />
             </Stack.Navigator>

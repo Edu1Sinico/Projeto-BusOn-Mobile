@@ -18,36 +18,53 @@ export default function FavoritesCompanyPage() {
   const fetchFavorites = async () => {
     try {
       setIsLoading(true); // Ativa o estado de carregamento
-      const response = await fetch('http://localhost:3000/api/buscarFavoritos', {
+
+      // Buscar os IDs das empresas favoritas
+      const favoriteResponse = await fetch('http://localhost:3000/api/buscarFavoritos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          id_usuario: id,
-        }),
+        body: JSON.stringify({ id_usuario: id }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        const formattedData = Array.isArray(data)
-          ? data.map((item) => ({
-            id: item.id_empresa,
-            name: item.nome_empresa,
-            location: item.cidade_empresa,
-            image: item.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
-          }))
-          : [];
-
-        setFavorites(formattedData); // Atualiza os favoritos no estado
-        setErrorAlert(false);
-      } else {
-        setErrorAlert(true);
-        console.error('Erro ao buscar favoritos:', response.status);
+      if (!favoriteResponse.ok) {
+        throw new Error('Erro ao buscar IDs favoritos.');
       }
-    } catch (err) {
+
+      const favoriteData = await favoriteResponse.json(); // Retorna um array com os IDs
+      const favoriteIds = favoriteData.map((fav) => fav.id_empresa);
+
+      // Buscar os dados das empresas favoritas com base nos IDs
+      const companyResponse = await fetch('http://localhost:3000/api/buscarEmpresasID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ids: favoriteIds }), // Envia os IDs como array
+      });
+
+      if (!companyResponse.ok) {
+        throw new Error('Erro ao buscar empresas favoritas.');
+      }
+
+      const companies = await companyResponse.json();
+
+      // Formatar os dados das empresas
+      const formattedData = Array.isArray(companies)
+        ? companies.map((item) => ({
+          id: item.id_empresa,
+          name: item.nome_empresa,
+          location: item.cidade_empresa,
+          image: item.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
+        }))
+        : [];
+
+      setFavorites(formattedData); // Atualiza o estado com as empresas favoritas
+      setErrorAlert(false);
+    } catch (error) {
+      console.error(error);
       setErrorAlert(true);
-      console.error('Erro ao conectar ao servidor:', err);
     } finally {
       setIsLoading(false); // Desativa o estado de carregamento
     }

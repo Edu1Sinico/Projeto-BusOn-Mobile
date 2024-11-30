@@ -30,7 +30,7 @@ const completarUsuario = async (req, res) => {
 
     try {
         const result = await pool.query(
-            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, cep=$4, tipo_usuario=$5 WHERE id_usuario=$6 RETURNING *',
+            'UPDATE usuario SET cpf=$1, data_nascimento=$2, telefone=$3, cep=$4, tipo_usuario=$5, cadastro_completo=true WHERE id_usuario=$6 RETURNING *',
             [cpf, data_nascimento, telefone, cep, tipo_usuario, id_usuario]
         );
 
