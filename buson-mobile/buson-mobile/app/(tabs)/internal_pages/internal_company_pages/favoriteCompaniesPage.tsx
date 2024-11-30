@@ -14,63 +14,77 @@ export default function FavoritesCompanyPage() {
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o ID do usuário dos parâmetros da rota
 
-  // Função para buscar os favoritos do backend
+  // Buscar favoritos
   const fetchFavorites = async () => {
     try {
+      const response = await fetch('http://localhost:3000/api/buscarFavoritos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id, // ID do usuário logado
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFavorites(data); // Atualiza com um array vazio se `id_empresa` for indefinido
+        return data;
+
+      } else {
+        console.error('Erro ao buscar favoritos:', response.status);
+      }
+    } catch (err) {
+      console.error('Erro de conexão ao buscar favoritos:', err);
+    }
+  };
+
+
+  // Função para buscar os favoritos do backend
+  const fetchCompanies = async (favoriteIds) => {
+    try {
       setIsLoading(true); // Ativa o estado de carregamento
-
-      // Buscar os IDs das empresas favoritas
-      const favoriteResponse = await fetch('http://localhost:3000/api/buscarFavoritos', {
+      const response = await fetch('http://localhost:3000/api/buscarEmpresaID', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id_usuario: id }),
+        body: JSON.stringify({
+          id_empresas: favoriteIds,
+        }),
       });
+      if (response.ok) {
+        const data = await response.json();
+        const formattedData = Array.isArray(data)
+          ? data.map((item) => ({
+            id: item.id_empresa,
+            name: item.nome_empresa,
+            location: item.cidade_empresa,
+            image: item.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
+          }))
+          : [{
+            id: data.id_empresa,
+            name: data.nome_empresa,
+            location: data.cidade_empresa,
+            image: data.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
+          }];
 
-      if (!favoriteResponse.ok) {
-        throw new Error('Erro ao buscar IDs favoritos.');
+        setFavorites(formattedData);
+        setErrorAlert(false);
+      } else {
+        setErrorAlert(true);
+        console.error('Erro ao buscar empresas:', response.status);
       }
-
-      const favoriteData = await favoriteResponse.json(); // Retorna um array com os IDs
-      const favoriteIds = favoriteData.map((fav) => fav.id_empresa);
-
-      // Buscar os dados das empresas favoritas com base nos IDs
-      const companyResponse = await fetch('http://localhost:3000/api/buscarEmpresasID', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ids: favoriteIds }), // Envia os IDs como array
-      });
-
-      if (!companyResponse.ok) {
-        throw new Error('Erro ao buscar empresas favoritas.');
-      }
-
-      const companies = await companyResponse.json();
-
-      // Formatar os dados das empresas
-      const formattedData = Array.isArray(companies)
-        ? companies.map((item) => ({
-          id: item.id_empresa,
-          name: item.nome_empresa,
-          location: item.cidade_empresa,
-          image: item.logo || require('@/assets/images/companiesLogo/LogoSou.png'),
-        }))
-        : [];
-
-      setFavorites(formattedData); // Atualiza o estado com as empresas favoritas
-      setErrorAlert(false);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
       setErrorAlert(true);
+      console.error('Erro ao conectar ao servidor:', err);
     } finally {
       setIsLoading(false); // Desativa o estado de carregamento
     }
   };
 
-  // Função para remover um favorito
+  // Método para remover os favoritos
   const removeFavorite = async (id_empresa) => {
     try {
       const response = await fetch('http://localhost:3000/api/removerFavoritos', {
@@ -99,7 +113,14 @@ export default function FavoritesCompanyPage() {
 
   // Carrega os favoritos ao montar o componente
   useEffect(() => {
-    fetchFavorites();
+    const loadFavoritesAndCompanies = async () => {
+      const favoriteIds = await fetchFavorites(); // Obtém os IDs favoritos
+      if (favoriteIds && favoriteIds.length > 0) {
+        await fetchCompanies(favoriteIds); // Passa os IDs favoritos
+      }
+    };
+
+    loadFavoritesAndCompanies();
   }, []);
 
   // Renderiza cada empresa favorita
@@ -132,14 +153,25 @@ export default function FavoritesCompanyPage() {
           {isLoading ? (
             <View style={styles.loadingSection}>
               {errorAlert ? (
-                <Text style={styles.errorMessage}>Falha ao carregar favoritos. Verifique sua conexão e tente novamente.</Text>
+                <Text style={styles.alertMessage}>
+                  Falha ao carregar favoritos. Verifique sua conexão e tente novamente.
+                </Text>
               ) : (
                 <ActivityIndicator size="large" color="#0AC86C" />
               )}
             </View>
           ) : errorAlert ? (
             <View style={styles.loadingSection}>
-              <Text style={styles.errorMessage}>Falha ao carregar favoritos. Verifique sua conexão e tente novamente.</Text>
+              <Text style={styles.alertMessage}>
+                Falha ao carregar favoritos. Verifique sua conexão e tente novamente.
+              </Text>
+            </View>
+          ) : favorites.length === 0 ? (
+            // Mensagem se nenhum favorito for encontrado
+            <View style={styles.loadingSection}>
+              <Text style={styles.alertMessage}>
+                Você ainda não marcou nenhuma empresa como favorita.
+              </Text>
             </View>
           ) : (
             <FlatList
