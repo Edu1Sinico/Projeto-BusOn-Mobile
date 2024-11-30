@@ -113,7 +113,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
 
-    errorMessage: {
+    alertMessage: {
         textAlign: 'center',
         fontSize: 15,
         color: 'gray',
@@ -123,6 +123,6 @@ export default StyleSheet.create({
         paddingBottom: 16, // Espaçamento inferior para melhor visualização
     },
 
-    
+
 
 });

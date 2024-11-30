@@ -153,14 +153,25 @@ export default function FavoritesCompanyPage() {
           {isLoading ? (
             <View style={styles.loadingSection}>
               {errorAlert ? (
-                <Text style={styles.errorMessage}>Falha ao carregar favoritos. Verifique sua conexão e tente novamente.</Text>
+                <Text style={styles.alertMessage}>
+                  Falha ao carregar favoritos. Verifique sua conexão e tente novamente.
+                </Text>
               ) : (
                 <ActivityIndicator size="large" color="#0AC86C" />
               )}
             </View>
           ) : errorAlert ? (
             <View style={styles.loadingSection}>
-              <Text style={styles.errorMessage}>Falha ao carregar favoritos. Verifique sua conexão e tente novamente.</Text>
+              <Text style={styles.alertMessage}>
+                Falha ao carregar favoritos. Verifique sua conexão e tente novamente.
+              </Text>
+            </View>
+          ) : favorites.length === 0 ? (
+            // Mensagem se nenhum favorito for encontrado
+            <View style={styles.loadingSection}>
+              <Text style={styles.alertMessage}>
+                Você ainda não marcou nenhuma empresa como favorita.
+              </Text>
             </View>
           ) : (
             <FlatList
