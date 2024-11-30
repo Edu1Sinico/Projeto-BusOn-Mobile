@@ -22,6 +22,7 @@ export default function HomeScreen() {
   const [search, setSearch] = useState('');
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
   const [userName, setUserName] = useState('Usuário');
+  const [registerComplete, setRegisterComplete] = useState(false);
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
@@ -43,6 +44,7 @@ export default function HomeScreen() {
       if (response.ok) {
         const data = await response.json();
         setUserName(data.nome);
+        setRegisterComplete(data.cadastro_completo);
       } else {
         console.log('Erro ao buscar o usuário.')
       }

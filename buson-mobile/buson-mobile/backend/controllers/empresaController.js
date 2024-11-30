@@ -12,13 +12,17 @@ const buscarEmpresas = async (req, res) => {
 };
 
 const buscarEmpresaID = async (req, res) => {
-    const { id_empresa } = req.body;
+    const { id_empresas } = req.body; // Recebe um array de IDs
+    if (!Array.isArray(id_empresas)) {
+        return res.status(400).send('id_empresas deve ser um array.');
+    }
+
     try {
         const result = await pool.query(
-            'SELECT * FROM favoritos WHERE id_empresa=$1',
-            [id_empresa]
+            'SELECT * FROM empresa WHERE id_empresa = ANY($1)',
+            [id_empresas]
         );
-        res.json(result.rows); // Retorna todos os registros como um array
+        res.json(result.rows);
     } catch (err) {
         console.error(err);
         res.status(500).send('Erro ao buscar as empresas específicas.');

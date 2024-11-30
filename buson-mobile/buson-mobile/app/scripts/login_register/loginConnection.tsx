@@ -46,7 +46,6 @@ export const handleLogin = async (
 
     if (inputValidationLogin(user, email, password, setMessageAlert, setUserError, setEmailError, setPasswordError, setModalVisible)) {
         const id = await autenticarUsuario(user, email, password, setMessageAlert, setModalVisible);
-        console.log('ID recebido: ' + id);
 
         if (id) {
             setSuccessLogin(true);

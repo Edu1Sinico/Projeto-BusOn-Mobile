@@ -16,11 +16,11 @@ export function HomeNavigator() {
 
     return (
         <NavigationContainer independent={true}>
-            <Stack.Navigator initialRouteName="HomeScreen"
+            <Stack.Navigator initialRouteName="Home"
                 screenOptions={{
                     headerShown: false,  // Removendo o cabeçalho
                 }}>
-                <Stack.Screen name="HomeScreen" component={HomeScreen} initialParams={{ id }} options={{
+                <Stack.Screen name="Home" component={HomeScreen} initialParams={{ id }} options={{
                     animation: 'fade'
                 }} />
                 <Stack.Screen name="Empresas" component={CompanyScreen} initialParams={{ id }} options={{

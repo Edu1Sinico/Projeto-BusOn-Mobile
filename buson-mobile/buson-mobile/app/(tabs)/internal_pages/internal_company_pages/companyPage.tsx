@@ -16,7 +16,6 @@ export default function CompanyScreen() {
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o parâmetro id
 
-
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   // Função para buscar empresas do backend

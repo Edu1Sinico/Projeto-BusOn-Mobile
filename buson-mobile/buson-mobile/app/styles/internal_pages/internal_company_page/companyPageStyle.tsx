@@ -123,10 +123,6 @@ export default StyleSheet.create({
         paddingBottom: 16, // Espaçamento inferior para melhor visualização
     },
 
-    emptyText: {
-        fontSize: 16,
-        color: "#999",
-        textAlign: "center",
-    },
+    
 
 });
