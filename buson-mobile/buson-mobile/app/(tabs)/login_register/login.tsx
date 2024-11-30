@@ -1,140 +1,79 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Modal, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import { useLinkTo } from '@react-navigation/native';
-// Importando a estilização
 import styles from '@/app/styles/login_register/LoginStyle';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
-// Importando a tela de aviso do campo vazio
 import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
-import { inputValidationLogin } from '@/app/scripts/login_register/validationLogin';
-import React from 'react';
+import { handleLogin } from '@/app/scripts/login_register/loginConnection';
 
 const background = require("@/assets/images/background/bus_background.png");
 
 export default function LoginScreen() {
-    const [email, setEmail] = useState('');  // Estado para armazenar o valor do campo de texto
+    const [email, setEmail] = useState('');
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const linkTo = useLinkTo();
 
-    const linkTo = useLinkTo(); // Sistema de links do react navigator
-
-    // Estados de erro para campos individuais
     const [userError, setUserError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    // Estado para mensagem de sucesso
     const [successLogin, setSuccessLogin] = useState(false);
-
-    // Mensagem de alerta
-    const [messageAlert, setMessageAlert] = useState("");
-
-
-    const handleLogin = async (response) => {
-        if (inputValidationLogin(user, email, password, setMessageAlert, setUserError, setEmailError, setPasswordError, setModalVisible)) {
-            const id = await autenticarUsuario();
-            console.log("ID recebido: " + id)
-            if (id) {
-                setSuccessLogin(true);
-                setTimeout(() => {
-                    linkTo(`/MainHome?id=${id}`);
-                    setModalVisible(false);
-                }, 2000);
-            }
-        }
-    };
-
-    const autenticarUsuario = async () => {
-        try {
-            // Define o endpoint da API (ajuste o endereço do backend)
-            const response = await fetch('http://localhost:3000/api/autenticarUsuario', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    nome: user,
-                    email: email,
-                    senha: password,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.id_usuario;
-            } else {
-                setMessageAlert('Credenciais inválidas, tente novamente.');
-                setModalVisible(true);
-                return null;
-            }
-        } catch (err) {
-            console.error('Erro ao realizar login:', err);
-            setMessageAlert('Erro ao conectar ao servidor.');
-            setModalVisible(true);
-            return null;
-        }
-    };
+    const [messageAlert, setMessageAlert] = useState('');
 
     return (
         <View style={styles.container}>
-            <ImageBackground source={background} resizeMode='repeat' style={styles.backgroundImage}>
+            <ImageBackground source={background} resizeMode="repeat" style={styles.backgroundImage}>
                 <View style={styles.loginSection}>
-
                     <View style={styles.topSection}>
                         <View style={styles.userSection}>
                             <Icon name="user" size={110} color="#0AC86C" />
                         </View>
-
                         <Text style={styles.title}>Login</Text>
                     </View>
 
                     <View style={styles.middleSection}>
-
-                        {/* Campo de Usuário */}
                         <View style={styles.inputSection}>
                             <View style={[styles.iconInputSection, userError && styles.iconInputError]}>
                                 <Icon name="user" size={20} color="#fff" />
                             </View>
                             <TextInput
-                                style={[styles.input, userError && styles.inputError]} // Aplica o estilo de erro se userError for true
+                                style={[styles.input, userError && styles.inputError]}
                                 placeholder="Usuário"
-                                placeholderTextColor={'#C7C7C7'}
+                                placeholderTextColor="#C7C7C7"
                                 value={user}
                                 onChangeText={setUser}
                                 underlineColorAndroid="transparent"
                             />
                         </View>
 
-                        {/* Campo do Email */}
                         <View style={styles.inputSection}>
                             <View style={[styles.iconInputSection, emailError && styles.iconInputError]}>
                                 <Icon name="at" size={20} color="#fff" />
                             </View>
                             <TextInput
-                                style={[styles.input, emailError && styles.inputError]} // Aplica o estilo de erro se emailError for true
+                                style={[styles.input, emailError && styles.inputError]}
                                 placeholder="E-mail"
-                                placeholderTextColor={'#C7C7C7'}
+                                placeholderTextColor="#C7C7C7"
                                 value={email}
-                                onChangeText={setEmail} // Atualiza o estado com o texto digitado
-                                keyboardType="email-address" // Define o tipo de teclado como email
+                                onChangeText={setEmail}
+                                keyboardType="email-address"
                                 underlineColorAndroid="transparent"
                             />
                         </View>
 
-                        {/* Campo de Senha */}
                         <View style={styles.inputSection}>
                             <View style={[styles.iconInputSection, passwordError && styles.iconInputError]}>
                                 <Icon name="lock" size={20} color="#fff" />
                             </View>
                             <TextInput
-                                style={[styles.input, passwordError && styles.inputError]} // Aplica o estilo de erro se passwordError for true
+                                style={[styles.input, passwordError && styles.inputError]}
                                 placeholder="Senha"
-                                placeholderTextColor={'#C7C7C7'}
-                                secureTextEntry={true} // Oculta o texto
+                                placeholderTextColor="#C7C7C7"
+                                secureTextEntry
                                 value={password}
-                                onChangeText={setPassword} // Atualiza o estado com o texto digitado
+                                onChangeText={setPassword}
                                 underlineColorAndroid="transparent"
                             />
                         </View>
@@ -142,11 +81,26 @@ export default function LoginScreen() {
                         <TouchableOpacity style={styles.touchLink}>
                             <Text style={styles.link}>Esqueceu a senha? Clique aqui!</Text>
                         </TouchableOpacity>
-
                     </View>
 
                     <View style={styles.bottomSection}>
-                        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                        <TouchableOpacity
+                            style={styles.loginButton}
+                            onPress={() =>
+                                handleLogin(
+                                    user,
+                                    email,
+                                    password,
+                                    linkTo,
+                                    setMessageAlert,
+                                    setUserError,
+                                    setEmailError,
+                                    setPasswordError,
+                                    setModalVisible,
+                                    setSuccessLogin
+                                )
+                            }
+                        >
                             <Text style={styles.loginTextButton}>Login</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.touchLink} onPress={() => linkTo('/Register')}>
@@ -154,16 +108,15 @@ export default function LoginScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </ImageBackground >
+            </ImageBackground>
 
-            {/* Modal de alerta */}
-            < Modal
-                animationType='fade'
-                transparent={true}
-                visible={modalVisible}
-            >
-                <ModalAlertValidation messageAlert={messageAlert} successMessage={successLogin} handleClose={() => setModalVisible(false)} />
-            </Modal >
-        </View >
+            <Modal animationType="fade" transparent visible={modalVisible}>
+                <ModalAlertValidation
+                    messageAlert={messageAlert}
+                    successMessage={successLogin}
+                    handleClose={() => setModalVisible(false)}
+                />
+            </Modal>
+        </View>
     );
 }

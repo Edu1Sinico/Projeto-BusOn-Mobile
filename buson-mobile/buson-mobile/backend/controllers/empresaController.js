@@ -11,6 +11,20 @@ const buscarEmpresas = async (req, res) => {
     }
 };
 
+const buscarEmpresaID = async (req, res) => {
+    const { id_empresa } = req.body;
+    try {
+        const result = await pool.query(
+            'SELECT * FROM favoritos WHERE id_empresa=$1',
+            [id_empresa]
+        );
+        res.json(result.rows); // Retorna todos os registros como um array
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao buscar as empresas específicas.');
+    }
+};
+
 // Método para adicionar aos favoritos
 const adicionarFavoritos = async (req, res) => {
     const { id_usuario, id_empresa } = req.body;
@@ -69,4 +83,4 @@ const buscarFavoritos = async (req, res) => {
     }
 };
 
-module.exports = { buscarEmpresas, adicionarFavoritos, removerFavoritos, buscarFavoritos }; // Exporta a função para ser usada nas rotas.
+module.exports = { buscarEmpresas, buscarEmpresaID, adicionarFavoritos, removerFavoritos, buscarFavoritos }; // Exporta a função para ser usada nas rotas.

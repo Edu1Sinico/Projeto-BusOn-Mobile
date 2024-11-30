@@ -9,12 +9,12 @@ import SemiHeader from "@/components/header/semiHeader";
 // Importando a tela de aviso do campo vazio
 import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
 import { inputValidationRegisterPlus } from '@/app/scripts/login_register/validationRegisterPlus';
+import Header from '@/components/header/header';
 
-export default function RegisterPlus() {
-  const route = useRoute(); // Hook para acessar os parâmetros da rota
-  console.log(route.params);
+export default function RegisterPlus({ route }: { route: any }) {
+  const { id, registerPlusProfile } = route.params;
+
   const [cpf, setCpf] = useState("");
-  const { id } = route.params; // Obtém o parâmetro id
   const [dataNascimento, setDataNascimento] = useState("");
   const [telefone, setTelefone] = useState("");
   const [cep, setCep] = useState("");
@@ -47,7 +47,14 @@ export default function RegisterPlus() {
       if (id) {
         setSuccessRegister(true);
         setTimeout(() => {
-          linkTo(`/MainHome?id=${id}`); // Passa os parâmetros explicitamente
+          {
+            registerPlusProfile ? (
+              linkTo(`/HomeScreen?id=${id}`) // Passa os parâmetros explicitamente
+            ) : (
+              linkTo(`/MainHome?id=${id}`) // Passa os parâmetros explicitamente
+            )
+          }
+
           setModalVisible(false);
         }, 1500);
       }
@@ -98,12 +105,18 @@ export default function RegisterPlus() {
         {/* Top Section */}
         <View style={styles.sectionTop}>
           <View style={styles.header}>
-            <View style={styles.logo_section}>
-              <Image
-                source={require("@/assets/images/BusOn_Logo_Branco_Preto.png")}
-                style={styles.logo}
-              />
-            </View>
+            {registerPlusProfile ? (
+              <Header backgroundActive={false} />
+            ) : (
+              <View style={styles.logo_section}>
+                <Image
+                  source={require("@/assets/images/BusOn_Logo_Branco_Preto.png")}
+                  style={styles.logo}
+                />
+              </View>
+            )
+            }
+
           </View>
           <View style={styles.userbanner}>
             <Icon name="user-alt" size={50} color="#0AC86C" />
@@ -219,7 +232,7 @@ export default function RegisterPlus() {
         >
           <ModalAlertValidation messageAlert={messageAlert} successMessage={successRegister} handleClose={() => setModalVisible(false)} />
         </Modal>
-      </ImageBackground>
-    </View>
+      </ImageBackground >
+    </View >
   );
 }

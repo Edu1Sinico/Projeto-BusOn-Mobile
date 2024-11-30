@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
@@ -18,10 +17,6 @@ import Header from '@/components/header/header';
 export default function HomeScreen() {
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o parâmetro id
-
-  React.useEffect(() => {
-    console.log('ID do usuário:', id);
-  }, [id]);
 
   // useState
   const [search, setSearch] = useState('');
