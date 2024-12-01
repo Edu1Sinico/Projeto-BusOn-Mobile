@@ -43,14 +43,15 @@ export default function AddCardScreen() {
 
   return (
     <View style={styles.container}>
-      <Header  backgroundActive={true}/>
-      <SemiHeader title="Cadastrar Cartão"  />
+      <Header backgroundActive={true} />
+      <SemiHeader title="Cadastrar Cartão" />
 
       <View style={styles.form}>
         <Text style={styles.label}>Número do Cartão</Text>
         <TextInput
           style={styles.input}
           value={cardNumber}
+          placeholderTextColor={'#C7C7C7'}
           onChangeText={setCardNumber}
           keyboardType="numeric"
           maxLength={16}
@@ -61,6 +62,7 @@ export default function AddCardScreen() {
         <TextInput
           style={styles.input}
           value={expiryDate}
+          placeholderTextColor={'#C7C7C7'}
           onChangeText={setExpiryDate}
           placeholder="MM/AAAA"
         />
@@ -69,6 +71,7 @@ export default function AddCardScreen() {
         <TextInput
           style={styles.input}
           value={securityCode}
+          placeholderTextColor={'#C7C7C7'}
           onChangeText={setSecurityCode}
           keyboardType="numeric"
           maxLength={3}

@@ -30,7 +30,7 @@ export default function AddCashScreen() {
           </View>
           <View style={styles.textCashSection}>
             <Text style={styles.titleCashButton}>Pix</Text>
-            <Text style={styles.textCashButton}>Adicione credítos na sua carteira via Pix</Text>
+            <Text style={styles.textCashButton}>Adicione créditos na sua carteira via Pix</Text>
           </View>
         </TouchableOpacity>
 
@@ -42,7 +42,17 @@ export default function AddCashScreen() {
           </View>
           <View style={styles.textCashSection}>
             <Text style={styles.titleCashButton}>Cartão</Text>
-            <Text style={styles.textCashButton}>Adicione credítos na sua carteira via Débito ou Crédito</Text>
+            <Text style={styles.textCashButton}>Adicione créditos na sua carteira via Débito ou Crédito</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.cashButton}>
+          <View style={styles.iconCashSection}>
+            <Icon name={'card-giftcard'} size={40} color="#2EBEC6" />
+          </View>
+          <View style={styles.textCashSection}>
+            <Text style={styles.titleCashButton}>Cartão-Presente</Text>
+            <Text style={styles.textCashButton}>Adicione créditos na sua carteira via Cartão-Presente</Text>
           </View>
         </TouchableOpacity>
 
