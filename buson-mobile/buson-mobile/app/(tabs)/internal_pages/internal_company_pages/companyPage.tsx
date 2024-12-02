@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, TextInput, FlatList, Image, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, FlatList, Image, ActivityIndicator, Modal } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "@/app/styles/internal_pages/internal_company_page/companyPageStyle";
 import { useLinkTo, useRoute } from '@react-navigation/native';
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
+import { ModalCompanyValidation } from "@/components/modal/ModalCompanyValidation";
+
+let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 export default function CompanyScreen() {
   const [search, setSearch] = useState('');
@@ -12,9 +15,16 @@ export default function CompanyScreen() {
   const [companies, setCompanies] = useState([]); // Estado para armazenar as empresas
   const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
   const [errorAlert, setErrorAlert] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [generateCode, setGenerateCode] = useState('');
+
+  // Informações da empresa
+  const [companyName, setCompanyName] = useState('Empresa');
 
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o parâmetro id
+
+  console.log('ID recebido: ' + id);
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
@@ -151,6 +161,27 @@ export default function CompanyScreen() {
     }
   };
 
+  const abrirModalCompany = (nomeEmpresa) => {
+    generatedPassword();
+    setCompanyName(nomeEmpresa);
+    setModalVisible(true);
+  }
+
+  function generatedPassword() {
+
+    // Variável para a senha
+    let code = "";
+    let n = charset.length;
+    // For para roda o charSet, o size definirá a quantidade de caracteres
+    for (let index = 0; index < 9; index++) {
+      // realizando a concatenação com caracteres aleatórios do charset
+      // Math.floor gera números inteiros
+      // A multiplicação entre o método random e o valor n gerará o valor aleatório
+      code += charset.charAt(Math.floor(Math.random() * n));
+    }
+    setGenerateCode(code);
+  }
+
   const renderCompanyCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={item.image} style={styles.cardImage} />
@@ -169,6 +200,7 @@ export default function CompanyScreen() {
         />
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={() => { abrirModalCompany(item.name) }}
         style={styles.selectButton}
       >
         <Text style={styles.selectButtonText}>Selecionar</Text>
@@ -207,7 +239,7 @@ export default function CompanyScreen() {
           {isLoading ? (
             <View style={styles.loadingSection}>
               {errorAlert ? (
-                <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique
+                <Text style={styles.alertMessage}>Falha ao buscar empresas. Verifique
                   sua conexão e tente novamente.</Text>
               ) : (
                 <ActivityIndicator size="large" color="#0AC86C" />
@@ -215,7 +247,7 @@ export default function CompanyScreen() {
             </View>
           ) : errorAlert ? (
             <View style={styles.loadingSection}>
-              <Text style={styles.errorMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
+              <Text style={styles.alertMessage}>Falha ao buscar empresas. Verifique sua conexão e tente novamente.</Text>
             </View>
           ) : (
             <FlatList
@@ -226,6 +258,16 @@ export default function CompanyScreen() {
           )}
         </View>
       </View>
+
+      <Modal animationType="fade" transparent visible={modalVisible}>
+        <ModalCompanyValidation
+          companyName={companyName}
+          code={generateCode}
+          handleClose={() => setModalVisible(false)}
+        />
+      </Modal>
+
     </View>
+
   );
 }

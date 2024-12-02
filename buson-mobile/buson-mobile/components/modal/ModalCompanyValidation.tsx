@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-nativ
 // Importando os ícones
 import Icon from 'react-native-vector-icons/AntDesign';
 
-export function ModalCompanyValidation({ companyName, code }) {
+export function ModalCompanyValidation({ companyName, code, handleClose }) {
 
     return (
         <View style={styles.container}>
@@ -33,7 +33,7 @@ export function ModalCompanyValidation({ companyName, code }) {
                         <TouchableOpacity style={styles.confirmButton}>
                             <Text style={styles.confirmTextButton}>Confirmar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.confirmButton, styles.cancelButton]}>
+                        <TouchableOpacity style={[styles.confirmButton, styles.cancelButton]}  onPress={handleClose}>
                             <Text style={styles.confirmTextButton}>Cancelar</Text>
                         </TouchableOpacity>
                     </View>
