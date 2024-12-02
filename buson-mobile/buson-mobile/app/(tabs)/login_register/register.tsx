@@ -31,7 +31,6 @@ export default function RegisterScreen() {
     // Mensagem de alerta
     const [messageAlert, setMessageAlert] = useState("");
 
-
     const handleRegister = () => {
         // Realiza a validação
         const isValid = inputValidationRegister(
