@@ -1,15 +1,24 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, Modal, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Modal,
+  ImageBackground,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "@/app/styles/login_register/RegisterPlusStyle";
-import { useLinkTo, useRoute } from '@react-navigation/native';
+import { useLinkTo, useRoute } from "@react-navigation/native";
 import SemiHeader from "@/components/header/semiHeader";
 
 // Importando a tela de aviso do campo vazio
-import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
-import { inputValidationRegisterPlus } from '@/app/scripts/login_register/validationRegisterPlus';
-import Header from '@/components/header/header';
+import { ModalAlertValidation } from "@/components/modal/ModalAlertValidation";
+import { inputValidationRegisterPlus } from "@/app/scripts/login_register/validationRegisterPlus";
+import Header from "@/components/header/header";
+import ModalDocumentValidation from "@/components/modal/ModalDocumentValidation";
 
 export default function RegisterPlus({ route }: { route: any }) {
   const { id, registerPlusProfile } = route.params;
@@ -19,8 +28,9 @@ export default function RegisterPlus({ route }: { route: any }) {
   const [telefone, setTelefone] = useState("");
   const [cep, setCep] = useState("");
   const [categoria, setCategoria] = useState("Padrão");
+  const [tituloDocumento, setTituloDocumento] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [modalDocumentVisible, setModalDocumentVisible] = useState(false);
 
   // Estados de erro para campos individuais
   const [cpfError, setCpfError] = useState(false);
@@ -34,25 +44,33 @@ export default function RegisterPlus({ route }: { route: any }) {
   // Estado para mensagem de sucesso
   const [successRegister, setSuccessRegister] = useState(false);
 
-  const background = require('@/assets/images/background/background.png');
+  const background = require("@/assets/images/background/background.png");
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
   const handleRegister = async (response) => {
-    const isValid = inputValidationRegisterPlus(cpf, dataNascimento, telefone, cep, setMessageAlert, setCpfError, setDataNascError, setTelefoneError, setCepError, setModalVisible);
+    const isValid = inputValidationRegisterPlus(
+      cpf,
+      dataNascimento,
+      telefone,
+      cep,
+      setMessageAlert,
+      setCpfError,
+      setDataNascError,
+      setTelefoneError,
+      setCepError,
+      setModalVisible
+    );
     if (isValid) {
-
       const id = await completarCadastro();
 
       if (id) {
         setSuccessRegister(true);
         setTimeout(() => {
           {
-            registerPlusProfile ? (
-              linkTo(`/HomeScreen?id=${id}`) // Passa os parâmetros explicitamente
-            ) : (
-              linkTo(`/MainHome?id=${id}`) // Passa os parâmetros explicitamente
-            )
+            registerPlusProfile
+              ? linkTo(`/HomeScreen?id=${id}`) // Passa os parâmetros explicitamente
+              : linkTo(`/MainHome?id=${id}`); // Passa os parâmetros explicitamente
           }
 
           setModalVisible(false);
@@ -64,38 +82,53 @@ export default function RegisterPlus({ route }: { route: any }) {
   const completarCadastro = async () => {
     try {
       // Define o endpoint da API (ajuste o endereço do backend)
-      const response = await fetch('http://localhost:3000/api/completarUsuario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          cpf: cpf,
-          data_nascimento: dataNascimento,
-          telefone: telefone,
-          cep: cep,
-          tipo_usuario: categoria,
-          id_usuario: id,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/completarUsuario",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            cpf: cpf,
+            data_nascimento: dataNascimento,
+            telefone: telefone,
+            cep: cep,
+            tipo_usuario: categoria,
+            id_usuario: id,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         return data.id_usuario;
       } else {
-        console.error('Erro ao cadastrar usuário:', await response.text());
-        setMessageAlert('Erro ao cadastrar usuário. Tente novamente.');
+        console.error("Erro ao cadastrar usuário:", await response.text());
+        setMessageAlert("Erro ao cadastrar usuário. Tente novamente.");
         setModalVisible(true);
         return null;
       }
     } catch (error) {
-      console.error('Erro de conexão:', error);
-      setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
+      console.error("Erro de conexão:", error);
+      setMessageAlert("Erro de conexão com o servidor. Tente novamente.");
       setModalVisible(true);
       return null;
     }
   };
-
+  const abrirModalDocument = (option) => {
+    const opcao = option;
+    console.log(opcao);
+    if (opcao == "Estudante") {
+      setTituloDocumento("Declaração Escolar");
+      setModalDocumentVisible(true);
+    } else if (opcao == "PCD") {
+      setTituloDocumento("Laudo de Comprovação");
+      setModalDocumentVisible(true);
+    } else {
+      return null;
+    }
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -114,9 +147,7 @@ export default function RegisterPlus({ route }: { route: any }) {
                   style={styles.logo}
                 />
               </View>
-            )
-            }
-
+            )}
           </View>
           <View style={styles.userbanner}>
             <Icon name="user-alt" size={50} color="#0AC86C" />
@@ -134,7 +165,12 @@ export default function RegisterPlus({ route }: { route: any }) {
             <View style={styles.inputContainer}>
               {/* input cpf */}
               <View style={styles.inputSection}>
-                <View style={[styles.iconInputSection, cpfError && styles.iconInputError]}>
+                <View
+                  style={[
+                    styles.iconInputSection,
+                    cpfError && styles.iconInputError,
+                  ]}
+                >
                   <Icon name="id-card" size={20} color="#fff" />
                 </View>
                 <TextInput
@@ -151,7 +187,12 @@ export default function RegisterPlus({ route }: { route: any }) {
             <View style={styles.inputContainer}>
               {/* input cpf */}
               <View style={styles.inputSection}>
-                <View style={[styles.iconInputSection, dataNascError && styles.iconInputError]}>
+                <View
+                  style={[
+                    styles.iconInputSection,
+                    dataNascError && styles.iconInputError,
+                  ]}
+                >
                   <Icon name="calendar" size={20} color="#fff" />
                 </View>
                 <TextInput
@@ -167,7 +208,12 @@ export default function RegisterPlus({ route }: { route: any }) {
             <View style={styles.inputContainer}>
               {/* input cpf */}
               <View style={styles.inputSection}>
-                <View style={[styles.iconInputSection, telefoneError && styles.iconInputError]}>
+                <View
+                  style={[
+                    styles.iconInputSection,
+                    telefoneError && styles.iconInputError,
+                  ]}
+                >
                   <Icon name="phone" size={20} color="#fff" />
                 </View>
                 <TextInput
@@ -183,7 +229,12 @@ export default function RegisterPlus({ route }: { route: any }) {
             <View style={styles.inputContainer}>
               {/* input cpf */}
               <View style={styles.inputSection}>
-                <View style={[styles.iconInputSection, cepError && styles.iconInputError]}>
+                <View
+                  style={[
+                    styles.iconInputSection,
+                    cepError && styles.iconInputError,
+                  ]}
+                >
                   <Icon name="map-marker-alt" size={20} color="#fff" />
                 </View>
                 <TextInput
@@ -203,7 +254,10 @@ export default function RegisterPlus({ route }: { route: any }) {
                 <TouchableOpacity
                   key={option}
                   style={styles.radioButton}
-                  onPress={() => setCategoria(option)}
+                  onPress={() => {
+                    setCategoria(option);
+                    abrirModalDocument(option);
+                  }}
                 >
                   <View
                     style={[
@@ -217,22 +271,33 @@ export default function RegisterPlus({ route }: { route: any }) {
             </View>
 
             {/* Submit Button */}
-            <TouchableOpacity style={styles.addButton}
-              onPress={handleRegister}>
+            <TouchableOpacity style={styles.addButton} onPress={handleRegister}>
               <Text style={styles.addTextButton}>Completar Cadastro</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Modal de alerta */}
-        <Modal
-          animationType='fade'
-          transparent={true}
-          visible={modalVisible}
-        >
-          <ModalAlertValidation messageAlert={messageAlert} successMessage={successRegister} handleClose={() => setModalVisible(false)} />
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+          <ModalAlertValidation
+            messageAlert={messageAlert}
+            successMessage={successRegister}
+            handleClose={() => setModalVisible(false)}
+          />
         </Modal>
-      </ImageBackground >
-    </View >
+
+        {/* Modal de alerta */}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalDocumentVisible}
+        >
+          <ModalDocumentValidation
+            tituloDocumento={tituloDocumento}
+            handleClose={() => setModalVisible(false)}
+          />
+        </Modal>
+      </ImageBackground>
+    </View>
   );
 }

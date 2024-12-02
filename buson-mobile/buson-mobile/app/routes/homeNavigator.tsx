@@ -5,7 +5,7 @@ import HomeScreen from '../(tabs)/home/home';
 import CompanyScreen from '../(tabs)/internal_pages/internal_company_pages/companyPage';
 import FavoritesCompanyPage from '../(tabs)/internal_pages/internal_company_pages/favoriteCompaniesPage';
 import ProfileScreen from '../(tabs)/internal_pages/internal_user_pages/userPage';
-import RegisterPlus from '../(tabs)/login_register/registerplus';
+import RegisterPlus from '../(tabs)/login_register/registerPlus';
 const Stack = createNativeStackNavigator();
 import { useRoute } from '@react-navigation/native';
 

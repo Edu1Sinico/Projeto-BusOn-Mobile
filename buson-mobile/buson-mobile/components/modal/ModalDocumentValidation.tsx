@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 // Componente ModalDocumentValidation
-export function ModalDocumentValidation() {
+export function ModalDocumentValidation({tituloDocumento, handleClose}) {
   return (
     <View style={stylesModal.container}>
       <View style={stylesModal.content}>
@@ -34,7 +34,7 @@ const LaudoComprovacao = () => {
           source={require("@/assets/images/BusOn Logo.png")} // Substitua pelo caminho correto da logo
           style={stylesLaudo.logo}
         />
-        <Text style={stylesLaudo.title}>Laudo de Comprovação</Text>
+        <Text style={stylesLaudo.title}>Validação de Documentação</Text>
       </View>
 
       {/* Campo para anexar documento */}
@@ -74,7 +74,9 @@ const LaudoComprovacao = () => {
 
       {/* Botões */}
       <View style={stylesLaudo.buttonContainer}>
-        <TouchableOpacity style={stylesLaudo.cancelButton}>
+        <TouchableOpacity style={stylesLaudo.cancelButton}
+        // onPress={}
+        >
           <Text style={stylesLaudo.buttonText}>Cancelar</Text>
         </TouchableOpacity>
         <TouchableOpacity
