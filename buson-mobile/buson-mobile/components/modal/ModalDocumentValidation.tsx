@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -7,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-} from 'react-native';
+} from "react-native";
 
 // Componente ModalDocumentValidation
 export function ModalDocumentValidation() {
@@ -30,7 +31,7 @@ const LaudoComprovacao = () => {
       {/* Cabeçalho */}
       <View style={stylesLaudo.header}>
         <Image
-          source={require('@/assets/images/BusOn Logo.png')} // Substitua pelo caminho correto da logo
+          source={require("@/assets/images/BusOn Logo.png")} // Substitua pelo caminho correto da logo
           style={stylesLaudo.logo}
         />
         <Text style={stylesLaudo.title}>Laudo de Comprovação</Text>
@@ -93,20 +94,20 @@ const LaudoComprovacao = () => {
 // Estilos para ModalDocumentValidation
 const stylesModal = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(25,25,25,0.5)',
+    backgroundColor: "rgba(25,25,25,0.5)",
     flex: 1,
-    width: '100%',
-    height: '100%',
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    height: "100%",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
   content: {
-    backgroundColor: '#FFF',
-    width: '80%',
+    backgroundColor: "#FFF",
+    width: "80%",
     height: 750,
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
     borderRadius: 8,
   },
 });
@@ -115,13 +116,13 @@ const stylesModal = StyleSheet.create({
 const stylesLaudo = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     padding: 16,
-    width: '100%',
+    width: "100%",
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 16,
   },
   logo: {
@@ -131,7 +132,7 @@ const stylesLaudo = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   label: {
     fontSize: 16,
@@ -139,14 +140,14 @@ const stylesLaudo = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 8,
     marginBottom: 16,
   },
   termos: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 8,
     height: 150,
@@ -157,55 +158,55 @@ const stylesLaudo = StyleSheet.create({
     marginBottom: 8,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 16,
   },
   checkbox: {
     width: 24,
     height: 24,
     borderWidth: 2,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 8,
   },
   checkboxSelected: {
-    borderColor: '#00A859',
+    borderColor: "#00A859",
   },
   radioDot: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#00A859',
+    backgroundColor: "#00A859",
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   cancelButton: {
-    backgroundColor: '#FF0000',
+    backgroundColor: "#FF0000",
     padding: 12,
     borderRadius: 8,
     flex: 1,
     marginRight: 8,
   },
   sendButton: {
-    backgroundColor: '#00A859',
+    backgroundColor: "#00A859",
     padding: 12,
     borderRadius: 8,
     flex: 1,
     marginLeft: 8,
   },
   disabledButton: {
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
   },
   buttonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
+    color: "#FFFFFF",
+    textAlign: "center",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
