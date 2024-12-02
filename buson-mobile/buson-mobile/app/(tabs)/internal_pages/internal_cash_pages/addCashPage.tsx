@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useLinkTo } from '@react-navigation/native';
 
+
 // Importando os ícones
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -36,7 +37,7 @@ export default function AddCashScreen() {
 
         {/* Botão do Cartão */}
         <TouchableOpacity style={styles.cashButton}
-          onPress={() => linkTo('/Visualizar-Cartao')}>
+          onPress={() => linkTo(`/Visualizar-Cartao?id=${id}`)}>
           <View style={styles.iconCashSection}>
             <Icon name="credit-card" size={40} color="#2EBEC6" />
           </View>

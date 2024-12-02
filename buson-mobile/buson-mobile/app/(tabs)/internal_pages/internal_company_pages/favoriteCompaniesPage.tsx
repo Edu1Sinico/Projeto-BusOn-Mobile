@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, Modal } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "@/app/styles/internal_pages/internal_company_page/companyPageStyle";
 import Header from "@/components/header/header";
 import SemiHeader from "@/components/header/semiHeader";
 import { useRoute } from "@react-navigation/native";
+import { ModalCompanyValidation } from "@/components/modal/ModalCompanyValidation";
+
+let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 export default function FavoritesCompanyPage() {
   const [favorites, setFavorites] = useState([]); // Estado para armazenar os favoritos
   const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
   const [errorAlert, setErrorAlert] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o ID do usuário dos parâmetros da rota
+
+  // Informações da empresa
+  const [companyName, setCompanyName] = useState('Empresa');
 
   // Buscar favoritos
   const fetchFavorites = async () => {
@@ -123,6 +130,11 @@ export default function FavoritesCompanyPage() {
     loadFavoritesAndCompanies();
   }, []);
 
+  const abrirModalCompany = (nomeEmpresa) => {
+    setCompanyName(nomeEmpresa);
+    setModalVisible(true);
+  }
+
   // Renderiza cada empresa favorita
   const renderFavoriteCard = ({ item }) => (
     <View style={styles.card}>
@@ -136,8 +148,10 @@ export default function FavoritesCompanyPage() {
         onPress={() => removeFavorite(item.id)}
       >
         <Icon name="star" size={24} color="#FFD700" /> {/* Sempre amarelo */}
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.selectButton}>
+      </TouchableOpacity >
+      <TouchableOpacity style={styles.selectButton}
+        onPress={() => { abrirModalCompany(item.name) }}
+      >
         <Text style={styles.selectButtonText}>Selecionar</Text>
       </TouchableOpacity>
     </View>
@@ -182,6 +196,14 @@ export default function FavoritesCompanyPage() {
           )}
         </View>
       </View>
+
+      <Modal animationType="fade" transparent visible={modalVisible}>
+        <ModalCompanyValidation
+          companyName={companyName}
+          code={123}
+          handleClose={() => setModalVisible(false)}
+        />
+      </Modal>
     </View>
   );
 }

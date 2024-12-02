@@ -5,7 +5,7 @@ const router = express.Router(); // Cria um roteador para definir as rotas relac
 // Define uma rota que escuta requisições POST no endpoint /empresas.
 // Quando essa rota é acessada, a função buscarEmpresas é chamada.
 router.get('/buscarEmpresas', buscarEmpresas);
-router.post('/buscarEmpresaID', buscarEmpresaID)
+router.post('/buscarEmpresaID', buscarEmpresaID);
 router.post('/adicionarFavoritos', adicionarFavoritos);
 router.post('/removerFavoritos', removerFavoritos);
 router.post('/buscarFavoritos', buscarFavoritos);

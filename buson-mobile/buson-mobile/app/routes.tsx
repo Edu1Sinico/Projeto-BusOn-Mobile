@@ -26,6 +26,7 @@ export function Routes() {
             <Tab.Screen
                 name="Saldo"
                 component={CashNavigator} // Use o CashNavigator aqui
+                initialParams={{ id }}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused, color }) => (
