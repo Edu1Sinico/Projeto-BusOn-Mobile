@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'rea
 import Icon from 'react-native-vector-icons/Feather';
 // Link do site de ícones: https://oblador.github.io/react-native-vector-icons/
 
-export function ModalAlertValidation({ messageAlert, successMessage, handleClose}) {
+export function ModalAlertValidation({ messageAlert, successMessage, handleClose }) {
 
     return (
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
     },
-    
+
     loadingSection: {
         height: '50%',
         alignItems: 'center',
@@ -97,5 +97,5 @@ const styles = StyleSheet.create({
         fontWeight: 500,
         color: '#fff',
     }
-    
+
 });

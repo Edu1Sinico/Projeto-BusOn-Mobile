@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9', // Fundo para dar contraste
   },
   button: {
-    backgroundColor: '#4CAF50', // Verde para botão
+    backgroundColor: '#0AC86C', // Verde para botão
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
