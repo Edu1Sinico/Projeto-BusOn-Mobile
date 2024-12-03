@@ -1,14 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Modal,
-  ImageBackground,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, Modal, ImageBackground } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "@/app/styles/login_register/RegisterPlusStyle";
 import { useLinkTo, useRoute } from "@react-navigation/native";
@@ -116,9 +108,9 @@ export default function RegisterPlus({ route }: { route: any }) {
       return null;
     }
   };
+
   const abrirModalDocument = (option) => {
     const opcao = option;
-    console.log(opcao);
     if (opcao == "Estudante") {
       setTituloDocumento("Declaração Escolar");
       setModalDocumentVisible(true);
@@ -129,6 +121,7 @@ export default function RegisterPlus({ route }: { route: any }) {
       return null;
     }
   };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -294,7 +287,11 @@ export default function RegisterPlus({ route }: { route: any }) {
         >
           <ModalDocumentValidation
             tituloDocumento={tituloDocumento}
-            handleClose={() => setModalVisible(false)}
+            handleClose={() => {
+              setModalDocumentVisible(false);
+              setCategoria("Padrão");
+
+            }}
           />
         </Modal>
       </ImageBackground>

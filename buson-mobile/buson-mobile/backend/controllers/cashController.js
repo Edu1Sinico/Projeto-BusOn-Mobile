@@ -79,4 +79,38 @@ const deletarCartao = async (req, res) => {
     }
 };
 
-module.exports = { adicionarCartao, listarCartoes, atualizarCartao, deletarCartao };
+// Método para adicionar saldo
+const adicionarSaldo = async (req, res) => {
+    const id_usuario = req.params;
+
+    try {
+        const result = await.pool.query(
+            'INSERT INTO saldo (tipo,) VALUES ($1, $2, $3) RETURNING *',
+            [id_usuario]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao solicitar o saldo ' + err);
+    }
+}
+
+// Método para buscar o saldo do usuário
+const buscarSaldo = async (req, res) => {
+    const id_usuario = req.params;
+
+    try {
+        const result = await.pool.query(
+            'SELECT valor FROM saldo WHERE id_usuario = $1',
+            [id_usuario]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao solicitar o saldo ' + err);
+    }
+}
+
+module.exports = { adicionarCartao, listarCartoes, atualizarCartao, deletarCartao, buscarSaldo, adicionarSaldo };

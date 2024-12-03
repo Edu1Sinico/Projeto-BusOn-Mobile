@@ -101,14 +101,14 @@ export default StyleSheet.create({
   },
 
   radioCircle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 24,
+    height: 24,
     borderWidth: 2,
-    borderColor: "#0AC86C",
+    borderColor: "#ccc",
+    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 5,
+    marginRight: 8,
   },
 
   radioSelected: {

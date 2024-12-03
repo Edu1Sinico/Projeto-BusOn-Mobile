@@ -87,4 +87,38 @@ const buscarFavoritos = async (req, res) => {
     }
 };
 
-module.exports = { buscarEmpresas, buscarEmpresaID, adicionarFavoritos, removerFavoritos, buscarFavoritos }; // Exporta a função para ser usada nas rotas.
+// Método para atualizar o código de pagamento da empresa
+const atualizarCodigoPagamento = async (req, res) => {
+    const { id_empresa, codigo_pagamento } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE empresa SET codigo_pagamento = $1 WHERE id_empresa = $2',
+            [codigo_pagamento, id_empresa]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao atualizar o código de pagamento: ' + err);
+    }
+};
+
+// Método para buscar código de pagamento da empresa
+const buscarCodigoPagamento = async (req, res) => {
+    const { id_empresas } = req.body; // Recebe um array de IDs
+
+    try {
+        const result = await pool.query(
+            'SELECT codigo_pagamento FROM empresa WHERE id_empresa = $1',
+            [id_empresas]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao buscar o código de pagamento: ' + err);
+    }
+};
+
+module.exports = { buscarEmpresas, buscarEmpresaID, adicionarFavoritos, removerFavoritos, buscarFavoritos, atualizarCodigoPagamento, buscarCodigoPagamento }; // Exporta a função para ser usada nas rotas.
