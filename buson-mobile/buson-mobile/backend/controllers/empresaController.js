@@ -106,18 +106,18 @@ const atualizarCodigoPagamento = async (req, res) => {
 
 // Método para buscar código de pagamento da empresa
 const buscarCodigoPagamento = async (req, res) => {
-    const { id_empresas } = req.body; // Recebe um array de IDs
+    const { codigo_pagamento } = req.body; // Recebe um array de IDs
 
     try {
         const result = await pool.query(
-            'SELECT codigo_pagamento FROM empresa WHERE id_empresa = $1',
-            [id_empresas]
+            'SELECT * FROM empresa WHERE codigo_pagamento = $1',
+            [codigo_pagamento]
         );
 
         res.status(201).json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).send('Erro ao buscar o código de pagamento: ' + err);
+        res.status(500).send('Erro ao buscar a empresa pelo código de pagamento: ' + err);
     }
 };
 
