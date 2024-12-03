@@ -16,7 +16,7 @@ export default function PaymentCashPage() {
 
   return (
     <View style={styles.container}>
-      <Header backgroundActive={true}/>
+      <Header backgroundActive={true} />
       <SemiHeader title={'Realizar Pagamento'} />
 
       <View style={styles.mainSection}>
@@ -49,6 +49,9 @@ export default function PaymentCashPage() {
                 onChangeText={setCode}
                 underlineColorAndroid="transparent"
               />
+              <TouchableOpacity style={styles.submitButton}>
+                <Text style={styles.submitButtonText}>Enviar</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

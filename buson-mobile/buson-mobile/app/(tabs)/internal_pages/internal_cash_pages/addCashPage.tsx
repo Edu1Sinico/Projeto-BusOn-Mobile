@@ -37,7 +37,7 @@ export default function AddCashScreen() {
 
         {/* Botão do Cartão */}
         <TouchableOpacity style={styles.cashButton}
-          onPress={() => linkTo(`/Visualizar-Cartao?id=${id}`)}>
+          onPress={() => linkTo('/Visualizar-Cartao')}>
           <View style={styles.iconCashSection}>
             <Icon name="credit-card" size={40} color="#2EBEC6" />
           </View>

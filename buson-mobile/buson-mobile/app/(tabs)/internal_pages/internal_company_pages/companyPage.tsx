@@ -16,15 +16,14 @@ export default function CompanyScreen() {
   const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
   const [errorAlert, setErrorAlert] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [generateCode, setGenerateCode] = useState('');
+  const [code, setCode] = useState('');
 
   // Informações da empresa
   const [companyName, setCompanyName] = useState('Empresa');
+  const [companyId, setCompanyId] = useState(null);
 
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o parâmetro id
-
-  console.log('ID recebido: ' + id);
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
@@ -161,13 +160,14 @@ export default function CompanyScreen() {
     }
   };
 
-  const abrirModalCompany = (nomeEmpresa) => {
-    generatedPassword();
+  const abrirModalCompany = (nomeEmpresa, idEmpresa) => {
+    generateCode();
     setCompanyName(nomeEmpresa);
+    setCompanyId(idEmpresa);
     setModalVisible(true);
   }
 
-  function generatedPassword() {
+  function generateCode() {
 
     // Variável para a senha
     let code = "";
@@ -179,7 +179,7 @@ export default function CompanyScreen() {
       // A multiplicação entre o método random e o valor n gerará o valor aleatório
       code += charset.charAt(Math.floor(Math.random() * n));
     }
-    setGenerateCode(code);
+    setCode(code);
   }
 
   const renderCompanyCard = ({ item }) => (
@@ -200,7 +200,7 @@ export default function CompanyScreen() {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => { abrirModalCompany(item.name) }}
+        onPress={() => { abrirModalCompany(item.name, item.id) }}
         style={styles.selectButton}
       >
         <Text style={styles.selectButtonText}>Selecionar</Text>
@@ -262,7 +262,8 @@ export default function CompanyScreen() {
       <Modal animationType="fade" transparent visible={modalVisible}>
         <ModalCompanyValidation
           companyName={companyName}
-          code={generateCode}
+          companyId={companyId}
+          code={code}
           handleClose={() => setModalVisible(false)}
         />
       </Modal>

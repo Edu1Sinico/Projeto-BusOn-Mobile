@@ -1,29 +1,20 @@
 
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity, Image } from "react-native";
 
 // Componente ModalDocumentValidation
-export function ModalDocumentValidation({tituloDocumento, handleClose}) {
+export function ModalDocumentValidation({ tituloDocumento, handleClose }) {
   return (
     <View style={stylesModal.container}>
       <View style={stylesModal.content}>
-        {/* Componente LaudoComprovacao é chamado aqui */}
-        <LaudoComprovacao />
+        <LaudoComprovacao tituloDocumento={tituloDocumento} handleClose={handleClose} />
       </View>
     </View>
   );
 }
 
 // Componente LaudoComprovacao
-const LaudoComprovacao = () => {
+const LaudoComprovacao = ({ tituloDocumento, handleClose }) => {
   const [isChecked, setIsChecked] = useState(false); // Estado para "Concordo"
 
   return (
@@ -34,12 +25,12 @@ const LaudoComprovacao = () => {
           source={require("@/assets/images/BusOn Logo.png")} // Substitua pelo caminho correto da logo
           style={stylesLaudo.logo}
         />
-        <Text style={stylesLaudo.title}>Validação de Documentação</Text>
+        <Text style={stylesLaudo.title}>{tituloDocumento}</Text>
       </View>
 
       {/* Campo para anexar documento */}
       <Text style={stylesLaudo.label}>Anexar o Documento</Text>
-      <TextInput style={stylesLaudo.input} placeholder="Anexar arquivo..." />
+      <TextInput style={stylesLaudo.input} placeholder="Anexar arquivo..." placeholderTextColor={'#C7C7C7'} />
 
       {/* Termos e condições */}
       <Text style={stylesLaudo.label}>Termos e Condições</Text>
@@ -50,8 +41,30 @@ const LaudoComprovacao = () => {
           Cupiditate tempore facere quos ullam sapiente repellendus aliquam
           officia, modi, unde nam voluptate.
         </Text>
+
         <Text style={stylesLaudo.termoText}>
           2. Lorem ipsum dolor sit amet consectetur adipiscing elit. Ducimus,
+          sunt placeat delectus ex earum voluptatibus animi voluptate?
+          Cupiditate tempore facere quos ullam sapiente repellendus aliquam
+          officia, modi, unde nam voluptate.
+        </Text>
+
+        <Text style={stylesLaudo.termoText}>
+          3. Lorem ipsum dolor sit amet consectetur adipiscing elit. Ducimus,
+          sunt placeat delectus ex earum voluptatibus animi voluptate?
+          Cupiditate tempore facere quos ullam sapiente repellendus aliquam
+          officia, modi, unde nam voluptate.
+        </Text>
+
+        <Text style={stylesLaudo.termoText}>
+          4. Lorem ipsum dolor sit amet consectetur adipiscing elit. Ducimus,
+          sunt placeat delectus ex earum voluptatibus animi voluptate?
+          Cupiditate tempore facere quos ullam sapiente repellendus aliquam
+          officia, modi, unde nam voluptate.
+        </Text>
+
+        <Text style={stylesLaudo.termoText}>
+          5. Lorem ipsum dolor sit amet consectetur adipiscing elit. Ducimus,
           sunt placeat delectus ex earum voluptatibus animi voluptate?
           Cupiditate tempore facere quos ullam sapiente repellendus aliquam
           officia, modi, unde nam voluptate.
@@ -75,7 +88,7 @@ const LaudoComprovacao = () => {
       {/* Botões */}
       <View style={stylesLaudo.buttonContainer}>
         <TouchableOpacity style={stylesLaudo.cancelButton}
-        // onPress={}
+          onPress={handleClose}
         >
           <Text style={stylesLaudo.buttonText}>Cancelar</Text>
         </TouchableOpacity>
@@ -121,6 +134,7 @@ const stylesLaudo = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     padding: 16,
     width: "100%",
+    borderRadius: 8,
   },
   header: {
     flexDirection: "row",

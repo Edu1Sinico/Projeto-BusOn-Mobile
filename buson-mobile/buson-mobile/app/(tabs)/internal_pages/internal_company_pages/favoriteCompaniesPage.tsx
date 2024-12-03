@@ -14,12 +14,14 @@ export default function FavoritesCompanyPage() {
   const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
   const [errorAlert, setErrorAlert] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [code, setCode] = useState('');
 
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o ID do usuário dos parâmetros da rota
 
   // Informações da empresa
   const [companyName, setCompanyName] = useState('Empresa');
+  const [companyId, setCompanyId] = useState(null);
 
   // Buscar favoritos
   const fetchFavorites = async () => {
@@ -130,9 +132,26 @@ export default function FavoritesCompanyPage() {
     loadFavoritesAndCompanies();
   }, []);
 
-  const abrirModalCompany = (nomeEmpresa) => {
+  const abrirModalCompany = (nomeEmpresa, idEmpresa) => {
+    generateCode();
     setCompanyName(nomeEmpresa);
+    setCompanyId(idEmpresa);
     setModalVisible(true);
+  }
+
+  function generateCode() {
+
+    // Variável para a senha
+    let code = "";
+    let n = charset.length;
+    // For para roda o charSet, o size definirá a quantidade de caracteres
+    for (let index = 0; index < 9; index++) {
+      // realizando a concatenação com caracteres aleatórios do charset
+      // Math.floor gera números inteiros
+      // A multiplicação entre o método random e o valor n gerará o valor aleatório
+      code += charset.charAt(Math.floor(Math.random() * n));
+    }
+    setCode(code);
   }
 
   // Renderiza cada empresa favorita
@@ -150,7 +169,7 @@ export default function FavoritesCompanyPage() {
         <Icon name="star" size={24} color="#FFD700" /> {/* Sempre amarelo */}
       </TouchableOpacity >
       <TouchableOpacity style={styles.selectButton}
-        onPress={() => { abrirModalCompany(item.name) }}
+        onPress={() => { abrirModalCompany(item.name, item.id) }}
       >
         <Text style={styles.selectButtonText}>Selecionar</Text>
       </TouchableOpacity>
@@ -200,10 +219,12 @@ export default function FavoritesCompanyPage() {
       <Modal animationType="fade" transparent visible={modalVisible}>
         <ModalCompanyValidation
           companyName={companyName}
-          code={123}
+          companyId={companyId}
+          code={code}
           handleClose={() => setModalVisible(false)}
         />
       </Modal>
+
     </View>
   );
 }

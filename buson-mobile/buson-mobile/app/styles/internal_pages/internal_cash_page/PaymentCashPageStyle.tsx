@@ -57,7 +57,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
-    
+
     mainBottomSection: {
         width: '100%',
         margin: 20,
@@ -67,7 +67,7 @@ export default StyleSheet.create({
 
     paymentCodeCard: {
         width: '85%',
-        height: 160,
+        height: 180,
         backgroundColor: '#F9F9F9',
         alignItems: 'center',
         shadowColor: '#000',
@@ -87,6 +87,7 @@ export default StyleSheet.create({
         height: '65%',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'column'
     },
 
     paymentCodeTitle: {
@@ -102,6 +103,15 @@ export default StyleSheet.create({
         fontSize: 25,
         borderRadius: 5,
         marginBottom: 10,
-    }
+    },
+
+    submitButton: {
+        margin: 10,
+    },
+
+    submitButtonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
 
 });
