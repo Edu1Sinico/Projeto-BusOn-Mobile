@@ -15,12 +15,12 @@ export default function PaymentCashPage() {
 
   const [code, setCode] = useState('');
   const [companyName, setCompanyName] = useState('Empresa');
-  const [companyCode, setCompanyCode] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [messageAlert, setMessageAlert] = useState('');
 
+  // Método para validar o código
   const buscarCodigoPagamento = async () => {
     try {
       // Define o endpoint da API (ajuste o endereço do backend)
@@ -37,7 +37,6 @@ export default function PaymentCashPage() {
       if (response.ok) {
         const data = await response.json();
         setCompanyName(data.nome_empresa);
-        setCompanyCode(data.codigo_pagamento);
         setSuccessMessage(true);
         setMessageAlert('Código validado com sucesso para a empresa "' + companyName + '"!');
         setModalVisible(true);
