@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useRoute } from '@react-navigation/native';
 
 // Importando a estilização
 import styles from '@/app/styles/internal_pages/internal_cash_page/CashPageStyle'
@@ -14,6 +14,10 @@ import Header from '@/components/header/header';
 
 
 export default function CashScreen() {
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  const { id } = route.params || {}; // Obtém o parâmetro id
+
+  console.log('Id do usuário: ' + id);
 
   // useState
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
