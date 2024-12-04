@@ -20,8 +20,6 @@ export default function AddCardScreen() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedValue, setSelectedValue] = useState(0);
 
-
-
   useEffect(() => {
     const fetchCards = async () => {
       try {
