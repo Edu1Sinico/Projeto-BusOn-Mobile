@@ -13,7 +13,6 @@ export default function AddCardScreen() {
   const [securityCode, setSecurityCode] = useState('');
   const [cards, setCards] = useState([]);
 
-  console.log('ID recebido ' + id);
   // Função para buscar cartões cadastrados
   // Função para buscar cartões cadastrados
   useEffect(() => {
@@ -23,7 +22,7 @@ export default function AddCardScreen() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            id_usuario: 1, // Substitua 1 pelo ID real do usuário
+            id_usuario: id, // Substitua 1 pelo ID real do usuário
           }),
         });
 
@@ -56,7 +55,7 @@ export default function AddCardScreen() {
           numero_cartao: cardNumber,
           data_vencimento: expiryDate,
           codigo_seguranca: securityCode,
-          id_usuario: 1,
+          id_usuario: id,
         }),
       });
 
