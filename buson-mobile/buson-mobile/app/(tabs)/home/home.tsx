@@ -22,7 +22,7 @@ export default function HomeScreen() {
   const [search, setSearch] = useState('');
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
   const [userName, setUserName] = useState('Usuário');
-  const [registerComplete, setRegisterComplete] = useState(false);
+  const [saldo, setSaldo] = useState('');
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
@@ -44,7 +44,6 @@ export default function HomeScreen() {
       if (response.ok) {
         const data = await response.json();
         setUserName(data.nome);
-        setRegisterComplete(data.cadastro_completo);
       } else {
         console.log('Erro ao buscar o usuário.')
       }
@@ -54,6 +53,32 @@ export default function HomeScreen() {
   };
 
   buscarUsuario(id);
+
+  const buscarSaldo = async () => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/buscarSaldo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSaldo(data.valor);
+      } else {
+        console.log('Erro ao buscar o saldo: ', await response.text())
+      }
+    } catch (err) {
+      console.error('Erro ao buscar o saldo: ' + err);
+    }
+  };
+
+  buscarSaldo();
 
   return (
 
@@ -78,7 +103,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.balanceTextSection}>
             <Text style={styles.balanceTitle}>Saldo Disponível</Text>
-            <Text style={styles.balanceValue}> {showBalance ? 'R$ ●●●●' : 'R$ 0,00'} </Text>
+            <Text style={styles.balanceValue}> {showBalance ? 'R$ ●●●●' : 'R$ ' + saldo} </Text>
           </View>
           <View style={styles.visibleButtonSection}>
             <TouchableOpacity onPress={() => setShowBalance(!showBalance)}>

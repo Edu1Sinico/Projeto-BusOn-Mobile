@@ -83,7 +83,7 @@ export function ModalCompanyValidation({ companyName, companyId, code, handleClo
                         <View style={styles.contentBottomSection}>
                             <View style={styles.textInfoSection}>
                                 <Text style={styles.text}>
-                                    Utilize o código da empresa {companyName} para realizar o pagamento.
+                                    Utilize o código da empresa {companyName} para realizar o pagamento de R$ 5,00.
                                 </Text>
                             </View>
                             <View style={styles.buttonSection}>

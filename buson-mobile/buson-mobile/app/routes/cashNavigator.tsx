@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export function CashNavigator() {
     const route = useRoute(); // Hook para acessar os parâmetros da rota
     const { id } = route.params || {}; // Obtém o parâmetro id
-
+    
     return (
         <NavigationContainer independent={true}>
             <Stack.Navigator initialRouteName="Saldo"

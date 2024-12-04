@@ -19,18 +19,14 @@ export default function AddCardScreen() {
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedValue, setSelectedValue] = useState(0);
-
-
-
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/cartoes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-
-          body: JSON.stringify({ id_usuario: id || 1 }),
-
+            id_usuario: id, // Substitua 1 pelo ID real do usuário
+          }),
         });
 
         if (response.ok) {
@@ -63,9 +59,7 @@ export default function AddCardScreen() {
           numero_cartao: cardNumber,
           data_vencimento: expiryDate,
           codigo_seguranca: securityCode,
-          id_usuario: id || 1,
-
-
+          id_usuario: id,
         }),
       });
 
