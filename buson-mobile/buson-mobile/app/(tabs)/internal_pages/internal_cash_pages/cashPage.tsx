@@ -17,7 +17,34 @@ export default function CashScreen() {
   const route = useRoute(); // Hook para acessar os parâmetros da rota
   const { id } = route.params || {}; // Obtém o parâmetro id
 
-  console.log('Id do usuário: ' + id);
+  // useState do Saldo
+  const [saldo, setSaldo] = useState('');
+
+  const buscarSaldo = async () => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/buscarSaldo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSaldo(data.valor);
+      } else {
+        console.log('Erro ao buscar o saldo: ', await response.text())
+      }
+    } catch (err) {
+      console.error('Erro ao buscar o saldo: ' + err);
+    }
+  };
+
+  buscarSaldo();
 
   // useState
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
@@ -37,7 +64,7 @@ export default function CashScreen() {
 
             <View style={styles.balanceValueSection}>
               <Text style={styles.realIcon}>R$ </Text>
-              <Text style={styles.valueText}>{showBalance ? '●●●●' : '0,00'}</Text>
+              <Text style={styles.valueText}>{showBalance ? '●●●●' : saldo}</Text>
             </View>
           </View>
 
@@ -56,7 +83,7 @@ export default function CashScreen() {
           <View style={styles.cashButtonsSection}>
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => linkTo('/Adicionar-Credito')} // Navegando para a página "Adicionar Créditos"
+              onPress={() => linkTo(`/Adicionar-Credito?id=${id}`)} // Navegando para a página "Adicionar Créditos"
             >
               <Icon name="wallet" size={90} color="#0AC86C" />
               <Text style={styles.buttonText}>Adicionar Créditos</Text>
@@ -65,7 +92,7 @@ export default function CashScreen() {
 
           <View style={styles.cashButtonsSection}>
             <TouchableOpacity style={styles.iconButton}
-              onPress={() => linkTo('/Realizar-Pagamento')}>
+              onPress={() => linkTo(`/Realizar-Pagamento?id=${id}`)}>
               <Icon name="credit-card" size={90} color="#0AC86C" />
               <Text style={styles.buttonText}>Realizar Pagamento</Text>
             </TouchableOpacity>

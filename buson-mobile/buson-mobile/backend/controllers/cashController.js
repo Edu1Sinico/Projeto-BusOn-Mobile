@@ -79,38 +79,51 @@ const deletarCartao = async (req, res) => {
     }
 };
 
-// // Método para adicionar saldo
-// const adicionarSaldo = async (req, res) => {
-//     const id_usuario = req.params;
-
-//     try {
-//         const result = await pool.query(
-//             'INSERT INTO saldo (tipo,) VALUES ($1, $2, $3) RETURNING *',
-//             [id_usuario]
-//         );
-
-//         res.status(201).json(result.rows[0]);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Erro ao solicitar o saldo ' + err);
-//     }
-// }
-
-// Método para buscar o saldo do usuário
-const buscarSaldo = async (req, res) => {
-    const id_usuario = req.params;
-
+// Método para adicionar saldo
+const criarSaldo = async (req, res) => {
     try {
+        const { id_usuario } = req.body; // Extrai id_usuario como número do corpo da requisição
+
+        if (!id_usuario || isNaN(Number(id_usuario))) {
+            return res.status(400).send('O campo id_usuario é inválido ou ausente.');
+        }
+
         const result = await pool.query(
-            'SELECT valor FROM saldo WHERE id_usuario = $1',
-            [id_usuario]
+            'INSERT INTO saldo (id_usuario) VALUES ($1) RETURNING *',
+            [Number(id_usuario)] // Converte explicitamente para número
         );
 
         res.status(201).json(result.rows[0]);
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Erro ao solicitar o saldo ' + err);
+        console.error('Erro ao criar o saldo:', err);
+        res.status(500).send('Erro ao criar o saldo: ' + err.message);
     }
-}
+};
 
-module.exports = { adicionarCartao, listarCartoes, atualizarCartao, deletarCartao, buscarSaldo };
+// Método para buscar o saldo do usuário
+const buscarSaldo = async (req, res) => {
+    const { id_usuario } = req.body; // Extrai id_usuario do corpo da requisição
+
+    if (!id_usuario || isNaN(Number(id_usuario))) {
+        return res.status(400).send('O campo id_usuario é inválido ou ausente.');
+    }
+
+    try {
+        const result = await pool.query(
+            'SELECT valor FROM saldo WHERE id_usuario = $1',
+            [Number(id_usuario)] // Converte explicitamente para número
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Saldo não encontrado para o ID fornecido.');
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.error('Erro ao buscar o saldo:', err);
+        res.status(500).send('Erro ao buscar o saldo: ' + err.message);
+    }
+};
+
+
+module.exports = { adicionarCartao, listarCartoes, atualizarCartao, deletarCartao, buscarSaldo, criarSaldo };

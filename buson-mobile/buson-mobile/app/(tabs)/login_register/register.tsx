@@ -89,6 +89,7 @@ export default function RegisterScreen() {
 
             if (response.ok) {
                 const data = await response.json();
+                criarSaldo(data.id_usuario);
                 return data.id_usuario;
             } else {
                 console.error('Erro ao cadastrar usuário:', await response.text());
@@ -101,6 +102,29 @@ export default function RegisterScreen() {
             setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
             setAlertModalVisible(true);
             return null;
+        }
+    };
+
+    const criarSaldo = async (id_usuario) => {
+        try {
+            // Define o endpoint da API (ajuste o endereço do backend)
+            const response = await fetch('http://localhost:3000/api/criarSaldo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id_usuario: id_usuario,
+                }),
+            });
+
+            if (response.ok) {
+                console.log('Saldo criado com sucesso!')
+            } else {
+                console.error('Erro ao criar saldo: ', await response.text());
+            }
+        } catch (error) {
+            console.error('Erro de conexão:', error);
         }
     };
 

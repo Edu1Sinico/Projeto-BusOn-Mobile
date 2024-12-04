@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo, useRoute } from '@react-navigation/native';
 
 
 // Importando os ícones
@@ -15,6 +15,8 @@ import Header from '@/components/header/header';
 import SemiHeader from '@/components/header/semiHeader';
 
 export default function AddCashScreen() {
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  const { id } = route.params || {}; // Obtém o parâmetro id
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 
@@ -37,7 +39,7 @@ export default function AddCashScreen() {
 
         {/* Botão do Cartão */}
         <TouchableOpacity style={styles.cashButton}
-          onPress={() => linkTo('/Visualizar-Cartao')}>
+          onPress={() => linkTo(`/Visualizar-Cartao?id=${id}`)}>
           <View style={styles.iconCashSection}>
             <Icon name="credit-card" size={40} color="#2EBEC6" />
           </View>
