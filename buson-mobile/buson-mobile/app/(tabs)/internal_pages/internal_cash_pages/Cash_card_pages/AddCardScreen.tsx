@@ -19,14 +19,18 @@ export default function AddCardScreen() {
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedValue, setSelectedValue] = useState(0);
+
+
+
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/cartoes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-            id_usuario: id, // Substitua 1 pelo ID real do usuário
-          }),
+
+          body: JSON.stringify({ id_usuario: id || 1 }),
+
         });
 
         if (response.ok) {
@@ -59,7 +63,9 @@ export default function AddCardScreen() {
           numero_cartao: cardNumber,
           data_vencimento: expiryDate,
           codigo_seguranca: securityCode,
-          id_usuario: id,
+          id_usuario: id || 1,
+
+
         }),
       });
 
@@ -145,40 +151,23 @@ export default function AddCardScreen() {
         </TouchableOpacity>
 
       </View>
+
       <FlatList
         data={cards}
+
         keyExtractor={(item, index) => (item?.id ? item.id.toString() : index.toString())}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={[styles.card, selectedCard === item.id && styles.selectedCard]}
             onPress={() => setSelectedCard(item.id)}
           >
-            <View style={styles.cardContent}>
-              <Text style={styles.cardText}>
-                Cartão: **** {item?.numero_cartao?.slice(-4) || 'Desconhecido'}
-              </Text>
-              <Text style={styles.cardText}>Titular: {item?.titular || 'Desconhecido'}</Text>
-              <Text style={styles.cardText}>Validade: {item?.validade || 'Desconhecida'}</Text>
-              <Text style={styles.cardText}>Limite: R$ {item?.limite || 'Indefinido'}</Text>
-            </View>
-
-            <View style={styles.cardButtons}>
-              <TouchableOpacity
-                style={[styles.valueButton, styles.editButton]}
-                onPress={() => handleEdit(item.id)}
-              >
-                <Text style={styles.valueButtonText}>Editar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.valueButton, styles.deleteButton]}
-                onPress={() => handleDelete(item.id)}
-              >
-                <Text style={styles.valueButtonText}>Excluir</Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.cardText}>
+              Cartão: **** {item?.numero_cartao?.slice(-4) || 'Desconhecido'}
+            </Text>
           </TouchableOpacity>
         )}
       />
+
 
       <View style={styles.valueButtons}>
         {[5, 10, 20, 50].map((value) => (
