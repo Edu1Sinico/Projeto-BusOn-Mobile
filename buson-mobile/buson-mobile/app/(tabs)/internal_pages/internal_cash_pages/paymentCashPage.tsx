@@ -10,10 +10,16 @@ import styles from '@/app/styles/internal_pages/internal_cash_page/PaymentCashPa
 import Header from '@/components/header/header';
 import SemiHeader from "@/components/header/semiHeader";
 import { ModalAlertValidation } from "@/components/modal/ModalAlertValidation";
+import { useRoute } from "@react-navigation/native";
 
 export default function PaymentCashPage() {
+  const route = useRoute(); // Hook para acessar os parâmetros da rota
+  const { id } = route.params || {}; // Obtém o parâmetro id
+
+  const [saldo, setSaldo] = useState(0);
 
   const [code, setCode] = useState('');
+  const [codeValidation, setCodeValidation] = useState(false);
   const [companyName, setCompanyName] = useState('Empresa');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,13 +44,45 @@ export default function PaymentCashPage() {
         const data = await response.json();
         setCompanyName(data.nome_empresa);
         setSuccessMessage(true);
+        setCodeValidation(true);
         setMessageAlert('Código validado com sucesso para a empresa "' + companyName + '"!');
         setModalVisible(true);
       } else {
         setSuccessMessage(false);
+        setCodeValidation(false);
         setMessageAlert('O código enviado não foi encontrado, tente novamente.');
         setModalVisible(true);
-        console.log('Código da empresa não encontrado.')
+      }
+    } catch (err) {
+      setSuccessMessage(false);
+      setCodeValidation(false);
+      setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
+      setModalVisible(true);
+      console.error('Erro de conexão: ' + err);
+    }
+  };
+
+  const buscarSaldo = async () => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/buscarSaldo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSaldo(data.valor);
+      } else {
+        console.log('Erro ao buscar o saldo: ', await response.text())
+        setSuccessMessage(false);
+        setMessageAlert('Saldo não encotrado, tente novamente.');
+        setModalVisible(true);
       }
     } catch (err) {
       setSuccessMessage(false);
@@ -54,17 +92,65 @@ export default function PaymentCashPage() {
     }
   };
 
-  const handlePaymentValidation = async () => {
-    if (code === null || code === '') {
-      setSuccessMessage(false);
-      setMessageAlert('Por favor, insira o código!');
-      setModalVisible(true);
-    } else {
-      buscarCodigoPagamento();
-      setTimeout(() => {
-        setModalVisible(false);
-      }, 2000);
+  const retirarSaldo = async (saldo) => {
+    try {
+      // Define o endpoint da API (ajuste o endereço do backend)
+      const response = await fetch('http://localhost:3000/api/retirarSaldo', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_usuario: id, // ID do usuário
+          valor: saldo,   // Valor a ser retirado
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSaldo(data.valor); // Atualiza o saldo no estado
+        setSuccessMessage(true);
+        setMessageAlert('Pagamento realizado com sucesso!');
+        setModalVisible(true);
+      } else {
+        console.error('Erro ao retirar saldo:', await response.text());
+        setSuccessMessage(false);
+        setMessageAlert('Falha ao realizar o pagamento.');
+        setModalVisible(true);
+      }
+    } catch (err) {
+      console.error('Erro ao retirar saldo: ' + err);
     }
+  };
+
+  const handlePaymentValidation = async () => {
+    buscarSaldo();
+    console.log("Saldo: ", saldo)
+    if (saldo >= 5) {
+      if (code === null || code === '') {
+        setSuccessMessage(false);
+        setMessageAlert('Por favor, insira o código!');
+        setModalVisible(true);
+      } else {
+        buscarCodigoPagamento();
+        setTimeout(() => {
+          setModalVisible(false);
+        }, 2000);
+        if (codeValidation == true) {
+          setSaldo(saldo - 5);
+          console.log("Saldo atual: ", saldo);
+          retirarSaldo(saldo);
+          setTimeout(() => {
+            setModalVisible(false);
+          }, 2000);
+        }
+      }
+    } else {
+      setSuccessMessage(false);
+      setMessageAlert('Saldo insuficiente, por favor insirá mais créditos na sua carteira.');
+      setModalVisible(true);
+    }
+
   };
 
   return (

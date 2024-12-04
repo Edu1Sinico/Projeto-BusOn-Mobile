@@ -79,7 +79,7 @@ const deletarCartao = async (req, res) => {
     }
 };
 
-// Método para adicionar saldo
+// Método para criar saldo
 const criarSaldo = async (req, res) => {
     try {
         const { id_usuario } = req.body; // Extrai id_usuario como número do corpo da requisição
@@ -99,6 +99,78 @@ const criarSaldo = async (req, res) => {
         res.status(500).send('Erro ao criar o saldo: ' + err.message);
     }
 };
+
+// Método para criar saldo
+const adicionarSaldo = async (req, res) => {
+    try {
+        const { valor, id_usuario } = req.body; // Extrai valores do corpo da requisição
+
+        if (!id_usuario || isNaN(Number(id_usuario))) {
+            return res.status(400).send('O campo id_usuario é inválido ou ausente.');
+        }
+
+        if (!valor || isNaN(Number(valor))) {
+            return res.status(400).send('O campo valor é inválido ou ausente.');
+        }
+
+        const result = await pool.query(
+            'UPDATE saldo SET valor = valor + $1 WHERE id_usuario = $2 RETURNING *',
+            [Number(valor), Number(id_usuario)] // Passa valores como números
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Usuário não encontrado ou saldo não atualizado.');
+        }
+
+        res.status(200).json(result.rows[0]); // Retorna o saldo atualizado
+    } catch (err) {
+        console.error('Erro ao adicionar o saldo:', err);
+        res.status(500).send('Erro ao adicionar o saldo: ' + err.message);
+    }
+};
+
+const retirarSaldo = async (req, res) => {
+    try {
+        const { valor, id_usuario } = req.body; // Extrai valores do corpo da requisição
+
+        if (!id_usuario || isNaN(Number(id_usuario))) {
+            return res.status(400).send('O campo id_usuario é inválido ou ausente.');
+        }
+
+        if (!valor || isNaN(Number(valor)) || Number(valor) <= 0) {
+            return res.status(400).send('O campo valor é inválido ou ausente.');
+        }
+
+        // Verifica se há saldo suficiente
+        const consultaSaldo = await pool.query(
+            'SELECT valor FROM saldo WHERE id_usuario = $1',
+            [Number(id_usuario)]
+        );
+
+        if (consultaSaldo.rows.length === 0) {
+            return res.status(404).send('Usuário não encontrado.');
+        }
+
+        const saldoAtual = Number(consultaSaldo.rows[0].valor);
+
+        if (saldoAtual < Number(valor)) {
+            return res.status(400).send('Saldo insuficiente.');
+        }
+
+        // Subtrai o valor do saldo
+        const result = await pool.query(
+            'UPDATE saldo SET valor = valor = $1 WHERE id_usuario = $2 RETURNING *',
+            [Number(valor), Number(id_usuario)]
+        );
+
+        res.status(200).json(result.rows[0]); // Retorna o saldo atualizado
+    } catch (err) {
+        console.error('Erro ao retirar saldo:', err);
+        res.status(500).send('Erro ao retirar saldo: ' + err.message);
+    }
+};
+
+
 
 // Método para buscar o saldo do usuário
 const buscarSaldo = async (req, res) => {
@@ -126,4 +198,6 @@ const buscarSaldo = async (req, res) => {
 };
 
 
-module.exports = { adicionarCartao, listarCartoes, atualizarCartao, deletarCartao, buscarSaldo, criarSaldo };
+
+
+module.exports = { adicionarCartao, listarCartoes, atualizarCartao, deletarCartao, buscarSaldo, criarSaldo, adicionarSaldo, retirarSaldo };

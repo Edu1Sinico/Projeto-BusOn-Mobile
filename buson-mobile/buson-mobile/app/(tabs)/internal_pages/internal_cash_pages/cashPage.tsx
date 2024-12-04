@@ -18,7 +18,7 @@ export default function CashScreen() {
   const { id } = route.params || {}; // Obtém o parâmetro id
 
   // useState do Saldo
-  const [saldo, setSaldo] = useState('');
+  const [saldo, setSaldo] = useState('0.00');
 
   const buscarSaldo = async () => {
     try {

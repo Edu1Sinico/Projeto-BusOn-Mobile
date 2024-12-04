@@ -22,7 +22,7 @@ export default function HomeScreen() {
   const [search, setSearch] = useState('');
   const [showBalance, setShowBalance] = useState(true); // Cria um useState booleano para a mudança de estado da visibilidade do saldo
   const [userName, setUserName] = useState('Usuário');
-  const [saldo, setSaldo] = useState('');
+  const [saldo, setSaldo] = useState('0.00');
 
   const linkTo = useLinkTo(); // Sistema de links do react navigator
 

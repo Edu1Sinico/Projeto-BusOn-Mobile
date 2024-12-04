@@ -19,30 +19,6 @@ export default function AddCardScreen() {
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedValue, setSelectedValue] = useState(0);
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/cartoes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-            id_usuario: id, // Substitua 1 pelo ID real do usuário
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setCards(data);
-        } else {
-          console.error('Erro ao buscar cartões');
-        }
-      } catch (error) {
-        console.error('Erro ao buscar cartões:', error);
-      }
-    };
-
-
-    fetchCards();
-  }, [id]);
 
 
   const handleAddCard = async () => {
