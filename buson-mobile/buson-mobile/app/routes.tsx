@@ -34,7 +34,6 @@ export function Routes() {
                     ),
                     tabBarLabel: 'Saldo',  // Define o texto da label
                 }}
-                initialParams={{ pageType: 'add' }} // Passa o parâmetro "pageType"
             />
             <Tab.Screen
                 name="HomeTab"
