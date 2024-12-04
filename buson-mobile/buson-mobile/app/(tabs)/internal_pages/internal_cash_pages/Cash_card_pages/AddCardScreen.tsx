@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from '@/app/styles/internal_pages/internal_cash_page/AddCardStyle';
 import Header from '@/components/header/header';
 import SemiHeader from '@/components/header/semiHeader';
-import { useRoute } from '@react-navigation/native';
+
 
 export default function AddCardScreen() {
   const route = useRoute();
+  const navigation = useNavigation();
+
   const { id } = route.params || {};
+
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [securityCode, setSecurityCode] = useState('');
   const [cards, setCards] = useState([]);
 
-  console.log('ID recebido ' + id);
-  // Função para buscar cartões cadastrados
-  // Função para buscar cartões cadastrados
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(0);
+
+
+
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/cartoes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id_usuario: 1, // Substitua 1 pelo ID real do usuário
-          }),
+
+          body: JSON.stringify({ id_usuario: id || 1 }),
+
         });
 
         if (response.ok) {
@@ -38,8 +44,9 @@ export default function AddCardScreen() {
       }
     };
 
-    fetchCards(); // Invocação da função dentro do useEffect
-  }, []); // Dependências vazias para executar apenas uma vez
+
+    fetchCards();
+  }, [id]);
 
 
   const handleAddCard = async () => {
@@ -56,7 +63,9 @@ export default function AddCardScreen() {
           numero_cartao: cardNumber,
           data_vencimento: expiryDate,
           codigo_seguranca: securityCode,
-          id_usuario: 1,
+          id_usuario: id || 1,
+
+
         }),
       });
 
@@ -65,7 +74,7 @@ export default function AddCardScreen() {
         setCardNumber('');
         setExpiryDate('');
         setSecurityCode('');
-        // Atualiza a lista de cartões
+
         const newCard = await response.json();
         setCards([...cards, newCard]);
       } else {
@@ -76,78 +85,122 @@ export default function AddCardScreen() {
     }
   };
 
-  const handleAddValue = (value) => {
-    Alert.alert('Valor Selecionado', `Você escolheu adicionar R$ ${value},00.`);
+
+  const handleConfirm = async () => {
+    if (!selectedCard || !selectedValue) {
+      Alert.alert('Erro', 'Selecione um cartão e um valor.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/saldo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          valor: selectedValue,
+          id_usuario: id || 1,
+        }),
+      });
+
+      if (response.ok) {
+        Alert.alert('Sucesso', `R$ ${selectedValue},00 adicionados ao saldo com sucesso!`);
+        navigation.navigate('CashScreen', { saldoAtualizado: selectedValue });
+      } else {
+        Alert.alert('Erro', 'Erro ao adicionar saldo.');
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível adicionar o saldo.');
+    }
   };
 
   return (
     <View style={styles.container}>
       <Header backgroundActive={true} />
       <SemiHeader title="Cadastrar Cartão" />
-
       <View style={styles.form}>
         <Text style={styles.label}>Número do Cartão</Text>
         <TextInput
           style={styles.input}
           value={cardNumber}
-          placeholderTextColor={'#C7C7C7'}
+          placeholder="Digite o número do cartão"
           onChangeText={setCardNumber}
           keyboardType="numeric"
           maxLength={16}
-          placeholder="Digite o número do cartão"
         />
 
         <Text style={styles.label}>Data de Vencimento</Text>
         <TextInput
           style={styles.input}
           value={expiryDate}
-          placeholderTextColor={'#C7C7C7'}
-          onChangeText={setExpiryDate}
           placeholder="MM/AAAA"
+          onChangeText={setExpiryDate}
         />
 
         <Text style={styles.label}>Código de Segurança</Text>
         <TextInput
           style={styles.input}
           value={securityCode}
-          placeholderTextColor={'#C7C7C7'}
+          placeholder="Digite o código"
           onChangeText={setSecurityCode}
           keyboardType="numeric"
           maxLength={3}
-          placeholder="Digite o código"
         />
 
         <TouchableOpacity style={styles.button} onPress={handleAddCard}>
           <Text style={styles.buttonText}>Cadastrar Cartão</Text>
         </TouchableOpacity>
 
-        <View style={styles.valueButtons}>
-          {[5, 10, 20, 50].map((value) => (
-            <TouchableOpacity
-              key={value}
-              style={styles.valueButton}
-              onPress={() => handleAddValue(value)}
-            >
-              <Text style={styles.valueButtonText}>R$ {value},00</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
       </View>
-
       <FlatList
         data={cards}
-        keyExtractor={(item, index) => (item?.id ? item.id.toString() : `card-${index}`)}
+        keyExtractor={(item, index) => (item?.id ? item.id.toString() : index.toString())}
         renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.cardText}>
-              Cartão: **** **** **** {item.numero_cartao?.slice(-4) || 'XXXX'}
-            </Text>
-            <Text style={styles.cardText}>Validade: {item.data_vencimento || 'N/A'}</Text>
-          </View>
+          <TouchableOpacity
+            style={[styles.card, selectedCard === item.id && styles.selectedCard]}
+            onPress={() => setSelectedCard(item.id)}
+          >
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>
+                Cartão: **** {item?.numero_cartao?.slice(-4) || 'Desconhecido'}
+              </Text>
+              <Text style={styles.cardText}>Titular: {item?.titular || 'Desconhecido'}</Text>
+              <Text style={styles.cardText}>Validade: {item?.validade || 'Desconhecida'}</Text>
+              <Text style={styles.cardText}>Limite: R$ {item?.limite || 'Indefinido'}</Text>
+            </View>
+
+            <View style={styles.cardButtons}>
+              <TouchableOpacity
+                style={[styles.valueButton, styles.editButton]}
+                onPress={() => handleEdit(item.id)}
+              >
+                <Text style={styles.valueButtonText}>Editar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.valueButton, styles.deleteButton]}
+                onPress={() => handleDelete(item.id)}
+              >
+                <Text style={styles.valueButtonText}>Excluir</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
         )}
-        ListHeaderComponent={<Text style={styles.label}>Cartões Cadastrados:</Text>}
       />
 
+      <View style={styles.valueButtons}>
+        {[5, 10, 20, 50].map((value) => (
+          <TouchableOpacity
+            key={value}
+            style={[styles.valueButton, selectedValue === value && styles.selectedValueButton]}
+            onPress={() => setSelectedValue(value)}
+          >
+            <Text style={styles.valueButtonText}>R$ {value},00</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleConfirm}>
+        <Text style={styles.buttonText}>Confirmar</Text>
+      </TouchableOpacity>
     </View>
   );
 }

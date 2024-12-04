@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './login_register/login';
 import RegisterScreen from './login_register/register';
-import RegisterPlus from './login_register/registerPlus';
+import RegisterPlus from './login_register/registerplus';
 
 import { Routes } from '../routes'; // Importando o sistema de navegação com o BottomTabNavigator
 
