@@ -131,14 +131,10 @@ const adicionarSaldo = async (req, res) => {
 
 const retirarSaldo = async (req, res) => {
     try {
-        const { valor, id_usuario } = req.body; // Extrai valores do corpo da requisição
+        const { id_usuario } = req.body;
 
         if (!id_usuario || isNaN(Number(id_usuario))) {
             return res.status(400).send('O campo id_usuario é inválido ou ausente.');
-        }
-
-        if (!valor || isNaN(Number(valor)) || Number(valor) <= 0) {
-            return res.status(400).send('O campo valor é inválido ou ausente.');
         }
 
         // Verifica se há saldo suficiente
@@ -153,14 +149,14 @@ const retirarSaldo = async (req, res) => {
 
         const saldoAtual = Number(consultaSaldo.rows[0].valor);
 
-        if (saldoAtual < Number(valor)) {
+        if (saldoAtual < 5) { // Valida se há saldo suficiente
             return res.status(400).send('Saldo insuficiente.');
         }
 
-        // Subtrai o valor do saldo
+        // Subtrai 5 diretamente no banco de dados
         const result = await pool.query(
-            'UPDATE saldo SET valor = valor = $1 WHERE id_usuario = $2 RETURNING *',
-            [Number(valor), Number(id_usuario)]
+            'UPDATE saldo SET valor = valor - $1 WHERE id_usuario = $2 RETURNING *',
+            [5, Number(id_usuario)]
         );
 
         res.status(200).json(result.rows[0]); // Retorna o saldo atualizado

@@ -20,7 +20,6 @@ export default function PaymentCashPage() {
 
   const [code, setCode] = useState('');
   const [codeValidation, setCodeValidation] = useState(false);
-  const [companyName, setCompanyName] = useState('Empresa');
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
@@ -29,7 +28,6 @@ export default function PaymentCashPage() {
   // Método para validar o código
   const buscarCodigoPagamento = async () => {
     try {
-      // Define o endpoint da API (ajuste o endereço do backend)
       const response = await fetch('http://localhost:3000/api/buscarCodigoPagamento', {
         method: 'POST',
         headers: {
@@ -41,26 +39,19 @@ export default function PaymentCashPage() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setCompanyName(data.nome_empresa);
-        setSuccessMessage(true);
         setCodeValidation(true);
-        setMessageAlert('Código validado com sucesso para a empresa "' + companyName + '"!');
-        setModalVisible(true);
+        const data = await response.json();
+        console.log("Código aceito!", data);
       } else {
-        setSuccessMessage(false);
         setCodeValidation(false);
-        setMessageAlert('O código enviado não foi encontrado, tente novamente.');
-        setModalVisible(true);
+        console.log("Código negado!");
       }
     } catch (err) {
-      setSuccessMessage(false);
       setCodeValidation(false);
-      setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
-      setModalVisible(true);
       console.error('Erro de conexão: ' + err);
     }
   };
+
 
   const buscarSaldo = async () => {
     try {
@@ -80,78 +71,75 @@ export default function PaymentCashPage() {
         setSaldo(data.valor);
       } else {
         console.log('Erro ao buscar o saldo: ', await response.text())
-        setSuccessMessage(false);
-        setMessageAlert('Saldo não encotrado, tente novamente.');
-        setModalVisible(true);
       }
     } catch (err) {
-      setSuccessMessage(false);
-      setMessageAlert('Erro de conexão com o servidor. Tente novamente.');
-      setModalVisible(true);
       console.error('Erro de conexão: ' + err);
     }
   };
 
-  const retirarSaldo = async (saldo) => {
+  const retirarSaldo = async () => {
     try {
-      // Define o endpoint da API (ajuste o endereço do backend)
       const response = await fetch('http://localhost:3000/api/retirarSaldo', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id_usuario: id, // ID do usuário
-          valor: saldo,   // Valor a ser retirado
+          id_usuario: id, // Envie apenas o ID do usuário
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setSaldo(data.valor); // Atualiza o saldo no estado
-        setSuccessMessage(true);
-        setMessageAlert('Pagamento realizado com sucesso!');
-        setModalVisible(true);
+        setSaldo(data.valor); // Atualize o estado com o novo saldo
       } else {
-        console.error('Erro ao retirar saldo:', await response.text());
-        setSuccessMessage(false);
-        setMessageAlert('Falha ao realizar o pagamento.');
-        setModalVisible(true);
+        const errorMessage = await response.text();
+        console.error('Erro ao retirar saldo:', errorMessage);
       }
     } catch (err) {
-      console.error('Erro ao retirar saldo: ' + err);
+      console.error('Erro ao retirar saldo:', err);
     }
   };
+
+
 
   const handlePaymentValidation = async () => {
-    buscarSaldo();
-    console.log("Saldo: ", saldo)
-    if (saldo >= 5) {
-      if (code === null || code === '') {
-        setSuccessMessage(false);
-        setMessageAlert('Por favor, insira o código!');
-        setModalVisible(true);
-      } else {
-        buscarCodigoPagamento();
-        setTimeout(() => {
-          setModalVisible(false);
-        }, 2000);
-        if (codeValidation == true) {
-          setSaldo(saldo - 5);
-          console.log("Saldo atual: ", saldo);
-          retirarSaldo(saldo);
-          setTimeout(() => {
-            setModalVisible(false);
-          }, 2000);
-        }
-      }
-    } else {
-      setSuccessMessage(false);
-      setMessageAlert('Saldo insuficiente, por favor insirá mais créditos na sua carteira.');
-      setModalVisible(true);
-    }
+    await buscarSaldo(); // Atualiza o saldo antes da validação
 
+    console.log("Saldo atual: ", saldo);
+
+    if (code === '' || code === null) {
+      setSuccessMessage(false);
+      setMessageAlert('Por favor, insira o código!');
+      setModalVisible(true);
+    } else {
+      await buscarCodigoPagamento();
+      if (codeValidation) {
+        if (saldo >= 5) {
+          setSuccessMessage(true);
+          setMessageAlert('Pagamento realizado com sucesso!');
+          setModalVisible(true); // Exibe o modal
+
+          setTimeout(async () => {
+            await retirarSaldo(); // Subtração ocorre diretamente no backend
+            setModalVisible(false); // Fecha o modal após 2 segundos
+            setCodeValidation(false);
+          }, 2000);
+        } else {
+          setSuccessMessage(false);
+          setMessageAlert('Saldo insuficiente, por favor insira mais créditos na sua carteira.');
+          setModalVisible(true);
+        }
+      } else {
+        setSuccessMessage(false);
+        setMessageAlert('Código inválido! Por favor, utilize outro código!');
+        setModalVisible(true);
+      }
+    }
   };
+
+
+
 
   return (
     <View style={styles.container}>
