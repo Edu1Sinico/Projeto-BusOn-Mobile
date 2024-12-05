@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, Modal } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from '@/app/styles/internal_pages/internal_cash_page/AddCardStyle';
 import Header from '@/components/header/header';
 import SemiHeader from '@/components/header/semiHeader';
+import { ModalAlertValidation } from '@/components/modal/ModalAlertValidation';
+import { inputValidationCard } from '@/app/scripts/internal_pages/internal_cash_pages/inputValidationCard';
 
 
 export default function AddCardScreen() {
@@ -19,6 +21,36 @@ export default function AddCardScreen() {
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedValue, setSelectedValue] = useState(0);
+
+  const [cardNumberError, setCardNumberError] = useState(false);
+  const [expiryDateError, setExpiryDateError] = useState(false);
+  const [securityCodeError, setSecurityCodeError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [messageAlert, setMessageAlert] = useState("");
+
+  const handleCardValidation = () => {
+    const isValid = inputValidationCard(
+      cardNumber,
+      expiryDate,
+      securityCode,
+      setMessageAlert,
+      setCardNumberError,
+      setExpiryDateError,
+      setSecurityCodeError,
+      setSuccessMessage,
+      setModalVisible
+    );
+
+    if (isValid) {
+      handleAddCard();
+      setTimeout(() => {
+        setModalVisible(false);
+      }, 1500);
+    }
+  };
+
+
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -118,33 +150,34 @@ export default function AddCardScreen() {
       <View style={styles.form}>
         <Text style={styles.label}>Número do Cartão</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, cardNumberError && styles.inputError]}
           value={cardNumber}
           placeholder="Digite o número do cartão"
+          placeholderTextColor={'#C7C7C7'}
           onChangeText={setCardNumber}
           keyboardType="numeric"
           maxLength={16}
         />
 
-        <Text style={styles.label}>Data de Vencimento</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, expiryDateError && styles.inputError]}
           value={expiryDate}
           placeholder="MM/AAAA"
+          placeholderTextColor={'#C7C7C7'}
           onChangeText={setExpiryDate}
         />
 
-        <Text style={styles.label}>Código de Segurança</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, securityCodeError && styles.inputError]}
           value={securityCode}
           placeholder="Digite o código"
+          placeholderTextColor={'#C7C7C7'}
           onChangeText={setSecurityCode}
           keyboardType="numeric"
           maxLength={3}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleAddCard}>
+        <TouchableOpacity style={styles.button} onPress={handleCardValidation}>
           <Text style={styles.buttonText}>Cadastrar Cartão</Text>
         </TouchableOpacity>
 
@@ -182,6 +215,14 @@ export default function AddCardScreen() {
       <TouchableOpacity style={styles.button} onPress={handleConfirm}>
         <Text style={styles.buttonText}>Confirmar</Text>
       </TouchableOpacity>
+
+      <Modal animationType="fade" transparent visible={modalVisible}>
+        <ModalAlertValidation
+          messageAlert={messageAlert}
+          successMessage={successMessage}
+          handleClose={() => setModalVisible(false)}
+        />
+      </Modal>
     </View>
   );
 }

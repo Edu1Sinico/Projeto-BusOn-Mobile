@@ -106,7 +106,7 @@ const atualizarCodigoPagamento = async (req, res) => {
 
 // Método para buscar código de pagamento da empresa
 const buscarCodigoPagamento = async (req, res) => {
-    const { codigo_pagamento } = req.body; // Recebe um array de IDs
+    const { codigo_pagamento } = req.body;
 
     try {
         const result = await pool.query(
@@ -114,11 +114,17 @@ const buscarCodigoPagamento = async (req, res) => {
             [codigo_pagamento]
         );
 
-        res.status(201).json(result.rows[0]);
+        if (result.rows.length === 0) {
+            // Se nenhum registro for encontrado, retornar erro 404
+            return res.status(404).send('Código de pagamento não encontrado.');
+        }
+
+        res.status(200).json(result.rows[0]); // Código encontrado
     } catch (err) {
         console.error(err);
         res.status(500).send('Erro ao buscar a empresa pelo código de pagamento: ' + err);
     }
 };
+
 
 module.exports = { buscarEmpresas, buscarEmpresaID, adicionarFavoritos, removerFavoritos, buscarFavoritos, atualizarCodigoPagamento, buscarCodigoPagamento }; // Exporta a função para ser usada nas rotas.

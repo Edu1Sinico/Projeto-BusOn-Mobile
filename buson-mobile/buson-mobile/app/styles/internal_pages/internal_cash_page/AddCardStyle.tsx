@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // Cor de fundo para toda a tela
   },
   form: {
+    padding: 5,
     marginTop: 30,
     paddingHorizontal: 25,
     paddingBottom: 20,
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    margin: 5,
   },
   valueButtons: {
     flexDirection: 'row',
@@ -95,15 +97,22 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
- 
-
-
   editButton: {
     backgroundColor: '#FFC107', // Cor amarela para Editar
   },
 
   deleteButton: {
     backgroundColor: '#F44336', // Cor vermelha para Excluir
+  },
+
+  inputError: {
+    borderColor: "red",
+    borderWidth: 1,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginBottom: 4,
   },
 });
 
